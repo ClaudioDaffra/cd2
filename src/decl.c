@@ -112,9 +112,17 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 						default: $syntaxError ; break ;
 					}
 				}
-				else $syntaxError ; 
+				else 
+				{
+					$syntaxError ; 
+					return NULL ;
+				} 
 			}
-			else $syntaxError ;
+			else 
+			{
+				$syntaxError ; 
+				return NULL ;
+			}
 			
 			//
 /*			
@@ -251,9 +259,17 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 					}
 					
 				}
-				else $syntaxError ; 
+				else 
+				{
+					$syntaxError ; 
+					return NULL ;
+				}
 			}
-			else $syntaxError ;
+			else 
+			{
+				$syntaxError ; 
+				return NULL ;
+			}
 		
 			//
 /*			
@@ -401,9 +417,17 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 					}
 
 				}
-				else $syntaxError ; 
+				else 
+				{
+					$syntaxError ; 
+					return NULL ;
+				} 
 			}
-			else $syntaxError ;
+			else 
+			{
+				$syntaxError ; 
+				return NULL ;
+			}
 		
 			//
 /*			
@@ -508,7 +532,11 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 				$MATCH( sym_pg1 , L'}' ) ;
 				
 			}
-			else $syntaxError ; 
+			else 
+			{
+				$syntaxError ; 
+				return NULL ;
+			} 
 			
 		$MATCH( sym_pv , L';' ) ;
 	}

@@ -254,9 +254,10 @@ pnode_t parserScan( pparser_t this )
  
 					nBlockVectorTemp	=	parserDeclArray(this,stScopeGlobal);
 					fDecl += astPushAllNodeBlock ( this->ast , nBlock , nBlockVectorTemp ) ;
+					
 
 					pnode = parserDeclType( this , stScopeGlobal ) ;
-					if (pnode!=NULL) astPushNodeBlock( this->ast , nBlock , pnode ) ;
+					astPushNodeBlock( this->ast , nBlock , pnode ) ;
 					if (pnode!=NULL) fDecl++; 
 
 				} while ( 	fDecl > 0 						&&

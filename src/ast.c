@@ -159,6 +159,9 @@ node_t* astMakeNodeBlock( past_t this )
 
 size_t astPushNodeBlock( past_t this , node_t * nBlock , node_t * next ) 
 {
+	if ( nBlock	== NULL ) return 0 ;
+	if ( next	== NULL ) return 0 ;
+	
     if ( this->fDebug ) fwprintf ( this->pFileOutputAST , L"%-30ls :: [block]:[%018p] -> [next]:[%018p]\n",L"astPushNodeBlock",nBlock,next );
 	
 	if ( next != NULL )	vectorPushBack( nBlock->block.next , next  ) ;
@@ -168,6 +171,9 @@ size_t astPushNodeBlock( past_t this , node_t * nBlock , node_t * next )
 
 size_t 	astPushAllNodeBlock	( past_t this , node_t * nBlockDest ,  node_t * nBlockSource )
 {
+	if ( nBlockDest   == NULL ) return 0 ;
+	if ( nBlockSource == NULL ) return 0 ;
+	
 	size_t kBlockSize = vectorSize ( nBlockSource->block.next ) ;
 
 	if (kBlockSize > 0 )

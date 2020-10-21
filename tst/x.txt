@@ -22,9 +22,14 @@
  
 
  var v5 : byte := 0b0000:0101 ; 
-
  
-type point { } ;
+type point 
+{ 
+	var p1x : integer ;
+	var p2y : integer ,
+		p3z : integer	;
+	array p4a : [12][13] real ;
+} ;
  
  1
 	23
