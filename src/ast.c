@@ -416,7 +416,7 @@ node_t* astNodeDebug( past_t this , node_t* n)
 				{	
 					if ( n->block.next.data[i] != NULL )
 					{
-						fwprintf ( this->pFileOutputNode , L"node [%018p] -> [%03d/%03d]::[%018p]\n",n,i,n->block.next.size-1,n->block.next.data[i] );
+						fwprintf ( this->pFileOutputNode , L"node [%018p] -> [%03d/%03d]::[%018p]\n",n,(int)i,(int)n->block.next.size-1,n->block.next.data[i] );
 					}
 				}
 				if ( n->block.next.data[i] != NULL ) 
@@ -498,7 +498,7 @@ node_t* astNodeDebug( past_t this , node_t* n)
 					( this->pFileOutputNode , L"node [%018p] %-10ls :: dim[%d]\n"
 						,(void*)n
 						,L"ArrayDim"
-						,vectorSize ( n->arrayDim.ndx )
+						,(int)vectorSize ( n->arrayDim.ndx )
 					);
 			}
 

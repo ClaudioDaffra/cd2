@@ -211,7 +211,7 @@ int lexerPrintToken( plexer_t this )
     fwprintf ( this->pFileOutputLexer , L"[%03d,%03d] len(%02d) sym(%03d) "
 		,	this->row_start
 		,	this->col_start-1
-		,	this->tokenSize
+		,	(int)this->tokenSize
 		,	(uint32_t)this->sym
     ) ;    
 
@@ -720,7 +720,7 @@ int lexerScan( plexer_t this )
         {
 			const int 	maxBuffer 	= maxTokenSize 	;
 			int 		kBuffer		=	 0	;
-			wchar_t buffer[maxBuffer];
+			wchar_t buffer[maxTokenSize];
 			
 			$pushToken($c0); 
 			$next;	// "

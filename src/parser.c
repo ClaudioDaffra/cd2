@@ -48,7 +48,7 @@ int parserPrintToken( pparser_t this )
     fwprintf ( this->pFileOutputParser , L"[%03d,%03d] len(%02d) sym(%03d) "
 		,	this->lexer->row_start
 		,	this->lexer->col_start-1
-		,	this->lexer->tokenSize
+		,	(int)this->lexer->tokenSize
 		,	(uint32_t)this->lexer->sym
     ) ;    
 

@@ -2,6 +2,7 @@ TARGET =cd.exe
 FLAG= /WX /utf-8 /MP
 
 SOURCES = \
+	src\error.c		\
 	src\main.c		\
 	lib\argParse.c	\
 	lib\stdio.c		\

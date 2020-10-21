@@ -221,11 +221,11 @@ void stDebugSymTableNode(psymTable_t pst)
 		
 		fwprintf ( pFileOutputST , L"\n# symTable->nDim    [%d] / " 			,pst->nDim  );
 		for(size_t i=0;i<vectorSize(pst->aDim);i++) fwprintf ( pFileOutputST , L"[%d]" ,vectorAt(pst->aDim,i)  );
-		fwprintf ( pFileOutputST , L"\n# symTable->member  [%d] / " ,vectorSize(pst->member)  );
-		for(size_t i=0;i<vectorSize(pst->member);i++) fwprintf ( pFileOutputST , L"[%d]" ,(void*)vectorAt(pst->member,i)  );
-		fwprintf ( pFileOutputST , L"\n# symTable->size    [%d]\n" 				,pst->size  );
-		fwprintf ( pFileOutputST , L"# symTable->offset  [%d]\n" 				,pst->offset  );
-		fwprintf ( pFileOutputST , L"# symTable->address [%d]\n" 				,pst->address  );
+		fwprintf ( pFileOutputST , L"\n# symTable->member  [%d] / " ,(int)vectorSize(pst->member)  );
+		for(size_t i=0;i<vectorSize(pst->member);i++) fwprintf ( pFileOutputST , L"[%p]" ,((void*)vectorAt(pst->member,i))  );
+		fwprintf ( pFileOutputST , L"\n# symTable->size    [%d]\n" 				,(int)pst->size  );
+		fwprintf ( pFileOutputST , L"# symTable->offset  [%d]\n" 				,(int)pst->offset  );
+		fwprintf ( pFileOutputST , L"# symTable->address [%p]\n" 				,pst->address  );
 		fwprintf ( pFileOutputST , L"# symTable->typeID  [%ls]\n" 				,(pst->typeID == NULL) ? L"{NULL}" : pst->typeID );
 		
 		/*
