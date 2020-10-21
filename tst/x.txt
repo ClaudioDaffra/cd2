@@ -1,5 +1,5 @@
 
-
+/*
  array a1 : [10][20] byte ;
  
  const c1 = "str" ;
@@ -22,7 +22,7 @@
  
 
  var v5 : byte := 0b0000:0101 ; 
- 
+ */
 type point 
 { 
 	var p1x : integer ;
@@ -32,9 +32,12 @@ type point
 } ;
  
  1
+ 
+ /*
 	23
 	 456
 
 "claudio"1 ""2 3
 
 
+*/

@@ -62,6 +62,7 @@ pnode_t 	parserScan		( pparser_t this ) ;
 pnode_t  	parserDeclConst	( pparser_t this , stScope_t scope ) ; 
 pnode_t  	parserDeclVar	( pparser_t this , stScope_t scope ) ;
 pnode_t  	parserDeclArray	( pparser_t this , stScope_t scope ) ;
+pnode_t  	parserDeclType	( pparser_t this , stScope_t scope ) ;
 
 // expr.c
 

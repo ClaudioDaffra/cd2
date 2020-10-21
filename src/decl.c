@@ -538,13 +538,32 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 				return NULL ;
 			} 
 			
+			// crea nodo type 
+			pnode = astMakeNodeDeclType( this->ast , idTemp ,  scope ) ;
+			
+			// inserisci i nodi nel vettore campi ( field )
+			
+			// TODO struct without field -> error
+			
+			const size_t kVectorSize = vectorSize ( nBlock->block.next ) ;
+			for ( uint32_t i = 0 ; i < kVectorSize ; i++ )
+			{
+				pnode_t  node = nBlock->block.next.data[i] ;
+				if ( node != NULL ) 
+				{
+					vectorPushBack( pnode->declType.field , node  ) ;
+				}
+			}
+
 		$MATCH( sym_pv , L';' ) ;
 	}
 
 	
 
-	fwprintf ( stderr , L"{type n. field %d.}\n",nBlock->block.next.size )  ;
+	//fwprintf ( stderr , L"{type n. nBlock field %d.}\n",nBlock->block.next.size )  ;
+	//fwprintf ( stderr , L"{type n. type field %d.}\n", vectorSize ( pnode->declType.field  ) )  ;
 	
+	//exit(-1);
 	// ***
 	// END
 	// ***
