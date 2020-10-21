@@ -528,9 +528,6 @@ node_t* astNodeDebug( past_t this , node_t* n)
 
         case nTypeDeclType :
         
-			//fwprintf ( this->pFileOutputNode , L"\ncase nTypeDeclType %d :: \n { \n", (int)vectorSize ( n->declType.field ) )  ;
-			//exit(-1);
-						
 			if ( this->fDebug )
 			{ 
 				fwprintf 

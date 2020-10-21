@@ -385,7 +385,7 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 						
 					} while ( this->lexer->sym == sym_pq0) ;
 
-	// ............................... [integer,real,char,byte]
+	// ............................... [integer,real,char,byte,id]
 	
 					symTemp = this->lexer->sym ;
 					
@@ -400,7 +400,12 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 							parserGetToken(this);
 							break ;
 						
-						default: $syntaxError ; break ;
+						default: 
+						
+							$syntaxError ; 
+							return NULL ;
+							
+							break ;
 					}
 					
 	// ............................... (:=)?
@@ -558,12 +563,6 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 		$MATCH( sym_pv , L';' ) ;
 	}
 
-	
-
-	//fwprintf ( stderr , L"{type n. nBlock field %d.}\n",nBlock->block.next.size )  ;
-	//fwprintf ( stderr , L"{type n. type field %d.}\n", vectorSize ( pnode->declType.field  ) )  ;
-	
-	//exit(-1);
 	// ***
 	// END
 	// ***
