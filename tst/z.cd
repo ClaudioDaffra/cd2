@@ -1,0 +1,21 @@
+
+const 
+	a = 1 ,
+	b = 2 
+
+; 
+
+var 
+	x 	: integer 	:= a 		,
+	y 	: real    	:= 3.4 * a 	,
+	x2 	: integer 	:= 45.67	,
+	y2 	: real    	:= 100 		,
+;
+
+// 100.3
+
+// a*b+x-y/2+y2
+
+a*b+x-y
+
+

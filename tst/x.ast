@@ -1,0 +1,98 @@
+
+file ast             : [0x00005598c03c6880] -> [tst/x.ast           ]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeArrayDim            
+astMakeNodeTermInteger         :: [10]
+astMakeNodeTermInteger         :: [20]
+astMakeNodeDeclArray           
+astPushNodeBlock               :: [block]:[0x00005598c03dc3b0] -> [next]:[0x00005598c03dd4a0]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03dd4a0]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeTermString          :: [str]
+astmakeNodeDeclConst           
+astPushNodeBlock               :: [block]:[0x00005598c03deea0] -> [next]:[0x00005598c03df570]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03df570]
+astMakeNodeBlock               
+astMakeNodeTermInteger         :: [100]
+astMakeNodeDeclVar             
+astPushNodeBlock               :: [block]:[0x00005598c03df690] -> [next]:[0x00005598c03e0160]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03e0160]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeDeclVar             
+astPushNodeBlock               :: [block]:[0x00005598c03e10c0] -> [next]:[0x00005598c03e1670]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03e1670]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeTermString          :: [aNb]
+astmakeNodeDeclConst           
+astPushNodeBlock               :: [block]:[0x00005598c03e2110] -> [next]:[0x00005598c03e27f0]
+astMakeNodeTermChar            :: [N]
+astmakeNodeDeclConst           
+astPushNodeBlock               :: [block]:[0x00005598c03e2110] -> [next]:[0x00005598c03e2a30]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03e27f0]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03e2a30]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeTermChar            :: [c]
+astmakeNodeDeclConst           
+astPushNodeBlock               :: [block]:[0x00005598c03e3990] -> [next]:[0x00005598c03e3fc0]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03e3fc0]
+astMakeNodeBlock               
+astMakeNodeTermReal            :: [12.340000]
+astMakeNodeDeclVar             
+astPushNodeBlock               :: [block]:[0x00005598c03e40e0] -> [next]:[0x00005598c03e4ba0]
+astMakeNodeTermChar            :: [x]
+astMakeNodeDeclVar             
+astPushNodeBlock               :: [block]:[0x00005598c03e40e0] -> [next]:[0x00005598c03e5270]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03e4ba0]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03e5270]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeTermString          :: [stringa]
+astMakeNodeDeclVar             
+astPushNodeBlock               :: [block]:[0x00005598c03e61d0] -> [next]:[0x00005598c03e6d60]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03e6d60]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeTermInteger         :: [5]
+astMakeNodeDeclVar             
+astPushNodeBlock               :: [block]:[0x00005598c03e7cc0] -> [next]:[0x00005598c03e87a0]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03e87a0]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeTermInteger         :: [1]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03eb3a0]
+astMakeNodeTermInteger         :: [23]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03eb8b0]
+astMakeNodeTermInteger         :: [456]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03ebdc0]
+astMakeNodeTermString          :: [claudio]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03ec330]
+astMakeNodeTermInteger         :: [1]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03ec8b0]
+astMakeNodeTermString          :: []
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03ece10]
+astMakeNodeTermInteger         :: [2]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03ed370]
+astMakeNodeTermInteger         :: [3]
+astPushNodeBlock               :: [block]:[0x00005598c03d0df0] -> [next]:[0x00005598c03ed880]

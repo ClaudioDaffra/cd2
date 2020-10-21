@@ -1,0 +1,203 @@
+
+Linux :
+
+	[gcc]
+		
+		-std=c11 -Wall  -Wextra -pedantic
+
+		make -f mk.lin.gcc  -j4
+		make -f mk.lin.gcc  clean
+
+
+    
+Windows :
+
+	[cl]
+	
+		FLAG= /WX /utf-8 /MP
+		
+		nmake mk.win.cl
+		nmake /f mk.win.cl clean
+		
+    [gcc]
+		
+		-std=c11 -Wall  -Wextra -pedantic    
+		
+		make -f mk.win.gcc  -j4
+		make -f mk.win.gcc  clean
+    
+tree :
+
+	bin\	:	eseguibile
+	doc\	:	documentazione
+	lib\	:	librerie d'appoggio
+	obj\	:	dir file oggetto temporanei
+	src\	:	codice sorgente
+	tst\	:	file per testare il programma
+
+src\
+	[ ]	error.c/h	:	modulo gestione errori
+	[ ] global.h	:	modulo varabili globali
+	[ ] lexer.ch	:	analizzatore lessicale
+	[ ] main.c		:	programma principale
+	[ ] token-h		:	enumerazioni tokens
+	
+	[ ] parser.c/h	:	analizzatore sintattivo
+	[x] asm.c/h		:	assemblatore
+	[x] decl.c		:	parser : dichiarazioni
+	[ ] expr.c		:	parser : espressione
+	[x] asm.c/h		:	assebmlatore
+	[x] ast.c/h		:	albero sintttico
+	[x] optimise.c	:	ottimizzatore
+	[x] vm.c/h		:	macchina virtuale
+	[x] symTable.c/h:	tabella dei simboli
+	
+lib\
+
+	[ ] argParse.c	:	gestione opzioni linea di comando
+	[ ] gc.c/h		:	garbage collector
+	[ ] hmap.c/h	:	map
+	[ ] mstack.h	:	macro stack
+	[ ] mvector.h	:	macro vector
+	[ ] stdio.c/h	:	input/output
+
+	
+------
+main
+------
+
+	gc			:	Start garbace collettor
+	argparse 	:	gestione line di comando
+	lexer		:	gestione analizztore sintattico
+
+		// *********
+		//  PARSER : main.c
+		// *********
+
+		pparser_t parser = parserAlloc();
+
+		parser->fileInputName = g.fileInputName ;
+		parser->fDebug = 1 	;
+		
+		parserCtor(parser);
+
+		if ( !kError ) 
+		{
+			pnode_t pn = NULL ;
+			
+			pn = parserScan(parser);
+			
+			astNodeDebug ( parser->ast , pn ) ; // esegue check null e fDebug
+
+		}
+
+		parserDtor(parser);
+
+		parserDealloc(parser);
+
+
+		-->		// *********
+				//  LEXER : parser.c
+				// *********
+
+				plexer_t lexer = lexerAlloc();
+
+				lexerCtor(lexer);
+
+				if ( this->fDebug == 1 ) lexer->fDebug = 1 ;
+
+				this->lexer = lexer ;
+
+				// *********
+				//  AST
+				// *********
+
+				past_t	ast = astAlloc();
+
+				if ( this->fDebug == 1 ) ast->fDebug = 1 ;
+
+				astCtor(ast,this->fileInputName);
+
+				this->ast =ast ;
+
+    // *********
+    //  END
+    // *********
+
+    printErrLog();
+
+	fwprintf ( stdout,L"\n" ) ;
+	
+	gcStop();
+	
+
+*****
+LEXER
+*****
+
+il lexer dopo essere stato allocato e costruito, accetta un file di input,  i campi interessanti all'interno della struttura sono
+
+	c0			:	current char
+	c1			:	look ahead
+
+	row 		;	// posizione attuale di scansione, in genere ove si genera errore
+	col 		;
+	old_row 	;	// vecchia posizione del token prima di unget
+	old_col 	;
+	row_start 	;	// posizione di partenza del token
+	col_start 	;		
+	token[]		:	gettone
+	tokenSize	:	dimensioni gettone
+	sym			:	simbolo del token
+	
+	union value : contiene il valore del token ( intero,reale, o altro )
+
+	stackStruct(lexerBuffer_t,sLexBuffer) 	; // gestione della pila di file di inclusione
+	
+	whmapType(mapKW) 						; // gestione della mappa delle parole chiave
+	
+	valori usati dal paser :
+	
+		row_start , col_start
+		token
+		sym
+	
+*****
+PARSER
+*****
+
+
+*****
+NODO PRINCIPE
+*****
+
+Questa struttura ad albero, contiene tutte le diramazioni dell AST generato dal parser
+Viene generata da parserScan() e deallocata dalla Garbage Collector:
+
+	struct node_s
+	{
+		enodeType_t 	type 	;
+		uint32_t        row 	;
+		uint32_t        col 	;
+		wchar_t*		token	;
+			
+		union 
+		{
+			nodeTerm_t      		term    		;
+			nodeBinOp_t     		binOp   		;
+			nodePrefix_t    		prefix  		;
+			//nodeProgramBlock_t    programBlock	;
+			//nodeDeclGlobalVar_t 	declGlobalVar	; 
+			//nodeTermVar_t			termVar			; 
+			nodeAssign_t			assign			;              
+		} ;
+		
+	} ;
+
+	typedef struct node_s 	 node_t  ;
+
+	typedef struct node_s*	 pnode_t ;
+
+/**/
+	
+	

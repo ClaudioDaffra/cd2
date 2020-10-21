@@ -1,0 +1,213 @@
+-------
+global.h
+-------
+
+struttura di accesso globale tra i rispettivi moduli.
+
+	char* makeFileWithNewExt( char* pFileName , char* newExt ) ;
+
+	typedef struct global_s
+	{
+		// FIELDs
+		
+		int 	fDebug;
+
+		char*	fileInputName ;   // source coude
+		FILE*	pFileInput    ;
+
+		char*	fileOutputName;   // result
+		FILE* 	pFileOutput   ;
+
+		char*   fileOutputStream ; // force debug info to stream stdout/stderr
+		
+		// METHODs
+		
+		char* (*makeFileWithNewExt)( char* pFileName , char* newExt ) ;
+		
+	} global_t ;
+
+	// var global main.c
+
+	extern struct global_s g ;
+
+-------
+lexer.h
+-------
+
+c0				:	current char
+c1				:	look ahead
+
+row_start	,	:	osizione del lexema :
+col_start
+row_end		,	
+col_end
+	
+token[]			:	gettone
+tokenSize		:	dimensioni gettone
+sym				:	simbolo del token
+
+value.			:	intero / reale / stringa
+
+sLexBuffer		: stac kfile di inclusione
+
+mapKW			: mappa parole chiave
+
+
+struttura principale del lexer.
+
+// lexer : fields
+
+	struct lexer_s
+	{
+		int 			fDebug ;	// emit debug info
+		int				flexerScan	;
+		//
+		
+		int     		tabSize        			; // size tab
+		FILE    		*pFileOutputLexer    	; // file debug lexer pointer
+		char    		*fileNameOutputLexer    ; // file debug lexer name	 
+		
+		//
+		
+		uint32_t        row ;
+		uint32_t        col ;
+		uint32_t        old_row ;
+		uint32_t        old_col ;
+			
+		const wchar_t*  fileInputName ;
+		FILE*           pfileInput ;
+		
+		wchar_t         c0 ;
+		wchar_t         c1 ;
+		uint32_t        row_start ;
+		uint32_t        col_start ;
+
+		sym_t           sym ;
+		wchar_t         token[maxTokenSize] ;
+		size_t          tokenSize;
+		
+		//
+		
+		union // value token
+		{
+			int64_t     integer	; 	// integer  / wchar_t  / byte
+			double      real	;	// float / double
+			wchar_t*	id		; 	// string / id / keyword
+		} value ;
+		
+		//
+
+		stackStruct(lexerBuffer_t,sLexBuffer) ; // stack include file
+		
+		whmapType(mapKW) ; // mappa keyword
+		
+	} ;
+
+
+-------
+ast.h
+-------
+
+	// .................................... enumerativi nodo
+
+	enum enodeType
+	{
+		nTypeUndefined      ,   // 0
+		nTypeTermInteger    ,   // 1
+		nTypeTermReal       ,   // 2 
+		// nTypeID ... 			   var const array function
+		nTypeBinOp          ,   // 3 
+		nTypePrefix         ,   // 4
+		//astnTypeBlock          ,   // 5 
+		//astnTypeDeclGlobalVar 	,	// 6 variabili globali
+		//astnTypeTermVar			,	// 7 variabile semplice a livello dell'espressione
+		nTypeAssign			,	// 8 =    
+	} ;
+
+	typedef enum enodeType 	enodeType_t;
+
+	// .................................... forward declaration
+
+	typedef struct node_s 	node_t ;
+
+	typedef struct node_s *	pnode_t ;
+
+	// .................................... nodo principe
+
+	struct node_s
+	{
+		enodeType_t 	type 	;
+		uint32_t        row 	;
+		uint32_t        col 	;
+		wchar_t*		token	;
+			
+		union 
+		{
+			nodeTerm_t      		term    		;
+			nodeBinOp_t     		binOp   		;
+			nodePrefix_t    		prefix  		;
+			//nodeProgramBlock_t    programBlock	;
+			//nodeDeclGlobalVar_t 	declGlobalVar	; 
+			//nodeTermVar_t			termVar			; 
+			nodeAssign_t			assign			;              
+		} ;
+		
+	} ;
+
+	typedef struct node_s 	 node_t  ;
+
+	typedef struct node_s*	 pnode_t ;
+
+
+	// ast : fields
+
+	struct ast_s
+	{
+		int 		fDebug 				;
+		FILE*		pFileOutputAST		;
+		char*		fileNameOutputAST	;  
+		FILE*		pFileOutputNode		;
+		char*		fileNameOutputNode	; 
+	} ;
+
+	typedef struct ast_s 	 ast_t 	;
+	typedef struct ast_s*	 past_t ;
+
+	// struttura per i prefissi -> expr.c
+
+	struct sPrefixOp_s
+	{
+		sym_t		sym 		;
+		uint32_t	row_start	;
+		uint32_t	col_start	;
+		wchar_t*	token 		;
+	} ;
+
+	typedef struct sPrefixOp_s 		sPrefixOp_t ;
+
+	typedef struct sPrefixOp_s*	 psPrefixOp_t ;
+
+-------
+parser.h
+-------
+
+	// parser : fields
+
+	struct parser_s
+	{
+		int 		fDebug 					;
+		FILE*		pFileOutputParser		;  
+		char*		fileNameOutputParser	;
+		char*		fileInputName			;
+		plexer_t	lexer 					;
+		past_t		ast						; 
+	} ;
+
+	typedef struct parser_s 	parser_t ;
+	typedef struct parser_s* 	pparser_t ;
+
+
+
+/**/
+
+

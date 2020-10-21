@@ -1,0 +1,27 @@
+ 
+
+const 
+	a = 1 	,
+	b = 2.3 ,
+	c=4
+; 
+ 
+	
+var
+	x : integer := a 		,
+	//y : integer := b*3.2 	,
+	//z : real 	:= 2		,
+	//w : real 	:= a		,
+	//q : point				,
+;
+	
+	//x:=1+21+x+y+w
+	
+	x:=123.4
+
+
+
+	
+
+
+

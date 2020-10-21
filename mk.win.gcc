@@ -1,0 +1,55 @@
+APP=cd.exe
+CC=gcc
+LINK=gcc
+
+FLAGS=-std=c11 -Wall  -Wextra -pedantic -Wno-restrict
+LIBRARYS=
+
+ALL : $(APP)
+
+ODIR=obj
+SDIR=src
+BDIR=bin
+LDIR=lib
+
+OBJS =  main.obj		\
+		lexer.obj		\
+		error.obj		\
+		ast.obj			\
+		parser.obj		\
+		expr.obj		\
+		symTable.obj	\
+		decl.obj
+		
+		
+LIBS =  argParse.obj	\
+		stdio.obj		\
+		gc.obj 			\
+		hmap.obj
+
+OBJ = $(patsubst %,$(ODIR)/%,$(OBJS))
+
+$(ODIR)/%.obj: $(SDIR)/%.c 
+		$(CC) -c -o $@ $< $(FLAGS)
+
+LIB = $(patsubst %,$(LDIR)/%,$(LIBS))
+
+$(LDIR)/%.obj: $(LDIR)/%.c
+		$(CC) -c -o $@ $< $(FLAGS) 
+
+ALLOBJ =  $(OBJ) $(LIB)        
+
+$(APP):$(ALLOBJ) 
+		$(CC) -o $(BDIR)/$@ $^ $(flgags) $(LIBRARYS) 
+
+clean:
+		del bin\*.exe & del obj\*.obj & del lib\*.obj
+		del *.exe & del *.obj
+		del *.lexer & del tst\*.lexer
+		del *.parser & del tst\*.parser
+		del *.output & del tst\*.output
+		del *.ast & del tst\*.ast
+		del *.node & del tst\*.node
+		del *.asm & del tst\*.asm
+		del *.vm & del tst\*.vm
+		del *.symTable & del tst\*.symTable

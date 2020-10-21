@@ -1,0 +1,203 @@
+
+file parser          : [0x00005598c03b47d0] -> [tst/x.parser        ]
+
+# Parser  -> scanning ...
+
+-[tst/x.txt           ][003,001] len(05) sym(109) [               array]
+parserDeclConst
+parserDeclVar
+parserDeclArray
+-[tst/x.txt           ][003,007] len(02) sym(004) [                  a1]
+-[tst/x.txt           ][003,010] len(01) sym(155) [                   :]
+-[tst/x.txt           ][003,012] len(01) sym(258) [                   []
+-[tst/x.txt           ][003,013] len(02) sym(005) [                  10] -> [[10]]
+parserExpr
+parserAssign
+parserAddSub
+parserMulDivMod
+parserTerm
+sym_integer                    :: [10].
+-[tst/x.txt           ][003,015] len(01) sym(259) [                   ]]
+-[tst/x.txt           ][003,016] len(01) sym(258) [                   []
+-[tst/x.txt           ][003,017] len(02) sym(005) [                  20] -> [[20]]
+parserExpr
+parserAssign
+parserAddSub
+parserMulDivMod
+parserTerm
+sym_integer                    :: [20].
+-[tst/x.txt           ][003,019] len(01) sym(259) [                   ]]
+-[tst/x.txt           ][003,021] len(04) sym(108) [                byte]
+-[tst/x.txt           ][003,026] len(01) sym(153) [                   ;]
+-[tst/x.txt           ][005,001] len(05) sym(103) [               const]
+parserDeclConst
+-[tst/x.txt           ][005,007] len(02) sym(004) [                  c1]
+-[tst/x.txt           ][005,010] len(01) sym(257) [                   =]
+-[tst/x.txt           ][005,012] len(06) sym(003) [               "str"] -> [[str]]
+-[tst/x.txt           ][005,018] len(01) sym(153) [                   ;]
+-[tst/x.txt           ][008,001] len(03) sym(104) [                 var]
+parserDeclVar
+-[tst/x.txt           ][008,005] len(03) sym(004) [                 v1a]
+-[tst/x.txt           ][008,009] len(01) sym(155) [                   :]
+-[tst/x.txt           ][008,011] len(07) sym(105) [             integer]
+-[tst/x.txt           ][008,019] len(02) sym(201) [                  :=]
+-[tst/x.txt           ][008,022] len(03) sym(005) [                 100] -> [[100]]
+parserExpr
+parserAssign
+parserAddSub
+parserMulDivMod
+parserTerm
+sym_integer                    :: [100].
+-[tst/x.txt           ][008,026] len(01) sym(153) [                   ;]
+-[tst/x.txt           ][011,001] len(03) sym(104) [                 var]
+parserDeclArray
+parserDeclConst
+parserDeclVar
+-[tst/x.txt           ][011,005] len(03) sym(004) [                 v1b]
+-[tst/x.txt           ][011,009] len(01) sym(155) [                   :]
+-[tst/x.txt           ][011,011] len(05) sym(004) [               point]
+-[tst/x.txt           ][011,017] len(01) sym(153) [                   ;]
+-[tst/x.txt           ][013,001] len(05) sym(103) [               const]
+parserDeclArray
+parserDeclConst
+-[tst/x.txt           ][013,012] len(02) sym(004) [                  c2]
+-[tst/x.txt           ][013,015] len(01) sym(257) [                   =]
+-[tst/x.txt           ][013,017] len(07) sym(003) [              "a\nb"] -> [[aNb]]
+-[tst/x.txt           ][013,024] len(01) sym(154) [                   ,]
+-[tst/x.txt           ][014,008] len(02) sym(004) [                  c3]
+-[tst/x.txt           ][014,011] len(01) sym(257) [                   =]
+-[tst/x.txt           ][014,013] len(04) sym(002) [                '\n'] -> [[N]]
+-[tst/x.txt           ][014,017] len(01) sym(153) [                   ;]
+-[tst/x.txt           ][017,001] len(05) sym(103) [               const]
+parserDeclVar
+parserDeclArray
+parserDeclConst
+-[tst/x.txt           ][017,008] len(02) sym(004) [                  c4]
+-[tst/x.txt           ][017,011] len(01) sym(257) [                   =]
+-[tst/x.txt           ][017,013] len(03) sym(002) [                 'c'] -> [[c]]
+-[tst/x.txt           ][017,017] len(01) sym(153) [                   ;]
+-[tst/x.txt           ][019,001] len(03) sym(104) [                 var]
+parserDeclVar
+-[tst/x.txt           ][019,005] len(02) sym(004) [                  v3]
+-[tst/x.txt           ][019,008] len(01) sym(155) [                   :]
+-[tst/x.txt           ][019,010] len(04) sym(106) [                real]
+-[tst/x.txt           ][019,015] len(02) sym(201) [                  :=]
+-[tst/x.txt           ][019,018] len(05) sym(006) [               12.34] -> [[12.340000]]
+parserExpr
+parserAssign
+parserAddSub
+parserMulDivMod
+parserTerm
+sym_real                       :: [12.340000].
+-[tst/x.txt           ][019,024] len(01) sym(154) [                   ,]
+-[tst/x.txt           ][019,026] len(02) sym(004) [                  v3]
+-[tst/x.txt           ][019,029] len(01) sym(155) [                   :]
+-[tst/x.txt           ][019,031] len(04) sym(107) [                char]
+-[tst/x.txt           ][019,036] len(02) sym(201) [                  :=]
+-[tst/x.txt           ][019,039] len(03) sym(002) [                 'x'] -> [[x]]
+parserExpr
+parserAssign
+parserAddSub
+parserMulDivMod
+parserTerm
+sym_char                       :: [x].
+-[tst/x.txt           ][019,043] len(01) sym(153) [                   ;]
+-[tst/x.txt           ][021,001] len(03) sym(104) [                 var]
+parserDeclArray
+parserDeclConst
+parserDeclVar
+-[tst/x.txt           ][021,005] len(02) sym(004) [                  v4]
+-[tst/x.txt           ][021,008] len(01) sym(155) [                   :]
+-[tst/x.txt           ][021,010] len(04) sym(107) [                char]
+-[tst/x.txt           ][021,015] len(02) sym(201) [                  :=]
+-[tst/x.txt           ][021,018] len(10) sym(003) [           "stringa"] -> [[stringa]]
+parserExpr
+parserAssign
+parserAddSub
+parserMulDivMod
+parserTerm
+sym_string                     :: [stringa].
+-[tst/x.txt           ][021,028] len(01) sym(153) [                   ;]
+-[tst/x.txt           ][024,001] len(03) sym(104) [                 var]
+parserDeclArray
+parserDeclConst
+parserDeclVar
+-[tst/x.txt           ][024,005] len(02) sym(004) [                  v5]
+-[tst/x.txt           ][024,008] len(01) sym(155) [                   :]
+-[tst/x.txt           ][024,010] len(04) sym(108) [                byte]
+-[tst/x.txt           ][024,015] len(02) sym(201) [                  :=]
+-[tst/x.txt           ][024,018] len(10) sym(005) [          0b00000101] -> [[5]]
+parserExpr
+parserAssign
+parserAddSub
+parserMulDivMod
+parserTerm
+sym_integer                    :: [5].
+-[tst/x.txt           ][024,030] len(01) sym(153) [                   ;]
+-[tst/x.txt           ][027,000] len(04) sym(110) [                type]
+parserDeclArray
+-[tst/x.txt           ][027,005] len(05) sym(004) [               point]
+-[tst/x.txt           ][027,011] len(01) sym(260) [                   {]
+-[tst/x.txt           ][027,013] len(01) sym(261) [                   }]
+parserDeclVar
+parserDeclArray
+-[tst/x.txt           ][027,015] len(01) sym(153) [                   ;]
+-[tst/x.txt           ][029,001] len(01) sym(005) [                   1] -> [[1]]
+parserDeclConst
+parserDeclVar
+parserDeclArray
+parserExpr
+parserAssign
+parserAddSub
+parserMulDivMod
+parserTerm
+sym_integer                    :: [1].
+-[tst/x.txt           ][030,004] len(02) sym(005) [                  23] -> [[23]]
+parserExpr
+parserAssign
+parserAddSub
+parserMulDivMod
+parserTerm
+sym_integer                    :: [23].
+-[tst/x.txt           ][031,005] len(03) sym(005) [                 456] -> [[456]]
+parserExpr
+parserAssign
+parserAddSub
+parserMulDivMod
+parserTerm
+sym_integer                    :: [456].
+-[tst/x.txt           ][033,000] len(10) sym(003) [           "claudio"] -> [[claudio]]
+parserExpr
+parserAssign
+parserAddSub
+parserMulDivMod
+parserTerm
+sym_string                     :: [claudio].
+-[tst/x.txt           ][033,009] len(01) sym(005) [                   1] -> [[1]]
+parserExpr
+parserAssign
+parserAddSub
+parserMulDivMod
+parserTerm
+sym_integer                    :: [1].
+-[tst/x.txt           ][033,011] len(02) sym(003) [                  ""] -> [[]]
+parserExpr
+parserAssign
+parserAddSub
+parserMulDivMod
+parserTerm
+sym_string                     :: [].
+-[tst/x.txt           ][033,013] len(01) sym(005) [                   2] -> [[2]]
+parserExpr
+parserAssign
+parserAddSub
+parserMulDivMod
+parserTerm
+sym_integer                    :: [2].
+-[tst/x.txt           ][033,015] len(01) sym(005) [                   3] -> [[3]]
+parserExpr
+parserAssign
+parserAddSub
+parserMulDivMod
+parserTerm
+sym_integer                    :: [3].

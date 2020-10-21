@@ -1,0 +1,81 @@
+
+lexer
+-----
+
+	[.]		:	qualisasi wide character	->	symChar
+
+
+END
+								!
+								-
+								+
+						prefix
+
+					real
+					integer
+					string
+					char
+					( expr )
+					prefix
+					
+				term
+
+				term
+				mulDivMod	*	/	%
+				addSub		+	-
+				assign		:=
+			
+			expr:
+
+						char
+						string
+						real
+						integer
+						
+					constTerm:
+
+				id	=	consTerm ;
+				id	=	constTerm  , parserDeclConst 
+				
+			parserDeclConst: 
+
+
+		expr:
+		parserDeclConst:
+		
+	parser :
+
+BEGIN
+
+/**/
+
+
+ 
+### {parserDeclConst}
+
+	"const" -> #1	[id] 	-> "=" 	|->	const 	integer		|->		|				->	";" -> #2
+									|->	const	real		|-^		|-> "," -> #1
+									|->	const 	string		|-^
+									|->	const 	char		|-^
+									
+	#2
+
+	Questo nodo è un caso speciale, in quanto non genera direttamente 
+	una foglia (nodo) dell'albero (ast), piuttosto va a sostituire
+	il simbolo con la costante.
+	
+	
+ 
+### {parserDeclVar}
+
+	"Var" -> #1	[id] 	-> ":"	|->		integer		|->		|									->	";" -> #2
+								|->		real		|-^		|-> 				->	"," -> #1
+								|->		char		|-^		|-> :=	-> expr  	->
+								|->		byte		|-^
+	#2
+
+
+	
+/**/
+
+

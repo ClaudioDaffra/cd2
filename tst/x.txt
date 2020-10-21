@@ -1,0 +1,35 @@
+
+
+ array a1 : [10][20] byte ;
+ 
+ const c1 = "str" ;
+ 
+ 
+ var v1a : integer := 100 ; 
+ 
+
+ var v1b : point ; 
+
+ const 	c2 = "a\nb" , 
+		c3 = '\n';
+ 
+ 
+ const  c4 = 'c' ;
+ 
+ var v3 : real := 12.34 , v3 : char := 'x' ;
+
+ var v4 : char := "stringa" ;
+ 
+
+ var v5 : byte := 0b0000:0101 ; 
+
+ 
+type point { } ;
+ 
+ 1
+	23
+	 456
+
+"claudio"1 ""2 3
+
+
