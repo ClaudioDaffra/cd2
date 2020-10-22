@@ -205,6 +205,76 @@ void parserDtor( pparser_t this )
 	}
 }
 
+// ......................................................... parser declaration
+
+pnode_t parserDeclaration( pparser_t this , node_t* nBlock , stScope_t	scope ) 
+{
+	pnode_t 	pnode = NULL ;
+	node_t* 	nBlockVectorTemp 	= NULL 	;
+	size_t 		fDecl=0;
+
+	// -----------
+	// DECLARATION
+	// -----------
+			
+	do {
+		
+		fDecl=0; 
+		
+		// dato che è un loop potrebbe esserci sia dichiarazioni di const/var come potrebbero non esserci
+
+		nBlockVectorTemp	=	parserDeclConst(this,scope);
+		fDecl += astPushAllNodeBlock ( this->ast , nBlock , nBlockVectorTemp ) ; 
+
+		nBlockVectorTemp	=	parserDeclVar(this,scope);
+		fDecl += astPushAllNodeBlock ( this->ast , nBlock , nBlockVectorTemp ) ;
+
+		nBlockVectorTemp	=	parserDeclArray(this,scope);
+		fDecl += astPushAllNodeBlock ( this->ast , nBlock , nBlockVectorTemp ) ;
+		
+
+		pnode = parserDeclType( this , scope ) ;
+		astPushNodeBlock( this->ast , nBlock , pnode ) ;
+		if (pnode!=NULL) fDecl++; 
+
+	} while ( 	fDecl > 0 						&&
+				this->lexer->sym != sym_end 	&&
+				!kError 
+			) ;
+			
+	return nBlock ;
+}
+
+// ......................................................... parser statement
+
+pnode_t parserStatement( pparser_t this , node_t* nBlock ) 
+{
+	pnode_t 	pnode = NULL ;
+	//node_t* 	nBlockVectorTemp 	= NULL 	;
+	//size_t 		fDecl=0;
+	
+	// -----------
+	// EXPR
+	// -----------
+
+	pnode = NULL ;
+
+	do {
+
+		if ( kError ) break ;
+		
+		pnode=parserExpr(this);
+		
+		if ( pnode!=NULL ) astPushNodeBlock( this->ast , nBlock , pnode );
+		
+	} while ( 		pnode!=NULL 
+				&&  this->lexer->sym != sym_end 
+				&&  !kError 
+			) ;
+
+	return nBlock ;
+}
+
 // ......................................................... parser scan 
 
 pnode_t parserScan( pparser_t this )
@@ -231,63 +301,12 @@ pnode_t parserScan( pparser_t this )
 			
 			parserGetToken(this);
 
-			// -----------
-			// DECLARATION
-			// -----------
-			
-				pnode = NULL ;
 
-				node_t* 	nBlockVectorTemp 	= NULL 	;
-				size_t 		fDecl=0;
-				
-				do {
-					
-					fDecl=0; 
-					
-					// dato che è un loop potrebbe esserci sia dichiarazioni di const/var come potrebbero non esserci
+				nBlock = parserDeclaration( this ,  nBlock , stScopeGlobal ) ;
 
-					nBlockVectorTemp	=	parserDeclConst(this,stScopeGlobal);
-					fDecl += astPushAllNodeBlock ( this->ast , nBlock , nBlockVectorTemp ) ; 
+				nBlock = parserStatement( this ,  nBlock ) ;
 
-					nBlockVectorTemp	=	parserDeclVar(this,stScopeGlobal);
-					fDecl += astPushAllNodeBlock ( this->ast , nBlock , nBlockVectorTemp ) ;
- 
-					nBlockVectorTemp	=	parserDeclArray(this,stScopeGlobal);
-					fDecl += astPushAllNodeBlock ( this->ast , nBlock , nBlockVectorTemp ) ;
-					
-
-					pnode = parserDeclType( this , stScopeGlobal ) ;
-					astPushNodeBlock( this->ast , nBlock , pnode ) ;
-					if (pnode!=NULL) fDecl++; 
-
-				} while ( 	fDecl > 0 						&&
-							this->lexer->sym != sym_end 	&&
-							!kError 
-						) ;
-
-
-			// -----------
-			// EXPR
-			// -----------
-			
-				pnode = NULL ;
-
-				do {
-
-					if ( kError ) break ;
-					
-					pnode=parserExpr(this);
-					
-					if ( pnode!=NULL ) astPushNodeBlock( this->ast , nBlock , pnode );
-					
-				} while ( 		pnode!=NULL 
-							&&  this->lexer->sym != sym_end 
-							&&  !kError 
-						) ;
-
-	// EXIT
-	
-	pnode=nBlock ;
+				pnode=nBlock ;
 
 	// parser exit
 

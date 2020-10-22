@@ -16,7 +16,7 @@
  
  const  c4 = 'c' ;
  
- var v3 : real := 12.34 , v3 : char := 'x' ;
+ var v3a : real := 12.34 , v3b : char := 'x' ;
 
  var v4 : char := "stringa" ;
  
