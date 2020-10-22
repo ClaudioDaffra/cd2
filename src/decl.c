@@ -572,6 +572,45 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
  return pnode ;
 }
 
+// ......................................................... parser declaration	:	Const, Var, Array,	Type
+
+pnode_t parserDeclaration( pparser_t this , node_t* nBlock , stScope_t	scope ) 
+{
+	pnode_t 	pnode = NULL ;
+	node_t* 	nBlockVectorTemp 	= NULL 	;
+	size_t 		fDecl=0;
+
+	// -----------
+	// DECLARATION
+	// -----------
+			
+	do {
+		
+		fDecl=0; 
+		
+		// dato che è un loop potrebbe esserci sia dichiarazioni di const/var come potrebbero non esserci
+
+		nBlockVectorTemp	=	parserDeclConst(this,scope);
+		fDecl += astPushAllNodeBlock ( this->ast , nBlock , nBlockVectorTemp ) ; 
+
+		nBlockVectorTemp	=	parserDeclVar(this,scope);
+		fDecl += astPushAllNodeBlock ( this->ast , nBlock , nBlockVectorTemp ) ;
+
+		nBlockVectorTemp	=	parserDeclArray(this,scope);
+		fDecl += astPushAllNodeBlock ( this->ast , nBlock , nBlockVectorTemp ) ;
+		
+		pnode = parserDeclType( this , scope ) ;
+		astPushNodeBlock( this->ast , nBlock , pnode ) ;
+		if (pnode!=NULL) fDecl++; 
+
+	} while ( 	fDecl > 0 						&&
+				this->lexer->sym != sym_end 	&&
+				!kError 
+			) ;
+			
+	return nBlock ;
+}
+
 /**/
 
 

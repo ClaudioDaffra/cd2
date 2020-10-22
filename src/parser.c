@@ -205,46 +205,6 @@ void parserDtor( pparser_t this )
 	}
 }
 
-// ......................................................... parser declaration
-
-pnode_t parserDeclaration( pparser_t this , node_t* nBlock , stScope_t	scope ) 
-{
-	pnode_t 	pnode = NULL ;
-	node_t* 	nBlockVectorTemp 	= NULL 	;
-	size_t 		fDecl=0;
-
-	// -----------
-	// DECLARATION
-	// -----------
-			
-	do {
-		
-		fDecl=0; 
-		
-		// dato che è un loop potrebbe esserci sia dichiarazioni di const/var come potrebbero non esserci
-
-		nBlockVectorTemp	=	parserDeclConst(this,scope);
-		fDecl += astPushAllNodeBlock ( this->ast , nBlock , nBlockVectorTemp ) ; 
-
-		nBlockVectorTemp	=	parserDeclVar(this,scope);
-		fDecl += astPushAllNodeBlock ( this->ast , nBlock , nBlockVectorTemp ) ;
-
-		nBlockVectorTemp	=	parserDeclArray(this,scope);
-		fDecl += astPushAllNodeBlock ( this->ast , nBlock , nBlockVectorTemp ) ;
-		
-
-		pnode = parserDeclType( this , scope ) ;
-		astPushNodeBlock( this->ast , nBlock , pnode ) ;
-		if (pnode!=NULL) fDecl++; 
-
-	} while ( 	fDecl > 0 						&&
-				this->lexer->sym != sym_end 	&&
-				!kError 
-			) ;
-			
-	return nBlock ;
-}
-
 // ......................................................... parser statement
 
 pnode_t parserStatement( pparser_t this , node_t* nBlock ) 
@@ -275,6 +235,23 @@ pnode_t parserStatement( pparser_t this , node_t* nBlock )
 	return nBlock ;
 }
 
+// ......................................................... parser block 
+
+pnode_t parserBlock( pparser_t this , stScope_t	scope )
+{
+	// *********
+	//  BLOCK
+	// *********
+
+	node_t* nBlock=astMakeNodeBlock(this->ast);
+
+	nBlock = parserDeclaration( this ,  nBlock , scope ) ;
+
+	nBlock = parserStatement( this ,  nBlock ) ;
+
+	return nBlock ;
+}
+
 // ......................................................... parser scan 
 
 pnode_t parserScan( pparser_t this )
@@ -285,34 +262,20 @@ pnode_t parserScan( pparser_t this )
 	
 	// parser init
 
-		// *********
-		//  BLOCK
-		// *********
-
-		node_t* nBlock=astMakeNodeBlock(this->ast);
-
 		pnode_t	pnode = NULL ;
 
-		//
+		lexerInclude ( this->lexer , this->fileInputName ) ;
 
-	// parser loop
-
-			lexerInclude ( this->lexer , this->fileInputName ) ;
-			
-			parserGetToken(this);
-
-
-				nBlock = parserDeclaration( this ,  nBlock , stScopeGlobal ) ;
-
-				nBlock = parserStatement( this ,  nBlock ) ;
-
-				pnode=nBlock ;
-
-	// parser exit
-
-	// ritorna il nodo principale
-	// ( GC for deallocation )
+		parserGetToken(this);
 		
+	// parser begin
+	
+		pnode = parserBlock( this , stScopeGlobal ) ;
+	
+	// parser end
+
+	// ritorna il nodo principale ( GC for deallocation )
+
 	return pnode ;
 }
 

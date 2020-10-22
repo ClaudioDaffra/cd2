@@ -23,7 +23,8 @@ enum enodeType
     nTypeAssign			,	// 9 := 
     nTypeDeclArray 		,	// 10 decl array global local   
     nTypeArrayDim		,	// 11 array dim [][][] ...   
-    nTypeDeclType 		,	// 12 type declaration          
+    nTypeDeclType 		,	// 12 type declaration 
+    nTypeDeclFunction	,	// 13 dichiarazione di funzione         
 } ;
 
 typedef enum enodeType 	enodeType_t;
@@ -121,7 +122,7 @@ typedef struct nodeDeclArray_s
 
 typedef struct nodeDeclType_s
 {
-	wchar_t*	id			;		//	v
+	wchar_t*	id			;		//	struct name
 	stScope_t	scope		;		//	local global
 	vectorStruct( pnode_t , field ) ;
 	//	initializer list	: var p1 : point := { }
@@ -149,6 +150,18 @@ typedef struct nodeAssign_s
 } nodeAssign_t ;
 
 
+// .................................... nodo  decl function
+
+typedef struct nodeDeclFunction_s
+{
+	wchar_t*	id					;	// name
+	vectorStruct( pnode_t , param ) ;	// parameter list
+	node_t*		ret					;	// parameter return
+	node_t*		block				;	// block
+    
+} nodeDeclFunction_t ;
+
+
 // .................................... nodo principe
 
 struct node_s
@@ -169,7 +182,8 @@ struct node_s
         nodeAssign_t			assign		;
         nodeDeclArray_t			declArray	;
         nodeArrayDim_t			arrayDim	; 
-        nodeDeclType_t			declType	;                     
+        nodeDeclType_t			declType	;
+        nodeDeclFunction_t		declFunction;                     
     } ;
     
 } ;

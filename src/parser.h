@@ -56,6 +56,8 @@ void 		parserDtor		( pparser_t this ) ;
 int 		parserPrintToken( pparser_t this ) ;
 sym_t 		parserGetToken	( pparser_t this ) ;
 pnode_t 	parserScan		( pparser_t this ) ;
+pnode_t 	parserBlock		( pparser_t this , stScope_t	scope ) ;
+pnode_t 	parserStatement ( pparser_t this , node_t* nBlock ) ;
 
 // decl.c
 
@@ -64,11 +66,11 @@ pnode_t  	parserDeclVar		( pparser_t this , stScope_t scope ) ;
 pnode_t  	parserDeclArray		( pparser_t this , stScope_t scope ) ;
 pnode_t  	parserDeclType		( pparser_t this , stScope_t scope ) ;
 pnode_t 	parserDeclaration	( pparser_t this , node_t* nBlock , stScope_t	scope ) ;
-pnode_t 	parserStatement		( pparser_t this , node_t* nBlock ) ;
+
 
 // expr.c
 
-node_t* 	parserTerm		( pparser_t this ) ;	
+node_t* 	parserTerm		( pparser_t this ) ;
 node_t* 	parserMulDivMod	( pparser_t this ) ;
 node_t* 	parserAddSub	( pparser_t this ) ;
 node_t* 	parserAssign	( pparser_t this ) ;
