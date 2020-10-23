@@ -282,7 +282,6 @@ node_t* astMakeNodeAssign  (  past_t this , plexer_t lexer ,  node_t * lhs , nod
     return nNew ;
 }
 
-
 // DECL TYPE
 
 pnode_t 	astMakeNodeDeclType	( past_t this , wchar_t* id , stScope_t	scope ) 
@@ -302,6 +301,26 @@ pnode_t 	astMakeNodeDeclType	( past_t this , wchar_t* id , stScope_t	scope )
 	return nNew ;
 }
 
+// DECL FUNCTION
+
+pnode_t 	astMakeNodeDeclFunction	( past_t this , wchar_t* id , sym_t retType , pnode_t pParamList , pnode_t pBlockCode ) 
+{
+	if ( this->fDebug ) fwprintf ( this->pFileOutputAST , L"%-30ls \n",L"astMakeNodeDeclFunction" );
+	node_t* nNew   = NULL ; // new node
+	
+	nNew = gcMalloc ( sizeof(node_t) ) ;
+	if ( nNew==NULL ) $astInternal ( malloc , outOfMemory , L"ast.c" , L"astMakeNodeDeclFunction") ;
+
+	nNew->type 					= 	nTypeDeclFunction	;
+	nNew->declFunction.id		=	gcWcsDup( id ) 		;
+	nNew->declFunction.retType	=	retType 			;
+	//nNew->declFunction.paramList=	pParamList			;
+	nNew->declFunction.blockCode=	pBlockCode			;
+
+	vectorNew( 	nNew->declFunction.param , 12 ) ; // struttura iniziale con 12 membri
+
+	return nNew ;
+}
 
 // ***********
 // astDebug
@@ -457,7 +476,8 @@ node_t* astNodeDebug( past_t this , node_t* n)
 			{ 
 				fwprintf 
 					( this->pFileOutputNode , L"node [%018p] %-10ls :: id[%ls] sym[%d] term[%018p] scope[%03d]\n"
-						,(void*)n,L"DeclConst" 
+						,(void*)n
+						,L"DeclConst" 
 						,n->declConst.id
 						,n->declConst.sym
 						,n->declConst.term
@@ -539,7 +559,7 @@ node_t* astNodeDebug( past_t this , node_t* n)
 					);
 			} 
 			   
-			fwprintf ( this->pFileOutputNode , L"{\n" )  ;   
+			fwprintf ( this->pFileOutputNode , L"\n{\n" )  ;   
 			   
 			for ( uint32_t i = 0 ; i < vectorSize ( n->declType.field ) ; i++ )
 			{
@@ -549,7 +569,33 @@ node_t* astNodeDebug( past_t this , node_t* n)
 			fwprintf ( this->pFileOutputNode , L"}\n" )  ;
         
         break ; 
-        
+ 
+        case nTypeDeclFunction :
+
+			if ( this->fDebug )
+			{ 
+				fwprintf 
+					( this->pFileOutputNode , L"node [%018p] %-10ls :: id[%ls]  ( %018p ) -> [%03d] { %018p } "
+						,(void*)n
+						,L"DeclFunction" 
+						,n->declFunction.id
+						,&n->declFunction.param
+						,n->declFunction.retType
+						,n->declFunction.blockCode
+					);
+			} 
+  
+			fwprintf ( this->pFileOutputNode , L"\n(\n" )  ;   
+			   
+			for ( uint32_t i = 0 ; i < vectorSize ( n->declFunction.param ) ; i++ )
+			{
+				astNodeDebug( this , n->declFunction.param.data[i]  )  ;
+			}
+			
+			fwprintf ( this->pFileOutputNode , L")\n" )  ;
+      
+        break ;  
+ 
       default :
 
             $nodeInternal ( debug , errUnknown , L"ast.c" , L"node_t* astDebug(node_t* n) -> switch ( n->type )") ;
@@ -579,7 +625,6 @@ void astDebug( past_t this , pnode_t n)
 		}
 	}
 }
-
 
 // ......................................................... ast alloc
 

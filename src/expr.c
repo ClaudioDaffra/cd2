@@ -185,7 +185,10 @@ node_t* parserTerm( pparser_t this )
 		default:
 			
 			//$syntaxError
+			
 			// TODO se non trova terminale ???
+			
+			return NULL ;
 			
 		break;
 	}

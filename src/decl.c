@@ -632,7 +632,7 @@ pnode_t  parserDeclFunction( pparser_t this )
 	// BEGIN
 	// *****	
 
-	node_t* 	nBlockParam			=	NULL ;
+	node_t* 	nBlockParam			=	astMakeNodeBlock(this->ast) ;	// alloca il blocco del vettore di nodi			param,param,param
 	node_t* 	nBlockCode			=	NULL ;
 	
 	node_t*		pnode 				= 	NULL ;
@@ -705,13 +705,8 @@ pnode_t  parserDeclFunction( pparser_t this )
 				$MATCH( sym_pg0 , L'{' ) ;
 
 	// ............................... [function block]
-	
-				//fwprintf ( stderr , L"\n§§§ %ls %d\n",this->lexer->token , this->lexer->sym ) ;
-				
+
 				nBlockCode = parserStatement ( this , nBlockCode ) ;
-
-				//fwprintf ( stderr , L"\n§§§ %ls %d\n",this->lexer->token , this->lexer->sym ) ;
-
 
 	// ............................... [}]
 
@@ -723,24 +718,29 @@ pnode_t  parserDeclFunction( pparser_t this )
 				$syntaxError ; 
 				return NULL ;
 			} 
-/*			
-			// crea nodo type 
-			pnode = astMakeNodeDeclType( this->ast , idTemp ,  scope ) ;
 			
+			// crea nodo type 
+			pnode = astMakeNodeDeclFunction( this->ast , idTemp ,  retTypeTemp ,  NULL , nBlockCode ) ;
+
+fwprintf ( stderr , L"\n§§§ %p %d\n",nBlockCode,0 )  ;
+
+/*			
 			// inserisci i nodi nel vettore campi ( field )
 			
 			// TODO struct without field -> error
+*/	
+		
+			const size_t kVectorSize = vectorSize ( nBlockParam->block.next ) ;
 			
-			const size_t kVectorSize = vectorSize ( nBlock->block.next ) ;
 			for ( uint32_t i = 0 ; i < kVectorSize ; i++ )
 			{
-				pnode_t  node = nBlock->block.next.data[i] ;
+				pnode_t  node = nBlockParam->block.next.data[i] ;
 				if ( node != NULL ) 
 				{
-					vectorPushBack( pnode->declType.field , node  ) ;
+					vectorPushBack( pnode->declFunction.param , node  ) ;
 				}
 			}
-*/
+
 		$MATCH( sym_pv , L';' ) ;
 	}
 

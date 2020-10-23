@@ -155,9 +155,10 @@ typedef struct nodeAssign_s
 typedef struct nodeDeclFunction_s
 {
 	wchar_t*	id					;	// name
+	sym_t		retType				;	// parameter return	
 	vectorStruct( pnode_t , param ) ;	// parameter list
-	node_t*		ret					;	// parameter return
-	node_t*		block				;	// block
+	//node_t*		paramList			;	// param List
+	node_t*		blockCode			;	// block code
     
 } nodeDeclFunction_t ;
 
@@ -244,9 +245,12 @@ size_t 		astPushAllNodeBlock		( past_t this , node_t * nBlockDest , node_t * nBl
 
 pnode_t 	astMakeNodeDeclConst	( past_t this , wchar_t* id ,  sym_t sym , pnode_t _term 	, stScope_t	scope ) ;
 pnode_t 	astMakeNodeDeclVar		( past_t this , wchar_t* id ,  sym_t sym , pnode_t _expr 	, stScope_t	scope ) ;
+
 pnode_t 	astMakeNodeDeclArray	( past_t this , wchar_t* id ,  pnode_t _dim  , sym_t sym , pnode_t _il , stScope_t	scope ) ;
 pnode_t 	astMakeNodeArrayDim		( past_t this ) ;
+
 pnode_t 	astMakeNodeDeclType		( past_t this , wchar_t* id , stScope_t	scope )  ;
+pnode_t 	astMakeNodeDeclFunction	( past_t this , wchar_t* id , sym_t retType , pnode_t pParamList , pnode_t pBlockCode ) ;
 
 //pnode_t makeNodeTermVar			( wchar_t* id 								) ;
 
