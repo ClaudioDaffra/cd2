@@ -229,8 +229,11 @@ pnode_t parserStatement( pparser_t this , node_t* nBlock )
 		
 	} while ( 		pnode!=NULL 
 				&&  this->lexer->sym != sym_end 
+				&&  this->lexer->sym != sym_pv
 				&&  !kError 
 			) ;
+			
+	if ( this->lexer->sym==sym_pv) $MATCH( sym_pv , L';' ) ;
 
 	return nBlock ;
 }

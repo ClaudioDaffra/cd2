@@ -707,10 +707,10 @@ pnode_t  parserDeclFunction( pparser_t this )
 
 	// ............................... [function block]
 
-//KO				//nBlockCode = parserStatement ( this , nBlockCode ) ;
+	nBlockCode = parserStatement ( this , nBlockCode ) ;
 
 //OK				//nBlockCode = parserExpr(this);
-
+/*
 	do {
 
 		if ( kError ) break ;
@@ -727,7 +727,7 @@ pnode_t  parserDeclFunction( pparser_t this )
 				&&  !kError 
 			) ;
 $MATCH( sym_pv , L';' ) ;
-
+*/
 //fwprintf ( stderr , L"\n§§§ %p %d\n",nBlockCode,0 ) ;
 
 	// ............................... [}]
