@@ -611,6 +611,150 @@ pnode_t parserDeclaration( pparser_t this , node_t* nBlock , stScope_t	scope )
 	return nBlock ;
 }
 
+
+/*
+ 
+	### {parserDeclFunction}
+
+
+	"function" 	f	( parserDeclVar	|| parserDeclArray) : integer || real { block } ;
+	 
+	#2i
+
+
+*/
+
+pnode_t  parserDeclFunction( pparser_t this )
+{
+	if ( kError ) return NULL  ;  
+	
+	// *****
+	// BEGIN
+	// *****	
+
+	node_t* 	nBlockParam			=	NULL ;
+	node_t* 	nBlockCode			=	NULL ;
+	
+	node_t*		pnode 				= 	NULL ;
+	node_t* 	nBlockVectorTemp 	= 	NULL ;
+	size_t 		fDecl				=	0 ;
+	wchar_t*	idTemp 				=   NULL ;
+	sym_t		retTypeTemp 		=   sym_end ;
+	
+	// ............................... "type"
+	
+	if ( this->lexer->sym==sym_kw_function )  
+	{ 
+		parserGetToken(this);
+		
+	// ............................... [id]
+			if ( this->lexer->sym==sym_id ) 
+			{
+				idTemp = gcWcsDup( this->lexer->token ) ;
+
+				//pstNew->id = gcWcsDup( lexer.token ) ; // ................ ST
+				parserGetToken(this);
+				
+	// ............................... [(]
+	
+				$MATCH( sym_p0 , L'(' ) ; 
+
+	// ............................... [param list]
+			
+				do {
+					
+					fDecl=0; 
+					
+					nBlockVectorTemp	=	parserDeclVar(this,stScopeLocal); // VAR
+
+					fDecl += astPushAllNodeBlock ( this->ast , nBlockParam , nBlockVectorTemp ) ;
+
+					nBlockVectorTemp	=	parserDeclArray(this,stScopeLocal); // ARRAY
+
+					fDecl += astPushAllNodeBlock ( this->ast , nBlockParam , nBlockVectorTemp ) ;
+					
+				} while ( 	fDecl > 0 						&&
+							this->lexer->sym != sym_end 	&&
+							!kError 
+						) ;
+						
+	// ............................... [)]
+	
+				$MATCH( sym_p1 , L')' ) 
+				
+	// ............................... [return type] ( integer , real , byte )
+	
+				switch(this->lexer->sym)
+				{
+					case	sym_kw_integer	:
+					case	sym_kw_real		:
+					case	sym_kw_byte		:
+					
+						retTypeTemp = this->lexer->sym ;
+						parserGetToken(this);
+						break ;
+						
+					default:
+						$syntaxError ; 
+						return NULL ;
+						break ;
+				}
+					
+	// ............................... [{]
+	
+				$MATCH( sym_pg0 , L'{' ) ;
+
+	// ............................... [function block]
+	
+				//fwprintf ( stderr , L"\n§§§ %ls %d\n",this->lexer->token , this->lexer->sym ) ;
+				
+				nBlockCode = parserStatement ( this , nBlockCode ) ;
+
+				//fwprintf ( stderr , L"\n§§§ %ls %d\n",this->lexer->token , this->lexer->sym ) ;
+
+
+	// ............................... [}]
+
+				$MATCH( sym_pg1 , L'}' ) ;
+				
+			}
+			else 
+			{
+				$syntaxError ; 
+				return NULL ;
+			} 
+/*			
+			// crea nodo type 
+			pnode = astMakeNodeDeclType( this->ast , idTemp ,  scope ) ;
+			
+			// inserisci i nodi nel vettore campi ( field )
+			
+			// TODO struct without field -> error
+			
+			const size_t kVectorSize = vectorSize ( nBlock->block.next ) ;
+			for ( uint32_t i = 0 ; i < kVectorSize ; i++ )
+			{
+				pnode_t  node = nBlock->block.next.data[i] ;
+				if ( node != NULL ) 
+				{
+					vectorPushBack( pnode->declType.field , node  ) ;
+				}
+			}
+*/
+		$MATCH( sym_pv , L';' ) ;
+	}
+
+	// ***
+	// END
+	// ***
+		
+	if ( kError ) return NULL ; 
+
+ return pnode ;
+}
+
+
+
 /**/
 
 

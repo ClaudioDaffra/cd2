@@ -31,11 +31,23 @@ type point
 	array p4a : [12][13] real ;
 } ;
  
+function f1 
+( 
+	var x : integer , y : integer ; 
+	array a  :[10] point ;
+) integer 
+{
+
+	8
+	
+} ;
+ 
+ 
  1
  
 
 	23
 	 456
 
-"claudio"1 ""2 3
+"claudio"1 ""2 3 
 

@@ -235,7 +235,35 @@ pnode_t parserStatement( pparser_t this , node_t* nBlock )
 	return nBlock ;
 }
 
-// ......................................................... parser block 
+// ......................................................... parser Function
+
+pnode_t parserFunction( pparser_t this , node_t* nBlock ) 
+{
+	pnode_t 	pnode = NULL ;
+
+	// -----------
+	// Function
+	// -----------
+
+	pnode = NULL ;
+
+	do {
+
+		if ( kError ) break ;
+		
+		pnode=parserDeclFunction(this);
+		
+		if ( pnode!=NULL ) astPushNodeBlock( this->ast , nBlock , pnode );
+		
+	} while ( 		pnode!=NULL 
+				&&  this->lexer->sym != sym_end 
+				&&  !kError 
+			) ;
+
+	return nBlock ;
+}
+
+// ......................................................... parser block : Declaration , Statement
 
 pnode_t parserBlock( pparser_t this , stScope_t	scope )
 {
@@ -247,6 +275,25 @@ pnode_t parserBlock( pparser_t this , stScope_t	scope )
 
 	nBlock = parserDeclaration( this ,  nBlock , scope ) ;
 
+	nBlock = parserStatement( this ,  nBlock ) ;
+
+	return nBlock ;
+}
+
+// ......................................................... parser block : Declaration , Function , statement
+
+pnode_t parserMainBlock( pparser_t this )
+{
+	// *********
+	//  MAIN
+	// *********
+
+	node_t* nBlock=astMakeNodeBlock(this->ast);
+
+	nBlock = parserDeclaration( this ,  nBlock , stScopeGlobal ) ;
+
+	nBlock = parserFunction( this ,  nBlock ) ;
+	
 	nBlock = parserStatement( this ,  nBlock ) ;
 
 	return nBlock ;
@@ -270,7 +317,7 @@ pnode_t parserScan( pparser_t this )
 		
 	// parser begin
 	
-		pnode = parserBlock( this , stScopeGlobal ) ;
+		pnode = parserMainBlock( this ) ; // decl(global); Function; statement[expr];
 	
 	// parser end
 

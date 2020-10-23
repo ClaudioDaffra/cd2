@@ -31,7 +31,8 @@ typedef enum e_sym
     sym_kw_byte		,	// +8    
     sym_kw_array	,	// +9  
     sym_kw_type		,	// +10      
-              
+    sym_kw_function	,	// +11   
+                  
     //              special operator  
     sym_op0=150  , 
           
@@ -64,7 +65,8 @@ typedef enum e_sym
     sym_pq1		,	// +9 ]
     sym_pg0		,	// +10 {
     sym_pg1		,	// +11 }
-                
+
+                   
     //
     
     sym_lexema	,	// carattere non riconosciuto

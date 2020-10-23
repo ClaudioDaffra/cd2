@@ -58,6 +58,8 @@ sym_t 		parserGetToken	( pparser_t this ) ;
 pnode_t 	parserScan		( pparser_t this ) ;
 pnode_t 	parserBlock		( pparser_t this , stScope_t	scope ) ;
 pnode_t 	parserStatement ( pparser_t this , node_t* nBlock ) ;
+pnode_t 	parserFunction	( pparser_t this , node_t* nBlock ) ;
+pnode_t 	parserMainBlock	( pparser_t this ) ;
 
 // decl.c
 
@@ -66,7 +68,7 @@ pnode_t  	parserDeclVar		( pparser_t this , stScope_t scope ) ;
 pnode_t  	parserDeclArray		( pparser_t this , stScope_t scope ) ;
 pnode_t  	parserDeclType		( pparser_t this , stScope_t scope ) ;
 pnode_t 	parserDeclaration	( pparser_t this , node_t* nBlock , stScope_t	scope ) ;
-
+pnode_t  	parserDeclFunction	( pparser_t this ) ;
 
 // expr.c
 

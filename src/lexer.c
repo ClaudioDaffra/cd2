@@ -37,7 +37,8 @@ mapKW_t mapArrayKW[] =
     {   L"byte"   	, sym_kw_byte		}    ,	//	+8        
     {   L"array"   	, sym_kw_array		}    ,	//	+9   
     {   L"type"   	, sym_kw_type		}    ,	//	+10   
-             
+    {   L"function"	, sym_kw_function	}    ,	//	+11   
+                 
     {   NULL        , 0            		}    ,
 } ;
 
@@ -802,7 +803,7 @@ int lexerScan( plexer_t this )
             case L'[' : symOp=sym_pq0 ; break;
             case L']' : symOp=sym_pq1 ; break;  
             case L'{' : symOp=sym_pg0 ; break;
-            case L'}' : symOp=sym_pg1 ; break;                                                                            
+            case L'}' : symOp=sym_pg1 ; break;                                                                          
             // se non trovi opertore allora è 1 carattere
             default   : fOp=0;          break; 
         } ;
