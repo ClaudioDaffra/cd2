@@ -37,9 +37,8 @@ function f1
 	array a  :[10] point ;
 ) integer 
 {
-
-8
-
+	8 
+	9 ;
 } ;
  
  

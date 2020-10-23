@@ -633,7 +633,7 @@ pnode_t  parserDeclFunction( pparser_t this )
 	// *****	
 
 	node_t* 	nBlockParam			=	astMakeNodeBlock(this->ast) ;	// alloca il blocco del vettore di nodi			param,param,param
-	node_t* 	nBlockCode			=	NULL ;
+	node_t* 	nBlockCode			=	astMakeNodeBlock(this->ast) ;
 	
 	node_t*		pnode 				= 	NULL ;
 	node_t* 	nBlockVectorTemp 	= 	NULL ;
@@ -707,11 +707,29 @@ pnode_t  parserDeclFunction( pparser_t this )
 
 	// ............................... [function block]
 
-				//nBlockCode = parserStatement ( this , nBlockCode ) ;
+//KO				//nBlockCode = parserStatement ( this , nBlockCode ) ;
 
-				nBlockCode = parserExpr(this);
+//OK				//nBlockCode = parserExpr(this);
 
-fwprintf ( stderr , L"\n§§§ %p %d\n",nBlockCode,0 ) ;
+	do {
+
+		if ( kError ) break ;
+		
+		pnode=parserExpr(this);
+		
+		//$MATCH( sym_pv , L';' ) ;
+		
+		if ( pnode!=NULL ) astPushNodeBlock( this->ast , nBlockCode , pnode );
+		
+	} while ( 		pnode!=NULL 
+				&&  this->lexer->sym != sym_end 
+				&&  this->lexer->sym != sym_pv // occorre identificare un termine di uscita
+				&&  !kError 
+			) ;
+$MATCH( sym_pv , L';' ) ;
+
+//fwprintf ( stderr , L"\n§§§ %p %d\n",nBlockCode,0 ) ;
+
 	// ............................... [}]
 
 				$MATCH( sym_pg1 , L'}' ) ;
