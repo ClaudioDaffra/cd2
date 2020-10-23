@@ -187,8 +187,9 @@ node_t* parserTerm( pparser_t this )
 			//$syntaxError
 			
 			// TODO se non trova terminale ???
+			fwprintf ( stderr , L"\n error : expr : term : [%ls][%03d]\n",this->lexer->token,this->lexer->sym );
 			
-			return NULL ;
+			return n ;
 			
 		break;
 	}

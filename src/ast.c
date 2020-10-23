@@ -593,7 +593,12 @@ node_t* astNodeDebug( past_t this , node_t* n)
 			}
 			
 			fwprintf ( this->pFileOutputNode , L")\n" )  ;
-      
+			
+ 			fwprintf ( this->pFileOutputNode , L"{\n" )  ;   
+			   
+			astNodeDebug( this , n->declFunction.blockCode  )  ;
+
+			fwprintf ( this->pFileOutputNode , L"}\n"   );   
         break ;  
  
       default :

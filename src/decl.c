@@ -703,11 +703,15 @@ pnode_t  parserDeclFunction( pparser_t this )
 	// ............................... [{]
 	
 				$MATCH( sym_pg0 , L'{' ) ;
+				
 
 	// ............................... [function block]
 
-				nBlockCode = parserStatement ( this , nBlockCode ) ;
+				//nBlockCode = parserStatement ( this , nBlockCode ) ;
 
+				nBlockCode = parserExpr(this);
+
+fwprintf ( stderr , L"\n§§§ %p %d\n",nBlockCode,0 ) ;
 	// ............................... [}]
 
 				$MATCH( sym_pg1 , L'}' ) ;
@@ -721,8 +725,7 @@ pnode_t  parserDeclFunction( pparser_t this )
 			
 			// crea nodo type 
 			pnode = astMakeNodeDeclFunction( this->ast , idTemp ,  retTypeTemp ,  NULL , nBlockCode ) ;
-
-fwprintf ( stderr , L"\n§§§ %p %d\n",nBlockCode,0 )  ;
+ ;
 
 /*			
 			// inserisci i nodi nel vettore campi ( field )
