@@ -91,6 +91,48 @@ node_t* astMakeNodeTermString( past_t this , plexer_t lexer , wchar_t* _wstring 
     return nNew ;
 }
 
+// TERM : VAR
+
+node_t* astMakeNodeTermVar( past_t this , plexer_t lexer , wchar_t* _name )
+{
+    if ( this->fDebug ) fwprintf ( this->pFileOutputAST , L"%-30ls :: [%ls]\n",L"astMakeNodeTermVar",_name );
+
+    node_t* nNew   = NULL ; // new node
+    
+    nNew = gcMalloc ( sizeof(node_t) ) ;
+    if ( nNew==NULL ) $astInternal ( malloc , outOfMemory , L"ast.c" , L"astMakeNodeTermVar") ;
+
+    nNew->type   		= nTypeTermVar ;
+    nNew->termVar.id 	= gcWcsDup(_name);
+    
+    nNew->row	=	lexer->row_start ;
+    nNew->col	=	lexer->col_start - 1;
+    nNew->token	=	gcWcsDup(lexer->token)  ;    
+
+    return nNew ;
+}
+
+// TERM : ID
+
+node_t* astMakeNodeTermField( past_t this , plexer_t lexer , wchar_t* _name )
+{
+    if ( this->fDebug ) fwprintf ( this->pFileOutputAST , L"%-30ls :: [%ls]\n",L"astMakeNodeTermField",_name );
+
+    node_t* nNew   = NULL ; // new node
+    
+    nNew = gcMalloc ( sizeof(node_t) ) ;
+    if ( nNew==NULL ) $astInternal ( malloc , outOfMemory , L"ast.c" , L"astMakeNodeTermField") ;
+
+    nNew->type   		= nTypeTermField ;
+    nNew->termField.id 	= gcWcsDup(_name);
+    
+    nNew->row	=	lexer->row_start ;
+    nNew->col	=	lexer->col_start - 1;
+    nNew->token	=	gcWcsDup(lexer->token)  ;    
+
+    return nNew ;
+}
+
 // BINOP
 
 node_t* astMakeNodeBinOP(  past_t this , plexer_t lexer , sym_t sym , node_t* left , node_t* right  )
@@ -397,7 +439,7 @@ node_t* astNodeDebug( past_t this , node_t* n)
 
             if ( this->fDebug ) 
             {
-				fwprintf ( this->pFileOutputNode , L"node [%018p] %-10ls :: [%lld]",(void*)n,L"integer"  ,n->term.integer );
+				fwprintf ( this->pFileOutputNode , L"node [%018p] %-10ls :: [%lld]",(void*)n,L"term integer"  ,n->term.integer );
 				$astDebugRowColToken(fDebug);   
 			}          
             
@@ -407,7 +449,7 @@ node_t* astNodeDebug( past_t this , node_t* n)
 
 			if ( this->fDebug ) 
 			{	
-				fwprintf ( this->pFileOutputNode , L"node [%018p] %-10ls :: [%lf]",(void*)n,L"real" ,n->term.real );
+				fwprintf ( this->pFileOutputNode , L"node [%018p] %-10ls :: [%lf]",(void*)n,L"term real" ,n->term.real );
 				$astDebugRowColToken(fDebug);
 			}
 
@@ -417,7 +459,7 @@ node_t* astNodeDebug( past_t this , node_t* n)
 
             if ( this->fDebug ) 
             {
-				fwprintf ( this->pFileOutputNode , L"node [%018p] %-10ls :: [%lc]",(void*)n,L"char"  ,g.outputSpecialCharInChar(n->term.wchar) );
+				fwprintf ( this->pFileOutputNode , L"node [%018p] %-10ls :: [%lc]",(void*)n,L"term char"  ,g.outputSpecialCharInChar(n->term.wchar) );
 				$astDebugRowColToken(fDebug);
 			}             
             
@@ -427,12 +469,32 @@ node_t* astNodeDebug( past_t this , node_t* n)
 
             if ( this->fDebug ) 
             {
-				fwprintf ( this->pFileOutputNode , L"node [%018p] %-10ls :: [%ls]",(void*)n,L"string"  ,g.outputSpecialCharInString(n->term.wstring) );
+				fwprintf ( this->pFileOutputNode , L"node [%018p] %-10ls :: [%ls]",(void*)n,L"term string"  ,g.outputSpecialCharInString(n->term.wstring) );
 				$astDebugRowColToken(fDebug);
 			}             
             
             break;
 
+      case  nTypeTermVar :
+
+            if ( this->fDebug ) 
+            {
+				fwprintf ( this->pFileOutputNode , L"node [%018p] %-10ls :: [%ls]",(void*)n,L"term var"  ,n->termVar.id );
+				$astDebugRowColToken(fDebug);
+			}             
+            
+            break;
+
+      case  nTypeTermField :
+
+            if ( this->fDebug ) 
+            {
+				fwprintf ( this->pFileOutputNode , L"node [%018p] %-10ls :: [%ls]",(void*)n,L"ter field"  ,n->termField.id );
+				$astDebugRowColToken(fDebug);
+			}             
+            
+            break;
+            
         case  nTypeBinOp :
 
             astNodeDebug( this,n->binOp.right ) ;

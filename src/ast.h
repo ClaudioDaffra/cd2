@@ -16,10 +16,10 @@ enum enodeType
     nTypeTermChar    	,   // 3
     nTypeTermString  	,   // 4 
      
-    nTypeTermVar  		,   // 5	x
-    nTypeTermArray  	,   // 6	x
-    nTypeTermFunction  	,   // 7	x
-    nTypeTermID  		,   // 8	x
+    nTypeTermVar  		,   // 5
+    nTypeTermArray  	,   // 6
+    nTypeTermFunction  	,   // 7
+    nTypeTermField  	,   // 8
 
     nTypeBinOp          ,   // 9
     nTypePrefix         ,   // 10
@@ -27,12 +27,12 @@ enum enodeType
     
     nTypeDeclConst 		,	// 12 decl const global local 
     nTypeDeclVar 		,	// 13 decl var 	global local    
-    nTypeAssign			,	// 14 := 
-    nTypeDeclArray 		,	// 15 decl array global local   
-    nTypeArrayDim		,	// 16 array dim [][][] ...   
-    nTypeDeclType 		,	// 17 type declaration 
-    nTypeDeclFunction	,	// 18 dichiarazione di funzione   
-          
+    nTypeDeclArray 		,	// 14 decl array global local   
+    nTypeArrayDim		,	// 15 array dim [][][] ...   
+    nTypeDeclType 		,	// 16 type declaration 
+    nTypeDeclFunction	,	// 17 dichiarazione di funzione   
+    
+    nTypeAssign			,	// 18 :=           
 } ;
 
 typedef enum enodeType 	enodeType_t;
@@ -153,8 +153,8 @@ typedef struct nodeTermFunction_s
     
 } nodeTermFunction_t ;
 
-/*
-// .................................... nodo variabili semplici expr
+
+// .................................... nodo variabili semplici	:	var
 
 typedef struct nodeTermVar_s
 {
@@ -162,7 +162,14 @@ typedef struct nodeTermVar_s
     
 } nodeTermVar_t ;
 
-*/
+// .................................... nodo campo della stuttura :	point.x 
+
+typedef struct nodeTermField_s
+{
+	wchar_t*	id			;
+    
+} nodeTermField_t ;
+
 
 // .................................... nodo  lhs := rhs
 
@@ -172,7 +179,6 @@ typedef struct nodeAssign_s
 	pnode_t		rhs		;
     
 } nodeAssign_t ;
-
 
 // .................................... nodo  decl function
 
@@ -210,7 +216,9 @@ struct node_s
         nodeDeclType_t			declType	;
         nodeDeclFunction_t		declFunction;   
         nodeTermArray_t			termArray	; 
-        nodeTermFunction_t		termFunction;                    
+        nodeTermFunction_t		termFunction;
+        nodeTermVar_t			termVar		;
+        nodeTermField_t			termField	;                    
     } ;
     
 } ;
@@ -261,10 +269,10 @@ node_t* 	astMakeNodeTermInteger	( past_t this , plexer_t lexer , int64_t 	_integ
 node_t* 	astMakeNodeTermReal		( past_t this , plexer_t lexer , double 	_real 		) 	;
 node_t* 	astMakeNodeTermChar		( past_t this , plexer_t lexer , wchar_t 	_wchar 		)	;
 node_t* 	astMakeNodeTermString	( past_t this , plexer_t lexer , wchar_t* 	_wstring	) 	;
-// Term Var
+node_t* 	astMakeNodeTermVar		( past_t this , plexer_t lexer , wchar_t* id ) ;
 pnode_t 	astMakeNodeTermArray	( past_t this , wchar_t* id  , pnode_t pArrayDim ) 	;
 pnode_t 	astMakeNodeTermFunction	( past_t this , wchar_t* id  , pnode_t pArrayParam ) ;
-// Term Id
+node_t* 	astMakeNodeTermField	( past_t this , plexer_t lexer , wchar_t* id ) ;
 
 node_t* 	astMakeNodeBinOP		( past_t this , plexer_t lexer , sym_t sym , node_t* left , node_t* right ) ;
 node_t* 	astMakeNodePrefix		( past_t this ,	psPrefixOp_t prefix , node_t* left ) ;
@@ -281,8 +289,6 @@ pnode_t 	astMakeNodeArrayDim		( past_t this ) ;
 
 pnode_t 	astMakeNodeDeclType		( past_t this , wchar_t* id , stScope_t	scope )  ;
 pnode_t 	astMakeNodeDeclFunction	( past_t this , wchar_t* id , sym_t retType , pnode_t pParamList , pnode_t pBlockCode ) ;
-
-//pnode_t makeNodeTermVar			( wchar_t* id 								) ;
 
 node_t* 	astMakeNodeAssign  		( past_t this , plexer_t lexer ,  node_t * lhs , node_t * rhs ) ;
 

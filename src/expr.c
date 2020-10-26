@@ -129,8 +129,7 @@ node_t* parserTerm( pparser_t this )
 
 		break;
 		
-		
-		case sym_id :
+		case sym_id : // Array || Function || Const || Var || Field
 		{
 				wchar_t*	idTemp = gcWcsDup ( this->lexer->token)  ; 
 				fwprintf ( this->pFileOutputParser , L"%-30ls :: [%ls].\n",L"ID",this->lexer->value.id );
@@ -152,6 +151,7 @@ node_t* parserTerm( pparser_t this )
 					case	sym_p0:		// FUNZIONE (
 							{
 								node_t* 	nBlockParam			=	astMakeNodeBlock(this->ast) ;
+								
 								$MATCH( sym_p0 , L'(' ) ;
 								
 									int fLoop=0;
@@ -174,7 +174,7 @@ node_t* parserTerm( pparser_t this )
 								{
 										n=astMakeNodeTermFunction	( this->ast , idTemp  , nBlockParam ) ;
 								} ;
-							}							
+							}
 							break;
 
 					default:
@@ -182,9 +182,10 @@ node_t* parserTerm( pparser_t this )
 							// costante		:	return Term const
 							// tipo			:	termID
 							{
+								n=astMakeNodeTermVar ( this->ast , this->lexer , idTemp ) ;
 							}
 					
-						return NULL ;
+						return n ;
 					break;
 				}
 		}

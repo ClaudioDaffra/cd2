@@ -730,28 +730,7 @@ pnode_t  parserDeclFunction( pparser_t this )
 
 	// ............................... [function block]
 
-	nBlockCode = parserStatement ( this , nBlockCode ) ;
-
-//OK				//nBlockCode = parserExpr(this);
-/*
-	do {
-
-		if ( kError ) break ;
-		
-		pnode=parserExpr(this);
-		
-		//$MATCH( sym_pv , L';' ) ;
-		
-		if ( pnode!=NULL ) astPushNodeBlock( this->ast , nBlockCode , pnode );
-		
-	} while ( 		pnode!=NULL 
-				&&  this->lexer->sym != sym_end 
-				&&  this->lexer->sym != sym_pv // occorre identificare un termine di uscita
-				&&  !kError 
-			) ;
-$MATCH( sym_pv , L';' ) ;
-*/
-//fwprintf ( stderr , L"\n§§§ %p %d\n",nBlockCode,0 ) ;
+				nBlockCode = parserStatement ( this , nBlockCode ) ;
 
 	// ............................... [}]
 
