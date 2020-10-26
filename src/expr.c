@@ -151,6 +151,24 @@ node_t* parserTerm( pparser_t this )
 							
 					case	sym_p0:		// FUNZIONE (
 							{
+								node_t* 	nBlockParam			=	astMakeNodeBlock(this->ast) ;
+								$MATCH( sym_p0 , L'(' ) ;
+								
+									int fLoop=0;
+									do {
+										fLoop=0; // REPETITA JUVANT :
+										pnode_t nTemp	=	parserExpr(this); // -> esce con termine nuovo, è all'entrata che ocorre getToken.
+
+										astPushNodeBlock ( this->ast , nBlockParam , nTemp ) ; // controllo automatico NULL
+
+										if ( this->lexer->sym == sym_v ) { fLoop=1; parserGetToken(this); } ;
+									} while ( 
+												fLoop==1  	&&
+												this->lexer->sym != sym_end 	&&
+												!kError 
+											) ;
+
+								$MATCH( sym_p1 , L')' ) ;
 							}
 							break;
 

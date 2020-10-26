@@ -114,7 +114,6 @@ typedef struct nodeArrayDim_s
     
 } nodeArrayDim_t ;
 
-
 // .................................... nodo	Var globali / locali
 
 typedef struct nodeDeclArray_s
