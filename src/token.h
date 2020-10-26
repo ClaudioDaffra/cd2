@@ -36,12 +36,16 @@ typedef enum e_sym
     //              special operator  
     sym_op0=150  , 
           
-    sym_p0		 ,	// )
-    sym_p1       ,	// (
-    sym_pv		 ,	// ;
-    sym_v		 ,	// ,
-    sym_dp		 ,	// :
-     
+    sym_p0		 ,	// +1	)
+    sym_p1       ,	// +2	(
+    sym_pv		 ,	// +3	;
+    sym_v		 ,	// +4	,
+    sym_dp		 ,	// +5	:
+    sym_pq0		,	// +6	[
+    sym_pq1		,	// +7	]
+    sym_pg0		,	// +8	{
+    sym_pg1		,	// +9	}  
+       
     //              operator 2
     sym_op2=200  ,    
     
@@ -61,10 +65,7 @@ typedef enum e_sym
         
     sym_eq		,	// +7 =
  
-    sym_pq0		,	// +8 [
-    sym_pq1		,	// +9 ]
-    sym_pg0		,	// +10 {
-    sym_pg1		,	// +11 }
+
 
                    
     //

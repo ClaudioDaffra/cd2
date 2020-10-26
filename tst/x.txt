@@ -49,7 +49,10 @@ function f1
 	23
 	 456
 
-"claudio"1 ""2 3 ;
+"claudio"1 ""2 3 
+
+	arr[11][12] ;
+	
 
 
 // qui puoi mettere o sym_pv o sym_end

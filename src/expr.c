@@ -128,6 +128,44 @@ node_t* parserTerm( pparser_t this )
 			parserGetToken(this);
 
 		break;
+		
+		
+		case sym_id :
+		{
+				wchar_t*	idTemp = gcWcsDup ( this->lexer->token)  ; 
+				fwprintf ( this->pFileOutputParser , L"%-30ls :: [%ls].\n",L"ID",this->lexer->value.id );
+					
+				parserGetToken(this);
+				
+				switch ( this->lexer->sym )
+				{
+					case	sym_pq0	:	// ARRAY [
+							{
+								node_t* nArrayDim	=	parserArrayDim(this);
+								if (nArrayDim!=NULL )
+								{
+									n=astMakeNodeTermArray	( this->ast , idTemp  , nArrayDim ) ;
+								} ;
+							}
+							break;
+							
+					case	sym_p0:		// FUNZIONE (
+							{
+							}
+							break;
+
+					default:
+							// variabile	:	termVar
+							// costante		:	return Term const
+							// tipo			:	termID
+							{
+							}
+					
+						return NULL ;
+					break;
+				}
+		}
+		break;
 /*
 		case sym_id:
 
@@ -139,7 +177,7 @@ node_t* parserTerm( pparser_t this )
 			if ( pID==NULL )
 			{
 				// allora e' una variabile : x ... gestione post fix in seguito [] ()
-				n=makeNodeTermVar(lexer.id);
+		n=makeNodeTermVar(lexer.id);
 			}
 			else // e' un tipo gia' definito
 			{

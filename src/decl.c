@@ -326,6 +326,31 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 
 */
 
+pnode_t  parserArrayDim( pparser_t this )
+{
+	node_t* nArrayDim 	=	NULL ;
+	
+	// ................................ [] index
+
+	// alloca un nuovo il blocco del	vettore di array nod	[][][]
+	
+	nArrayDim	=	astMakeNodeArrayDim( this->ast );
+	
+	vectorClear ( nArrayDim->arrayDim.ndx ) ; // azzeralo
+
+	do {
+		
+		$MATCH( sym_pq0, L'[' ) ;
+		
+		vectorPushBack (  nArrayDim->arrayDim.ndx , parserExpr ( this ) ) ;
+		
+		$MATCH( sym_pq1, L']' ) ;
+		
+	} while ( this->lexer->sym == sym_pq0 ) ;
+	
+	return nArrayDim ;
+}
+
 pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 {
 	if ( kError ) return NULL  ;  
@@ -368,7 +393,7 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 				if ( this->lexer->sym==sym_dp ) 
 				{
 					parserGetToken(this);
-
+/*
 	// ................................ [] index
 
 					// alloca un nuovo il blocco del	vettore di array nod	[][][]
@@ -376,15 +401,13 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 					vectorClear ( nArrayDim->arrayDim.ndx ) ; // azzeralo
 					
 					do {
-						
 						$MATCH( sym_pq0, L'[' ) ;
-
 						vectorPushBack (  nArrayDim->arrayDim.ndx , parserExpr ( this ) ) ;
-						
 						$MATCH( sym_pq1, L']' ) ;
-						
 					} while ( this->lexer->sym == sym_pq0) ;
-
+*/
+					nArrayDim = parserArrayDim(this);
+					
 	// ............................... [integer,real,char,byte,id]
 	
 					symTemp = this->lexer->sym ;
@@ -659,7 +682,7 @@ pnode_t  parserDeclFunction( pparser_t this )
 	
 				$MATCH( sym_p0 , L'(' ) ; 
 
-	// ............................... [param list]
+	// ............................... [param list] : var ...,array ...
 			
 				do {
 					
