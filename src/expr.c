@@ -169,7 +169,12 @@ node_t* parserTerm( pparser_t this )
 											) ;
 
 								$MATCH( sym_p1 , L')' ) ;
-							}
+
+								if (nBlockParam!=NULL )
+								{
+										n=astMakeNodeTermFunction	( this->ast , idTemp  , nBlockParam ) ;
+								} ;
+							}							
 							break;
 
 					default:

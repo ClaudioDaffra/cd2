@@ -144,6 +144,14 @@ typedef struct nodeTermArray_s
     
 } nodeTermArray_t ;
 
+// .................................... term : function f1(,,)
+
+typedef struct nodeTermFunction_s
+{
+	wchar_t*		id 		;
+    pnode_t			param 	;
+    
+} nodeTermFunction_t ;
 
 /*
 // .................................... nodo variabili semplici expr
@@ -201,7 +209,8 @@ struct node_s
         nodeArrayDim_t			arrayDim	; 
         nodeDeclType_t			declType	;
         nodeDeclFunction_t		declFunction;   
-        nodeTermArray_t			termArray	;                     
+        nodeTermArray_t			termArray	; 
+        nodeTermFunction_t		termFunction;                    
     } ;
     
 } ;
@@ -254,7 +263,7 @@ node_t* 	astMakeNodeTermChar		( past_t this , plexer_t lexer , wchar_t 	_wchar 	
 node_t* 	astMakeNodeTermString	( past_t this , plexer_t lexer , wchar_t* 	_wstring	) 	;
 // Term Var
 pnode_t 	astMakeNodeTermArray	( past_t this , wchar_t* id  , pnode_t pArrayDim ) 	;
-// Term Func
+pnode_t 	astMakeNodeTermFunction	( past_t this , wchar_t* id  , pnode_t pArrayParam ) ;
 // Term Id
 
 node_t* 	astMakeNodeBinOP		( past_t this , plexer_t lexer , sym_t sym , node_t* left , node_t* right ) ;

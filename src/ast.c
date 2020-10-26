@@ -341,6 +341,25 @@ pnode_t 	astMakeNodeTermArray	( past_t this , wchar_t* id  , pnode_t pArrayDim )
 }
 
 
+// TERM FUNCTION
+
+pnode_t 	astMakeNodeTermFunction	( past_t this , wchar_t* id  , pnode_t pArrayParam ) 
+{
+	if ( this->fDebug ) fwprintf ( this->pFileOutputAST , L"%-30ls \n",L"astMakeNodeTermFunction" );
+	node_t* nNew   = NULL ; // new node
+	
+	nNew = gcMalloc ( sizeof(node_t) ) ;
+	if ( nNew==NULL ) $astInternal ( malloc , outOfMemory , L"ast.c" , L"astMakeNodeTermFunction") ;
+
+	nNew->type 					= 	nTypeTermFunction	;
+	nNew->termFunction.id		= 	gcWcsDup( id ) 		;
+	nNew->termFunction.param	=	pArrayParam			;
+
+	return nNew ;
+}
+
+
+
 // ***********
 // astDebug
 // ***********
@@ -618,6 +637,7 @@ node_t* astNodeDebug( past_t this , node_t* n)
 			astNodeDebug( this , n->declFunction.blockCode  )  ;
 
 			fwprintf ( this->pFileOutputNode , L"}\n"   );   
+			
         break ;  
 
         case nTypeTermArray :
@@ -635,6 +655,26 @@ node_t* astNodeDebug( past_t this , node_t* n)
 					);
 			} 
         
+			break ;
+
+        case nTypeTermFunction :
+        
+			if ( this->fDebug )
+			{ 
+				fwprintf 
+					( this->pFileOutputNode , L"node [%018p] %-10ls :: id[%ls]  : param[%03d]\n"
+						,(void*)n
+						,L"nTypeTermFunction" 
+						,n->termFunction.id
+						,vectorSize ( n->termFunction.param->arrayDim.ndx  )   
+					);
+			} 
+			fwprintf ( this->pFileOutputNode , L"\n(\n");
+			
+			astNodeDebug( this , n->termFunction.param  )  ;  
+			 
+			fwprintf ( this->pFileOutputNode , L")\n");  
+			   
 			break ;
  
       default :
