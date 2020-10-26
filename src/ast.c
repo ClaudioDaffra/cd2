@@ -21,7 +21,7 @@ node_t* astMakeNodeTermInteger( past_t this , plexer_t lexer , int64_t _integer 
     nNew->term.integer = _integer ;
     
     nNew->row	=	lexer->row_start ;
-    nNew->col	=	lexer->col_start - wcslen(lexer->token);
+    nNew->col	=	lexer->col_start - 1;
     nNew->token	=	gcWcsDup(lexer->token)  ;   
 
     return nNew ;
@@ -42,8 +42,8 @@ node_t* astMakeNodeTermReal( past_t this , plexer_t lexer , double _real )
     nNew->term.real    = _real ;
 
     nNew->row	=	lexer->row_start ;
-    nNew->col	=	lexer->col_start - wcslen(lexer->token);
-    nNew->token	=	gcWcsDup(lexer->token)  ; 
+    nNew->col	=	lexer->col_start - 1;
+    nNew->token	=	gcWcsDup(lexer->token)  ;  
     
     return nNew ;
 }
@@ -64,8 +64,8 @@ node_t* astMakeNodeTermChar( past_t this , plexer_t lexer , wchar_t _wchar )
     nNew->term.wchar 	= _wchar ;
     
     nNew->row	=	lexer->row_start ;
-    nNew->col	=	lexer->col_start - wcslen(lexer->token);
-    nNew->token	=	gcWcsDup(lexer->token)  ;   
+    nNew->col	=	lexer->col_start - 1;
+    nNew->token	=	gcWcsDup(lexer->token)  ;    
 
     return nNew ;
 }
@@ -85,8 +85,8 @@ node_t* astMakeNodeTermString( past_t this , plexer_t lexer , wchar_t* _wstring 
     nNew->term.wstring = gcWcsDup(_wstring);
     
     nNew->row	=	lexer->row_start ;
-    nNew->col	=	lexer->col_start - wcslen(lexer->token);
-    nNew->token	=	gcWcsDup(lexer->token)  ;   
+    nNew->col	=	lexer->col_start - 1;
+    nNew->token	=	gcWcsDup(lexer->token)  ;    
 
     return nNew ;
 }
@@ -108,8 +108,8 @@ node_t* astMakeNodeBinOP(  past_t this , plexer_t lexer , sym_t sym , node_t* le
     nNew->binOp.right   = right     ;
 
     nNew->row	=	lexer->row_start ;
-    nNew->col	=	lexer->col_start - wcslen(lexer->token);
-    nNew->token	=	gcWcsDup(lexer->token)  ; 
+    nNew->col	=	lexer->col_start - 1;
+    nNew->token	=	gcWcsDup(lexer->token)  ;  
     
     return nNew ;
 }
@@ -129,9 +129,9 @@ node_t* astMakeNodePrefix( past_t this , psPrefixOp_t prefix , node_t* left )
     nNew->prefix.sym   = prefix->sym	;
     nNew->prefix.right = left         	;
 
-    nNew->row	=	prefix->row_start 	;
-    nNew->col	=	prefix->col_start - wcslen(prefix->token);
-    nNew->token	=	gcWcsDup(prefix->token)	;
+    nNew->row	=	prefix->row_start ;
+    nNew->col	=	prefix->col_start -1 ;
+    nNew->token	=	gcWcsDup(prefix->token)  ; 
 
     return nNew ;
 }
@@ -241,6 +241,7 @@ pnode_t 	astMakeNodeDeclArray	( past_t this , wchar_t* id ,  pnode_t _dim  , sym
 	nNew->declArray.il			=	_il				;
 	nNew->declArray.scope		=	scope 			;
 
+
 	return nNew ;
 }
 
@@ -276,9 +277,9 @@ node_t* astMakeNodeAssign  (  past_t this , plexer_t lexer ,  node_t * lhs , nod
 	nNew->assign.rhs = rhs ;
 
     nNew->row	=	lexer->row_start ;
-    nNew->col	=	lexer->col_start - wcslen(lexer->token);
-    nNew->token	=	gcWcsDup(lexer->token) ;
-    
+    nNew->col	=	lexer->col_start - 1;
+    nNew->token	=	gcWcsDup(lexer->token)  ; ;
+
     return nNew ;
 }
 

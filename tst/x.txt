@@ -46,10 +46,10 @@ function f1
  1
  
 
-	23
+	! 123
 	 456
 
-"claudio"1 ""2 3 
+"claudio"1 ""42 3 
 
 	arr[11][12] ;
 	

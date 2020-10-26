@@ -259,7 +259,7 @@ pnode_t 	astMakeNodeTermArray	( past_t this , wchar_t* id  , pnode_t pArrayDim )
 // Term Id
 
 node_t* 	astMakeNodeBinOP		( past_t this , plexer_t lexer , sym_t sym , node_t* left , node_t* right ) ;
-node_t* 	astMakeNodePrefix		( past_t this , psPrefixOp_t prefix , node_t* left ) ;
+node_t* 	astMakeNodePrefix		( past_t this ,	psPrefixOp_t prefix , node_t* left ) ;
 
 node_t* 	astMakeNodeBlock		( past_t this ) ;
 size_t 		astPushNodeBlock		( past_t this , node_t * nBlock 	, node_t * next );
