@@ -131,7 +131,10 @@ node_t* parserTerm( pparser_t this )
 		
 		case sym_id : // Array || Function || Const || Var || Field
 		{
-				wchar_t*	idTemp = gcWcsDup ( this->lexer->token)  ; 
+				wchar_t*	idTemp = gcWcsDup ( this->lexer->token)  ;
+				uint32_t	rowTemp = this->lexer->row ;
+				uint32_t	colTemp = this->lexer->col ;
+				 
 				fwprintf ( this->pFileOutputParser , L"%-30ls :: [%ls].\n",L"ID",this->lexer->value.id );
 					
 				parserGetToken(this);
@@ -182,7 +185,7 @@ node_t* parserTerm( pparser_t this )
 							// costante		:	return Term const
 							// tipo			:	termID
 							{
-								n=astMakeNodeTermVar ( this->ast , this->lexer , idTemp ) ;
+								n=astMakeNodeTermVar ( this->ast , idTemp , rowTemp , colTemp ) ;
 							}
 					
 						return n ;

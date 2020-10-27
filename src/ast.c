@@ -93,7 +93,7 @@ node_t* astMakeNodeTermString( past_t this , plexer_t lexer , wchar_t* _wstring 
 
 // TERM : VAR
 
-node_t* astMakeNodeTermVar( past_t this , plexer_t lexer , wchar_t* _name )
+node_t* astMakeNodeTermVar( past_t this , wchar_t* _name , uint32_t row , uint32_t col )
 {
     if ( this->fDebug ) fwprintf ( this->pFileOutputAST , L"%-30ls :: [%ls]\n",L"astMakeNodeTermVar",_name );
 
@@ -105,9 +105,9 @@ node_t* astMakeNodeTermVar( past_t this , plexer_t lexer , wchar_t* _name )
     nNew->type   		= nTypeTermVar ;
     nNew->termVar.id 	= gcWcsDup(_name);
     
-    nNew->row	=	lexer->row_start ;
-    nNew->col	=	lexer->col_start - 1;
-    nNew->token	=	gcWcsDup(lexer->token)  ;    
+    nNew->row	=	row ;
+    nNew->col	=	col - 1;
+    nNew->token	=	gcWcsDup(_name) ;    
 
     return nNew ;
 }

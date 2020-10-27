@@ -269,7 +269,7 @@ node_t* 	astMakeNodeTermInteger	( past_t this , plexer_t lexer , int64_t 	_integ
 node_t* 	astMakeNodeTermReal		( past_t this , plexer_t lexer , double 	_real 		) 	;
 node_t* 	astMakeNodeTermChar		( past_t this , plexer_t lexer , wchar_t 	_wchar 		)	;
 node_t* 	astMakeNodeTermString	( past_t this , plexer_t lexer , wchar_t* 	_wstring	) 	;
-node_t* 	astMakeNodeTermVar		( past_t this , plexer_t lexer , wchar_t* id ) ;
+node_t* 	astMakeNodeTermVar		( past_t this , wchar_t* _name , uint32_t row , uint32_t col ) ;
 pnode_t 	astMakeNodeTermArray	( past_t this , wchar_t* id  , pnode_t pArrayDim ) 	;
 pnode_t 	astMakeNodeTermFunction	( past_t this , wchar_t* id  , pnode_t pArrayParam ) ;
 node_t* 	astMakeNodeTermField	( past_t this , plexer_t lexer , wchar_t* id ) ;
