@@ -642,7 +642,7 @@ pnode_t parserDeclaration( pparser_t this , node_t* nBlock , stScope_t	scope )
 
 	"function" 	f	( parserDeclVar	|| parserDeclArray) : integer || real { block } ;
 	 
-	#2i
+	#2
 
 
 */

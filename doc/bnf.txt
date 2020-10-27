@@ -5,7 +5,8 @@ lexer
 	[.]		:	qualisasi wide character	->	symChar
 
 
-END
+END	 
+
 								!
 								-
 								+
@@ -15,6 +16,11 @@ END
 					integer
 					string
 					char
+					id
+					const id
+					var
+					array[]
+					func()
 					( expr )
 					prefix
 					
@@ -34,24 +40,36 @@ END
 						
 					constTerm:
 
-				id	=	consTerm ;
+				id	=	constTerm ;
 				id	=	constTerm  , parserDeclConst 
 				
-			parserDeclConst: 
-
-
-		expr:
-		parserDeclConst:
+			expr
+		parserStatement
 		
-	parser :
+				parserArrayDim
+			parserDeclArray (local)
+			parserDeclVar 	(local)
+		parserFunction
+		
+			parserDeclType
+				parserArrayDim
+			parserDeclArray (global)
+			parserDeclVar 	(global)
+			parserDeclConst (global)
+		parserDeclaration
 
-BEGIN
+
+	parser :
+	
+       ^
+BEGIN  |
+
 
 /**/
 
-
- 
 ### {parserDeclConst}
+
+
 
 	"const" -> #1	[id] 	-> "=" 	|->	const 	integer		|->		|				->	";" -> #2
 									|->	const	real		|-^		|-> "," -> #1
@@ -68,6 +86,8 @@ BEGIN
  
 ### {parserDeclVar}
 
+
+
 	"Var" -> #1	[id] 	-> ":"	|->		integer		|->		|									->	";" -> #2
 								|->		real		|-^		|-> 				->	"," -> #1
 								|->		char		|-^		|-> :=	-> expr  	->
@@ -75,7 +95,41 @@ BEGIN
 	#2
 
 
-	
+
+### {parserDeclArray}
+
+
+
+	"array" -> #1	[id] 	-> ":"	[]		|->		integer		|->		|									->	";" -> #2
+											|->		real		|-^		|-> 					->	"," -> #1
+											|->		char		|-^		|-> :=	-> InitList  	->
+											|->		byte		|-^
+											|->		id			|-^
+	#2
+
+
+
+### {parserDeclType}
+
+
+
+	"type" -> [id] 	-> "{"	|->		parserDeclVar		|->		|			 |->							|->	";" -> #2
+							|->		parserDeclArray		|-^		|-> 	"}"  |-> := { Initialiser List } 	|-^
+
+	#2
+
+
+ 
+### {parserDeclFunction}
+
+
+
+	"function" 	f	( parserDeclVar	|| parserDeclArray) : integer || real { block } ;
+	 
+	#2
+
+
+
 /**/
 
 

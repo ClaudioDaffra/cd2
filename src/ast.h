@@ -197,6 +197,7 @@ typedef struct nodeDeclFunction_s
 
 struct node_s
 {
+
     enodeType_t 	type 	;
     uint32_t        row 	;
     uint32_t        col 	;
