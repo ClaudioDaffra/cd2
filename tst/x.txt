@@ -7,7 +7,14 @@
  
  var v1a : integer := 100 ; 
  
-
+type point 
+{ 
+	var p1x : integer ;
+	var p2y : integer ,
+		p3z : integer	;
+	array p4a : [12][13] real ;
+} ;
+ 
  var v1b : point ; 
 
  const 	c2 = "a\nb" , 
@@ -23,21 +30,14 @@
 
  var v5 : byte := 0b00000101 ; 
  
-type point 
-{ 
-	var p1x : integer ;
-	var p2y : integer ,
-		p3z : integer	;
-	array p4a : [12][13] real ;
-} ;
- 
+
 function f1 
 ( 
 	var x : integer , y : integer ; 
 	array a  :[10] point ;
 ) integer 
 {
-	var f1_a : integer ;
+	var f1_a : real ;
 
 	8 ;
 	9 

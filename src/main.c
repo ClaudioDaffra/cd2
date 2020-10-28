@@ -170,11 +170,10 @@ int main (int argc , const char** argv )
 	    stdConsoleSetUTF8();
 	    
 	    if (g.fDebug) fwprintf ( stdout,L"\n\nConsole set to UTF-8\n") ;
-/*  
-        // ................... init symTable
 
-        stInitSymTable();
+ 
 
+/*
         // ................... PARSER
 
         node_t * n=NULL ;
@@ -197,9 +196,7 @@ int main (int argc , const char** argv )
             vmPrintResult( stackTop(vmStack) ) ;
         }
 
-        // ................... show symbol table
-     
-		if (!kError && fDebug) stShowMap();
+
 
         // ................... Close File
 */
@@ -210,6 +207,7 @@ int main (int argc , const char** argv )
         if (pFileOutputAsm)     fclose(pFileOutputAsm); 
         if (pFileOutputVM)      fclose(pFileOutputVM);
 */ 
+
 		// *********
 		//  symbol Table
 		// *********
@@ -237,6 +235,10 @@ int main (int argc , const char** argv )
 
 		}
 
+		// show map
+
+		stShowMap() ;
+
 		parserDtor(parser);
 
 		parserDealloc(parser);
@@ -251,10 +253,10 @@ int main (int argc , const char** argv )
 
 	stDeInitSymTable();
 
+	gcStop();
+	
 	fwprintf ( stdout,L"\n" ) ;
 	
-	gcStop();
-
 	return 0 ;
 }
 

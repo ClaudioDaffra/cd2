@@ -31,6 +31,7 @@ void stInitSymTable(void)
 	stScope = stScopeGlobal 			;	// parti dalle dichiarzioni globali
 	
 	vectorNew(stNameSpace,16) 			;	// definisci un iniziale spazio di 16 nomi in cascata
+	
 	vectorPushBack(stNameSpace,$CD) 	;	// inserisce il primo spazio dei nomi
 	
     // GNU GCC 9.2 : lib/hmap.c:299:39: warning: 
@@ -45,6 +46,7 @@ void stInitSymTable(void)
 	#ifdef __GNUC__
 	#pragma GCC diagnostic pop
 	#endif
+	
 }
 
 // .............................................. stDeInitSymTable
@@ -69,7 +71,7 @@ void stDeInitSymTable(void)
 //	  	stGet_nsid(0,id)
 //		\id
 //		\f1id
-
+/*
 wchar_t* stGet_nsid(size_t level,wchar_t* id) // ns(l)+id
 {
 	//if ( fDebug ) fwprintf ( pFileOutputST , L"# symTable   -> stGet_nsid " );
@@ -106,20 +108,36 @@ wchar_t* stGet_nsid(size_t level,wchar_t* id) // ns(l)+id
 
 	return gcWcsDup(temp) ;
 }
-
+*/
 // .............................................. show map
 
 void stShowMap(void)
 {
-    for ( whmapIt_t* it=whmapBegin(mapST) ; it != whmapEnd(mapST) ; whmapNext(mapST,it) )  
+	if (g.fDebug )
 	{
-		fwprintf ( pFileOutputST , L"\n§§§ ((%ls,%p)) ", whmapData(it) , (void*)whmapFind(mapST, whmapData(it) ) );
+		if ( !whmapSize(mapST) )
+		{
+			fwprintf ( pFileOutputST , L"symbol Table [%p] size[%d] -> empty.\n ",mapST,(int) whmapSize(mapST) );
+		}
+		else
+		{
+		} ;
+	} ;
+	
+	/*
+	if (!kError && g.fDebug ) 
+	{
+		for ( whmapIt_t* it=whmapBegin(mapST) ; it != whmapEnd(mapST) ; whmapNext(mapST,it) )  
+		{
+			fwprintf ( pFileOutputST , L"\n§§§ ((%ls,%p)) ", whmapData(it) , (void*)whmapFind(mapST, whmapData(it) ) );
+		}
+		fwprintf ( pFileOutputST,  L"\n");
 	}
-	fwprintf ( pFileOutputST,  L"\n");
+	*/
 }
 
 // .............................................. find simbol in map
-
+/*
 psymTable_t stFindIDinMap(wchar_t* id) 
 {
 	psymTable_t pret=NULL;
@@ -139,9 +157,9 @@ psymTable_t stFindIDinMap(wchar_t* id)
  
 	return pret ;
 }
-
+*/
 // .............................................. Make Sym Table and push in hasmap
-
+/*
 psymTable_t stMakeSymTable(void)
 {
 	if ( g.fDebug ) fwprintf ( pFileOutputST , L"# symTable   -> stMakeSymTable ...\n" );
@@ -172,9 +190,9 @@ psymTable_t stMakeSymTable(void)
 	
     return pstNew ;
 }
-
+*/
 // .............................................. Debug Sym Table (node)
-
+/*
 void stDebugSymTableNode(psymTable_t pst)
 {
 	if ( g.fDebug ) // typeID = struct name
@@ -228,7 +246,7 @@ void stDebugSymTableNode(psymTable_t pst)
 		fwprintf ( pFileOutputST , L"# symTable->address [%p]\n" 				,pst->address  );
 		fwprintf ( pFileOutputST , L"# symTable->typeID  [%ls]\n" 				,(pst->typeID == NULL) ? L"{NULL}" : pst->typeID );
 		
-		/*
+		
 		fwprintf ( pFileOutputST , L"# symTable->value   "  );
 		switch ( pst->type )
 		{
@@ -243,12 +261,12 @@ void stDebugSymTableNode(psymTable_t pst)
 				fwprintf ( pFileOutputST , L"[??]"	); 
 				break ;
 		} ;
-		*/
+		
 		
 		fwprintf ( pFileOutputST , L"\n\n");
 	}
 }
-
+*/
 
 #undef $CD
 
