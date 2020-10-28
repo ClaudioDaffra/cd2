@@ -682,7 +682,7 @@ pnode_t  parserDeclFunction( pparser_t this )
 	
 				$MATCH( sym_p0 , L'(' ) ; 
 
-	// ............................... [param list] : var ...,array ...
+	// ............................... [param list] : var ...,array ... // ho omesso const
 			
 				do {
 					
@@ -730,6 +730,8 @@ pnode_t  parserDeclFunction( pparser_t this )
 
 	// ............................... [function block]
 
+				nBlockCode = parserDeclaration ( this , nBlockCode , stScopeLocal ) ;
+				
 				nBlockCode = parserStatement ( this , nBlockCode ) ;
 
 	// ............................... [}]

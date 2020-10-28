@@ -37,6 +37,8 @@ function f1
 	array a  :[10] point ;
 ) integer 
 {
+	var f1_a : integer ;
+
 	8 ;
 	9 
 
