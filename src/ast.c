@@ -139,6 +139,11 @@ node_t* astMakeNodeBinOP(  past_t this , plexer_t lexer , sym_t sym , node_t* le
 {
     if ( this->fDebug ) fwprintf ( this->pFileOutputAST , L"%-30ls :: sym [%d]\n",L"astMakeNodeBinOP",sym );
   
+	if ( left==NULL || right==NULL ) // se uno dei due operandi è nullo 
+	{
+		$pushErrLog( parser,error,parseExpr,expectedPrimaryExpr,lexer->row,lexer->col,lexer->fileInputName,lexer->token ) ;
+	}
+ 
     node_t* nNew   = NULL ; // new node
     
     nNew = gcMalloc ( sizeof(node_t) ) ;

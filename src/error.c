@@ -76,7 +76,8 @@ errMessage_t errMessage[] =
     { L"division by zero"                                                               } , 
     { L"duplicate symbol name"                                                          } , 
     { L"undeclared identifier"                                                          } , 
-    { L"lvalue required as left operand of assignment"                					} ,     
+    { L"lvalue required as left operand of assignment"                					} , 
+    { L"expected primary-expression before" },    
 } ;
 
 // ................................................... push err log

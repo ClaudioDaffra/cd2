@@ -82,7 +82,8 @@ typedef enum action_e
     action_running          ,   // mentre siamo in esecuzione del codice 
     action_assembling       ,   // mentre sto assemblando codice macchina 
     action_scanning       	,   // mentre sto analizzando semanticamente
-    action_tokenizing		,	// metre sto analissado col lexer           
+    action_tokenizing		,	// metre sto analissado col lexer   
+            
 } e_action_t ;
 
 typedef struct action_s
@@ -120,7 +121,8 @@ typedef enum errMessage_e
     errMessage_division_by_zero        ,   // 1 / 0 ;
     errMessage_duplicateSymbolName	   ,   // identificare già presente nella tabella dei simboli
     errMessage_undeclaredIdentifier	   ,   // identificatore non dichiarato
-    errMessage_LValueRequired		   ,   // e' richiesto un valore sinistro 
+    errMessage_LValueRequired		   ,   // e' richiesto un valore sinistro
+    errMessage_expectedPrimaryExpr	   ,   // expected primary-expression before [token]
 } e_errMessage_t;
 
 typedef struct errMessage_s
@@ -182,7 +184,8 @@ void printErrLog(void); // error.printLog
             type_##TYPE,\
             action_##ACTION,\
             errMessage_##ERRMESSAGE,\
-            ROW,COL,\
+            ROW,\
+            COL,\
             gcWcsDup((wchar_t*)FILE),\
             gcWcsDup(EXTRA)\
         ) ;
@@ -287,7 +290,19 @@ void printErrLog(void); // error.printLog
             gcWcsDup((wchar_t*)this->lexer->fileInputName),\
             NULL\
         ) ;
- 
+        
+#define $parserErrorExtra( ACTION,ERRMESSAGE,EXTRA )\
+        pushErrLog(\
+            sender_parser,\
+            type_error,\
+            action_##ACTION,\
+            errMessage_##ERRMESSAGE,\
+			this->lexer->row_start,\
+			this->lexer->col_start,\
+            gcWcsDup((wchar_t*)this->lexer->fileInputName),\
+            gcWcsDup(EXTRA)\
+        ) ;
+        
 #define $syntaxError \
             pushErrLog(\
                 sender_parser,\

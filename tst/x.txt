@@ -1,4 +1,4 @@
-
+/*
 
  array a1 : [10][20] byte ;
  
@@ -40,7 +40,7 @@ function f1
 	var f1_a : real ;
 
 	8 ;
-	9 
+	9 ;
 
 } ;
  
@@ -58,7 +58,10 @@ function f1
 	f1(100	,	x[21*2][-4]	,	300	);
 	
 	variabile
-	
 
+*/
+array p4a : [][13] real ;
+1+2 ;
+;
 
 // qui puoi mettere o sym_pv o sym_end

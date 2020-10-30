@@ -256,9 +256,9 @@ node_t* parserTerm( pparser_t this )
 			 * 
 			 */
 			
-			$syntaxError
+			//$syntaxError
 
-			return NULL ;
+			return NULL ; // non trova espressione allora ritorna NULL !
 			
 		break;
 	}
