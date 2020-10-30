@@ -249,6 +249,13 @@ node_t* parserTerm( pparser_t this )
 */
 		default:
 			
+			/*
+			 * Le espressioni come le frasi del parser possono ritornare NULL, 
+			 * come possiamo vedere nella definizione degli array C : int a[] ...
+			 * per tanto andraà gestita l'espressione NULL e con quanto ne consgue.
+			 * 
+			 */
+			
 			$syntaxError
 
 			return NULL ;
