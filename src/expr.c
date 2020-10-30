@@ -19,10 +19,11 @@ psPrefixOp_t	parserPrefixNew( plexer_t lexer )
 	}
 	else
 	{
-		prefix->sym 		= lexer->sym ;
-		prefix->row_start	= lexer->row_start ;
-		prefix->col_start 	= lexer->col_start ;
-		prefix->token 		= gcWcsDup( lexer->token ) ;
+		prefix->sym 			= lexer->sym ;
+		prefix->row_start		= lexer->row_start ;
+		prefix->col_start 		= lexer->col_start ;
+		prefix->token 			= gcWcsDup( lexer->token ) ;
+		prefix->fileInputName 	= gcWcsDup( lexer->fileInputName ) ;
 	}
 	return prefix ;
 }
@@ -258,7 +259,7 @@ node_t* parserTerm( pparser_t this )
 			
 			//$syntaxError
 
-			return NULL ; // non trova espressione allora ritorna NULL !
+			n=NULL ; // non trova espressione allora ritorna NULL !
 			
 		break;
 	}

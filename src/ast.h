@@ -246,10 +246,11 @@ typedef struct ast_s*	 past_t ;
 
 struct sPrefixOp_s
 {
-	sym_t		sym 		;
-	uint32_t	row_start	;
-	uint32_t	col_start	;
-	wchar_t*	token 		;
+	sym_t		sym 			;
+	uint32_t	row_start		;
+	uint32_t	col_start		;
+	wchar_t*	token 			;
+	wchar_t*	fileInputName 	;
 } ;
 
 typedef struct sPrefixOp_s 	 sPrefixOp_t ;

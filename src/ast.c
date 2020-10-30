@@ -54,7 +54,6 @@ node_t* astMakeNodeTermChar( past_t this , plexer_t lexer , wchar_t _wchar )
 {
     if ( this->fDebug ) fwprintf ( this->pFileOutputAST , L"%-30ls :: [%lc]\n",L"astMakeNodeTermChar",g.outputSpecialCharInChar(_wchar) );
 
-
     node_t* nNew   = NULL ; // new node
     
     nNew = gcMalloc ( sizeof(node_t) ) ;
@@ -141,7 +140,7 @@ node_t* astMakeNodeBinOP(  past_t this , plexer_t lexer , sym_t sym , node_t* le
   
 	if ( left==NULL || right==NULL ) // se uno dei due operandi è nullo 
 	{
-		$pushErrLog( parser,error,parseExpr,expectedPrimaryExpr,lexer->row,lexer->col,lexer->fileInputName,lexer->token ) ;
+		$pushErrLog( parser,error,parseExpr,expectedPrimaryExprBefore,lexer->row,lexer->col,lexer->fileInputName,lexer->token ) ;
 	}
  
     node_t* nNew   = NULL ; // new node
@@ -166,7 +165,12 @@ node_t* astMakeNodeBinOP(  past_t this , plexer_t lexer , sym_t sym , node_t* le
 node_t* astMakeNodePrefix( past_t this , psPrefixOp_t prefix , node_t* left ) 
 {
     if ( this->fDebug ) fwprintf ( this->pFileOutputAST , L"%-30ls :: [%d]\n",L"astMakeNodePrefix",prefix->sym );
-  
+    
+ 	if ( left==NULL ) 
+	{
+		$pushErrLog( parser,error,parseExpr,expectedPrimaryExprAfter,prefix->row_start,prefix->col_start,prefix->fileInputName,prefix->token ) ;
+	} 
+
     node_t* nNew   = NULL ; // new node
     
     nNew = gcMalloc ( sizeof(node_t) ) ;

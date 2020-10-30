@@ -99,30 +99,31 @@ extern action_t action[]  ;
 
 typedef enum errMessage_e
 {
-    errMessage_noErr                   ,   // nessun errore
-    errMessage_fileNotFound            ,   // file no trovato
-    errMessage_noInputFiles            ,   // nessun file in input    
-    errMessage_eof                     ,   // raggiunta la fine del file
-    errMessage_eoRem                   ,   // trovato commento multilinea di chiusura, iniziale
-    errMessage_overflowTokenText       ,   // la lunghezza del token eccede quella del buffer    
-  //  errMessage_expectedNumericLiteral  ,   // atteso numero esadecimale
-    errMessage_invalid_argument        ,   // argometo non valido
-    errMessage_out_of_range            ,   // fuori range    
-  //  errMessage_expectedExponent        ,   // hexadecimal floating constants require an exponent
-    errMessage_expectedExponentDigit   ,   // exponent has no digit
-  //  errMessage_outOfRangeNDX           ,   // indice vettore fouri dai limiti
-  //  errMessage_unexpectedSym           ,   // simbolo inatteso
-    errMessage_errUnknown              ,   // errore sconosciuto
-    errMessage_unexpectedToken         ,   // token inatteso     
-  //  errMessage_didYouMean              ,   // intendevi forse ?
-    errMessage_syntaxError             ,   // errore di sintassi
-    errMessage_outOfMemory             ,   // mancanza di memoria !  
-    errMessage_notImplemetedYet        ,   // non ancora implementato 
-    errMessage_division_by_zero        ,   // 1 / 0 ;
-    errMessage_duplicateSymbolName	   ,   // identificare già presente nella tabella dei simboli
-    errMessage_undeclaredIdentifier	   ,   // identificatore non dichiarato
-    errMessage_LValueRequired		   ,   // e' richiesto un valore sinistro
-    errMessage_expectedPrimaryExpr	   ,   // expected primary-expression before [token]
+    errMessage_noErr                   		,   // nessun errore
+    errMessage_fileNotFound            		,   // file no trovato
+    errMessage_noInputFiles            		,   // nessun file in input    
+    errMessage_eof                     		,   // raggiunta la fine del file
+    errMessage_eoRem                   		,   // trovato commento multilinea di chiusura, iniziale
+    errMessage_overflowTokenText       		,   // la lunghezza del token eccede quella del buffer    
+  //  errMessage_expectedNumericLiteral  	,   // atteso numero esadecimale
+    errMessage_invalid_argument        		,   // argometo non valido
+    errMessage_out_of_range            		,   // fuori range    
+  //  errMessage_expectedExponent        	,   // hexadecimal floating constants require an exponent
+    errMessage_expectedExponentDigit   		,   // exponent has no digit
+  //  errMessage_outOfRangeNDX           	,   // indice vettore fouri dai limiti
+  //  errMessage_unexpectedSym           	,   // simbolo inatteso
+    errMessage_errUnknown              		,   // errore sconosciuto
+    errMessage_unexpectedToken         		,   // token inatteso     
+  //  errMessage_didYouMean              	,   // intendevi forse ?
+    errMessage_syntaxError             		,   // errore di sintassi
+    errMessage_outOfMemory             		,   // mancanza di memoria !  
+    errMessage_notImplemetedYet        		,   // non ancora implementato 
+    errMessage_division_by_zero        		,   // 1 / 0 ;
+    errMessage_duplicateSymbolName	   		,   // identificare già presente nella tabella dei simboli
+    errMessage_undeclaredIdentifier	   		,   // identificatore non dichiarato
+    errMessage_LValueRequired		   		,   // e' richiesto un valore sinistro
+    errMessage_expectedPrimaryExprBefore	,   // expected primary-expression before [token]
+    errMessage_expectedPrimaryExprAfter   	,   // expected primary-expression before [token    
 } e_errMessage_t;
 
 typedef struct errMessage_s

@@ -221,7 +221,7 @@ pnode_t parserStatement( pparser_t this , node_t* nBlock )
 
 	do {
 		
-		if  ( this->lexer->sym==sym_pv)  parserGetToken(this); 
+		if  ( this->lexer->sym==sym_pv)  parserGetToken(this);
 
 		if ( kError ) break ;
 		
@@ -336,6 +336,7 @@ pnode_t parserScan( pparser_t this )
 
 
 /**/
+
 
 
 /* 
