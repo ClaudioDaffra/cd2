@@ -11,11 +11,11 @@ END
 								-
 								+
 						prefix
-
-					real
-					integer
-					string
-					char
+						
+					const real
+					const integer
+					const string
+					const char
 					id
 					const id
 					var
@@ -23,26 +23,14 @@ END
 					func()
 					( expr )
 					prefix
-					
 				term
 
 				term
 				mulDivMod	*	/	%
 				addSub		+	-
 				assign		:=
-			
 			expr:
 
-						char
-						string
-						real
-						integer
-						
-					constTerm:
-
-				id	=	constTerm ;
-				id	=	constTerm  , parserDeclConst 
-				
 			expr
 		parserStatement
 		
@@ -58,7 +46,9 @@ END
 			parserDeclConst (global)
 		parserDeclaration
 
-
+		parserStatement
+		parserFunction
+		parserDeclaration
 	parser :
 	
        ^
@@ -127,6 +117,18 @@ BEGIN  |
 	"function" 	f	( parserDeclVar	|| parserDeclArray) : integer || real { block } ;
 	 
 	#2
+
+
+### parserMainBlock
+
+
+	parserDeclaration 
+
+	parserFunction 
+	
+	parserStatement
+
+	if ( this->lexer->sym != sym_end ) $syntaxError ;
 
 
 

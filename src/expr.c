@@ -23,7 +23,7 @@ psPrefixOp_t	parserPrefixNew( plexer_t lexer )
 		prefix->row_start		= lexer->row_start ;
 		prefix->col_start 		= lexer->col_start ;
 		prefix->token 			= gcWcsDup( lexer->token ) ;
-		prefix->fileInputName 	= gcWcsDup( lexer->fileInputName ) ;
+		prefix->fileInputName 	= gcWcsDup( (wchar_t*)lexer->fileInputName ) ;
 	}
 	return prefix ;
 }

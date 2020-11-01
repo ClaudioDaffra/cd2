@@ -1,7 +1,7 @@
 
-CD Φ
+µPascal
 
-Programming language
+A simplle case study on compiler construction.
 
 Windows 
 				Visual Studio 19
@@ -14,4 +14,4 @@ MacOSX
 				Apple clang version 11.0.3 
 				
 
-	
+

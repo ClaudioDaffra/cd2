@@ -1,8 +1,6 @@
 
- ! ;
 
 
-/*
  array a1 : [10][20] byte ;
  
  const c1 = "str" ;
@@ -58,9 +56,9 @@ function f1
 
 	arr[11][12] ;
 	
-	f1(100	,	x[21*2][-4]	,	300	);;;;;
+	f1(100	,	x[21*2][-4]	,	300	); 
 	
 	variabile
-*/
+
 
 // qui puoi mettere o sym_pv o sym_end

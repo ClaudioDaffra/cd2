@@ -303,6 +303,10 @@ pnode_t parserMainBlock( pparser_t this )
 	
 	nBlock = parserStatement( this ,  nBlock ) ;
 
+	//fwprintf ( stderr, L"\n§§§[%ls %d]\n",this->lexer->token,this->lexer->sym ) ;
+
+	if ( this->lexer->sym != sym_end ) $syntaxError ;
+
 	return nBlock ;
 }
 
