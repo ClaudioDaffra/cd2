@@ -129,7 +129,6 @@ void stShowMap(void)
 			fwprintf ( pFileOutputST,  L"\n");
 		} ;
 	} ;
-
 }
 
 // .............................................. find simbol in map
@@ -181,7 +180,7 @@ psymTable_t stMakeSymTable(void)
 	pstNew->offset 	= 0 ; 
 	//pstNew->address = NULL ; 
 	//pstNew->typeID  = NULL ;
-	//pstNew->value.integer  = 0 ; // default value
+	pstNew->value.integer  = 0 ; // default value
 	
     return pstNew ;
 }
@@ -266,12 +265,8 @@ void stDebugSymTableNode(psymTable_t pst)
 			case stTypeInteger  	: fwprintf ( pFileOutputST , L"[%ld]"		, pst->value.integer    ); break ;
 			case stTypeReal  		: fwprintf ( pFileOutputST , L"[%lf]"		, pst->value.real		); break ;
 			case stTypeStruct  		: fwprintf ( pFileOutputST , L"[MEMBER]" 							); break ;  
-			case stTypeConstString	: 
-				fwprintf ( pFileOutputST , L"[%lf]"		, g.outputSpecialCharInString(pst->value.wstring)	); 
-				break ;
-			case stTypeChar  		: 
-				fwprintf ( pFileOutputST , L"[%lc]"		, g.outputSpecialCharInChar(pst->value.wchar)	); 
-				break ;
+			case stTypeConstString	: fwprintf ( pFileOutputST , L"[%ls]"		, g.outputSpecialCharInString(pst->value.wstring)	); break ;
+			case stTypeChar  		: fwprintf ( pFileOutputST , L"[%lc]"		, g.outputSpecialCharInChar(pst->value.wchar)		); break ;
 			case stTypeByte  		: fwprintf ( pFileOutputST , L"[%u]"		, pst->value.byte		); break ;
 			default:
 				fwprintf ( pFileOutputST , L"[??]"	); 
