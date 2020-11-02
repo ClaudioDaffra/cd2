@@ -122,9 +122,11 @@ void stShowMap(void)
 		}
 		else
 		{
+			fwprintf ( pFileOutputST , L"\n§§§ List symbol in table : \n" );
+			
 			for ( whmapIt_t* it=whmapBegin(mapST) ; it != whmapEnd(mapST) ; whmapNext(mapST,it) )  
 			{
-				fwprintf ( pFileOutputST , L"\n§§§ ((%ls,%p)) ", whmapData(it) , (void*)whmapFind(mapST, whmapData(it) ) );
+				fwprintf ( pFileOutputST , L"\n§§§ ((%-20ls,%p)) ", whmapData(it) , (void*)whmapFind(mapST, whmapData(it) ) );
 			}
 			fwprintf ( pFileOutputST,  L"\n");
 		} ;
@@ -132,27 +134,31 @@ void stShowMap(void)
 }
 
 // .............................................. find simbol in map
-/*
+
 psymTable_t stFindIDinMap(wchar_t* id) 
 {
 	psymTable_t pret=NULL;
+	
 	// #1 per tutti i livelli da 0 a n del namespace + ID
 	// cerca nella mappa
  
 	size_t i=vectorSize(stNameSpace);
+	
 	do
 	{
 		i--;
 		//fwprintf ( stdout , L"\nNAME SPACE::[%ls]",vectorAt(stNameSpace,i) ) ;
 		//fwprintf ( stdout , L"\nFULL NAME ::[%ls]",stGet_nsid(i,id) 	) ;
+		
 		pret = whmapFind( mapST , stGet_nsid(i,id) ) ; // cerca il id nella mappa 
+		
 		if ( pret != NULL ) return pret ; // ritorna indice se l'ha trovato
 		
 	} while(i!=0);
  
 	return pret ;
 }
-*/
+
 // .............................................. Make Sym Table and push in hasmap
 
 psymTable_t stMakeSymTable(void)

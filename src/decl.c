@@ -131,22 +131,28 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 			
 			//
 			stDebugSymTableNode(pstNew) ; // DEBUG
-/*
+
 			// cerca se l'identificativo è già presente, nella ST il nuovo e' ancora da inserire
 			psymTable_t pstTemp = stFindIDinMap(pstNew->id); 
 			
 			if ( pstTemp ) 
 			{
-				$scannerErrorExtra(scanning,duplicateSymbolName,pstNew->id) ;
+				$scannerErrorExtra(scanning,duplicateSymbolName,this->lexer->fileInputName, pstNew->id) ;
+			}
+			else
+			{
+				whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew ); // altrimenti inserisci name space + id
 			}
 			
-			whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew ); // altrimenti inserisci name space + id
-*/	
 			// ---------------
 			// make node const
 			// ---------------
 			
-			n = astMakeNodeDeclConst( this->ast , idTemp , symTemp , pnTermTemp , scope ) ;
+			// decl : 	il nodo viene salvato così com'è, non viene sostituito con la costante
+			// expr	:	non viene valutato il nodo come costante ma lasciato l'id
+			// asm	:	viene generata l'istruzione che carica nello stack una costante
+			
+			n = astMakeNodeDeclConst( this->ast , idTemp , symTemp , pnTermTemp , scope ) ; 
 			
 			if ( n!=NULL ) astPushNodeBlock( this->ast , nBlock , n ) ;
 			
@@ -327,7 +333,6 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 											|->		byte		|-^
 											|->		id			|-^
 	#2
-
 
 */
 
@@ -512,7 +517,6 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 
 	#2
 
-
 */
 
 pnode_t  parserDeclType( pparser_t this , stScope_t scope )
@@ -648,7 +652,6 @@ pnode_t parserDeclaration( pparser_t this , node_t* nBlock , stScope_t	scope )
 	"function" 	f	( parserDeclVar	|| parserDeclArray) : integer || real { block } ;
 	 
 	#2
-
 
 */
 

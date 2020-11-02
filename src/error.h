@@ -370,7 +370,19 @@ void printErrLog(void); // error.printLog
             gcWcsDup(EXTRA)\
         ) ;
            
-        
+ #define $scannerErrorExtra( ACTION,ERRMESSAGE,FILE,EXTRA )\
+        pushErrLog(\
+            sender_scanner,\
+            type_error,\
+            action_##ACTION,\
+            errMessage_##ERRMESSAGE,\
+            0,\
+            0,\
+            gcWcsDup((wchar_t*)FILE),\
+            gcWcsDup(EXTRA)\
+        ) ;
+           
+                  
 #endif
 
 

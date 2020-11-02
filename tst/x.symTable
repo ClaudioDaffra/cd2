@@ -1,0 +1,100 @@
+
+# symTable   -> initializing ...
+
+# symTable   -> stMakeSymTable ...
+# symTable   -> stGet_nsid [\].
+
+# DEBUG ST [0x561a9ce3d130] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [\]
+# symTable->id      [c1]
+# symTable->kind    [1] :: [Const]
+# symTable->type    [6] :: [stTypeConstString]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [0]
+# symTable->offset  [0]
+# symTable->value   [str]
+
+# symTable   -> stGet_nsid [\c1].
+# symTable   -> stGet_nsid [\c1].
+# symTable   -> stMakeSymTable ...
+# symTable   -> stGet_nsid [\].
+
+# DEBUG ST [0x561a9ce53a10] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [\]
+# symTable->id      [c2]
+# symTable->kind    [1] :: [Const]
+# symTable->type    [6] :: [stTypeConstString]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [0]
+# symTable->offset  [0]
+# symTable->value   [aNb]
+
+# symTable   -> stGet_nsid [\c2].
+# symTable   -> stGet_nsid [\c2].
+# symTable   -> stMakeSymTable ...
+# symTable   -> stGet_nsid [\].
+
+# DEBUG ST [0x561a9ce601c0] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [\]
+# symTable->id      [c3]
+# symTable->kind    [1] :: [Const]
+# symTable->type    [3] :: [stTypeChar]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [0]
+# symTable->offset  [0]
+# symTable->value   [N]
+
+# symTable   -> stGet_nsid [\c3].
+# symTable   -> stGet_nsid [\c3].
+# symTable   -> stMakeSymTable ...
+# symTable   -> stGet_nsid [\].
+
+# DEBUG ST [0x561a9ce6dbc0] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [\]
+# symTable->id      [c4]
+# symTable->kind    [1] :: [Const]
+# symTable->type    [3] :: [stTypeChar]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [0]
+# symTable->offset  [0]
+# symTable->value   [c]
+
+# symTable   -> stGet_nsid [\c4].
+# symTable   -> stGet_nsid [\c4].
+# symTable   -> stMakeSymTable ...
+# symTable   -> stGet_nsid [\f1].
+
+# DEBUG ST [0x561a9ce84b50] ->
+# symTable->scope   [1] :: [Local]
+# symTable->ns      [\f1]
+# symTable->id      [f1_c]
+# symTable->kind    [1] :: [Const]
+# symTable->type    [1] :: [stTypeInteger]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [0]
+# symTable->offset  [0]
+# symTable->value   [65535]
+
+# symTable   -> stGet_nsid [\f1_c].
+# symTable   -> stGet_nsid [\f1f1_c].
+# symTable   -> stGet_nsid [\f1f1_c].
+
+§§§ List symbol in table : 
+
+§§§ ((\c1                 ,0x561a9ce3d130)) 
+§§§ ((\c2                 ,0x561a9ce53a10)) 
+§§§ ((\c3                 ,0x561a9ce601c0)) 
+§§§ ((\c4                 ,0x561a9ce6dbc0)) 
+§§§ ((\f1f1_c             ,0x561a9ce84b50)) 
+
+# symTable   -> denitialized . 
+
