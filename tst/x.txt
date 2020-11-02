@@ -44,7 +44,8 @@
 	) integer 
 	{
 		var f1_a : real ;
-
+		const f1_c = 0xffff ;
+		
 		8 ;
 		9 ;
 

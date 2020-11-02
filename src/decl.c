@@ -51,7 +51,8 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 
 	// ............................... new sym table
 			psymTable_t	pstNew = stMakeSymTable() ; // ................... ST
-			pstNew->kind = stKindConst ; // .............................. ST
+			pstNew->kind 	= stKindConst ; // ........................... ST
+			pstNew->scope 	= scope ; // ................................. ST
  
 	// ............................... [id]
 			if ( this->lexer->sym==sym_id ) 
@@ -654,7 +655,7 @@ pnode_t parserDeclaration( pparser_t this , node_t* nBlock , stScope_t	scope )
 pnode_t  parserDeclFunction( pparser_t this )
 {
 	if ( kError ) return NULL  ;  
-	
+
 	// *****
 	// BEGIN
 	// *****	
@@ -678,6 +679,9 @@ pnode_t  parserDeclFunction( pparser_t this )
 			if ( this->lexer->sym==sym_id ) 
 			{
 				idTemp = gcWcsDup( this->lexer->token ) ;
+
+				// PUSH BACK ..................................... namespace ST
+				vectorPushBack(stNameSpace,gcWcsDup( this->lexer->token )) ;
 
 				//pstNew->id = gcWcsDup( lexer.token ) ; // ................ ST
 				parserGetToken(this);
@@ -742,6 +746,8 @@ pnode_t  parserDeclFunction( pparser_t this )
 
 				$MATCH( sym_pg1 , L'}' ) ;
 				
+				// PUSH BACK..................................... namespace ST
+				vectorPopBack(stNameSpace) ;
 			}
 			else 
 			{
