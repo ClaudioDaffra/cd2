@@ -11,17 +11,20 @@
 #include "../lib/gc.h"
 #include "../lib/hmap.h"
 #include "error.h"
+#include "ast.h"
 
+/*
 // .............................................. scope
 
 enum stScope_e
 {
 	stScopeGlobal	,
-	stScopeLocal	
+	stScopeLocal	,
+	//stScopeFuncParam
 } ;
 
 typedef enum stScope_e stScope_t ;
-
+*/
 // .............................................. kind
 
 enum stKind_e
@@ -29,9 +32,9 @@ enum stKind_e
 	stKindNull		,
 	stKindConst		,	// 1
 	stKindVar		,	// 2
-	stKindArray		,
-	stKindStruct	,
-	stKindFunction	,
+	stKindArray		,	// 3
+	stKindStruct	,	// 4
+	stKindFunction	,	// 5
 } ;
 
 typedef enum stKind_e stKind_t ;
@@ -49,14 +52,14 @@ vectorType(wstring_t,stNameSpace) ;
 
 enum stType_e
 {
-	stTypeNull ,
-	stTypeInteger ,
-	stTypeReal	  ,
-	stTypeID	  ,
-	stTypeString  ,
-	stTypeChar	  ,
-	stTypeByte	  ,
+	stTypeNull 		,
+	stTypeInteger 	,
+	stTypeReal	  	,
+	stTypeChar	  	,	// il tipo string è un array di char
+	stTypeByte	  	,
+	stTypeStruct	,
 	// ...
+	stTypeConstString	,	// compare solo con le costanti
 } ;
 
 typedef enum stType_e stType_t ;
@@ -69,34 +72,36 @@ typedef struct symTable_s 	 symTable_t ;
 
 typedef struct symTable_s *	psymTable_t ; // puntatore alla tabella dei simboli
 
+typedef wchar_t*	pwchar_t ;
+
 struct symTable_s
 {
 	stScope_t				scope		 ; // Global / Local
 	wstring_t 				ns 	 		 ; // path
 	wstring_t 				id 			 ; // name
-	stKind_t				kind 		 ; // categoria 	: Const/Var/Array/Struct/Function
-	stType_t 				type 		 ; // tipo	atomico	: Integer/Real/String/Char/Pointer
+	stKind_t				kind 		 ; // categoria 	: Const/Var/Array/Type/Function
+	stType_t 				type 		 ; // tipo	atomico	: Integer/Real/String/Char/Byte
 	
 	uint32_t				nDim		 ; // numero delle dimensioni dell'array
-	vectorStruct(uint32_t,  aDim)		 ; // dimensioni dell'array MAXX,MAXY,MAXZ ... ( DIM / NDX ) ;
+	vectorStruct(pnode_t,   aDim)		 ; // dimensioni dell'array MAXX,MAXY,MAXZ ... ( DIM / NDX ) ;
 	
-	vectorStruct(psymTable_t,  member)   ; // membri della struttura.
+	vectorStruct(pwchar_t,  member)   ; // membri della struttura.
 	
  	size_t					size		 ; // dimesioni dell'oggetto
  	size_t					offset		 ; // posizione dell'oggetto
- 	void*					address		 ; // indirizzo nello HEAP(global) / STACK(local)
-	wstring_t 				typeID 	 	 ; // struct name
+ 	//void*					address		 ; // indirizzo nello HEAP(global) / STACK(local)
+	//wstring_t 			typeID 	 	 ; // struct name
 	
-	/*
-	union
+	
+	union // mantenuto solo per le const
 	{
 	  int64_t	integer 	;
 	  double    real 		;
-	  wchar_t*	string 		;
-	  wchar_t	character 	;
+	  wchar_t*	wstring 	;
+	  wchar_t	wchar	 	;
 	  uint8_t   byte 		;
 	} value ;
-	*/
+	
 } ;
 
 // .............................................. tabella HASH stTable

@@ -50,15 +50,15 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 			parserGetToken(this);
 
 	// ............................... new sym table
-			//psymTable_t	pstNew = stMakeSymTable() ; // ................... ST
-			//pstNew->kind = stKindConst ; // .............................. ST
+			psymTable_t	pstNew = stMakeSymTable() ; // ................... ST
+			pstNew->kind = stKindConst ; // .............................. ST
  
 	// ............................... [id]
 			if ( this->lexer->sym==sym_id ) 
 			{
 				idTemp = gcWcsDup( this->lexer->token ) ;
 				
-				//pstNew->id = gcWcsDup( lexer.token ) ; // ................ ST
+				pstNew->id = gcWcsDup( this->lexer->token ) ; // ......... ST
 				parserGetToken(this);
 				
 	// ............................... "="
@@ -75,8 +75,9 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 					{
 						case sym_integer :
 						
-							//pstNew->type = stTypeInteger ; // ............ ST
-							//pstNew->value.integer = lexer.integer ; // ... ST
+							pstNew->type = stTypeInteger ; // ........................ ST
+							pstNew->value.integer = this->lexer->value.integer ; // .. ST
+							
 							pnTermTemp = astMakeNodeTermInteger( this->ast , this->lexer , this->lexer->value.integer ) ;
 							parserGetToken(this);
 							
@@ -84,8 +85,9 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 							
 						case sym_real :
 						
-							//pstNew->type = stTypeReal ; // ............... ST
-							//pstNew->value.real = lexer.real ; // ......... ST
+							pstNew->type = stTypeReal ; // ..................... ST
+							pstNew->value.real = this->lexer->value.real ; // .. ST
+							
 							pnTermTemp = astMakeNodeTermReal( this->ast , this->lexer , this->lexer->value.real );
 							parserGetToken(this);
 							
@@ -93,8 +95,9 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 							
 						case sym_char :
 						
-							//pstNew->type = stTypeReal ; // ............... ST
-							//pstNew->value.real = lexer.wchar ; // ......... ST
+							pstNew->type = stTypeChar ; // ............................. ST
+							pstNew->value.wchar = this->lexer->value.wchar ; // ........ ST
+							
 							pnTermTemp = astMakeNodeTermChar( this->ast , this->lexer , this->lexer->value.wchar ) ;
 							parserGetToken(this);
 							
@@ -102,8 +105,9 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 						
 						case sym_string :
 						
-							//pstNew->type = stTypeReal ; // ............... ST
-							//pstNew->value.real = lexer.wstring ; // ......... ST
+							pstNew->type = stTypeConstString ; // .................................... ST
+							pstNew->value.wstring = gcWcsDup(this->lexer->value.wstring) ; // ........ ST
+							
 							pnTermTemp = astMakeNodeTermString( this->ast , this->lexer , this->lexer->value.wstring ) ;
 							parserGetToken(this);
 							
@@ -125,8 +129,8 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 			}
 			
 			//
-/*			
 			stDebugSymTableNode(pstNew) ; // DEBUG
+/*
 			// cerca se l'identificativo è già presente, nella ST il nuovo e' ancora da inserire
 			psymTable_t pstTemp = stFindIDinMap(pstNew->id); 
 			

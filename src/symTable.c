@@ -71,10 +71,10 @@ void stDeInitSymTable(void)
 //	  	stGet_nsid(0,id)
 //		\id
 //		\f1id
-/*
+
 wchar_t* stGet_nsid(size_t level,wchar_t* id) // ns(l)+id
 {
-	//if ( fDebug ) fwprintf ( pFileOutputST , L"# symTable   -> stGet_nsid " );
+	if ( g.fDebug ) fwprintf ( pFileOutputST , L"# symTable   -> stGet_nsid " );
 	
 	size_t MAXBUFFER = 4096 ;
 	wchar_t* temp = gcMalloc( sizeof(wchar_t) * MAXBUFFER ) ;
@@ -104,16 +104,17 @@ wchar_t* stGet_nsid(size_t level,wchar_t* id) // ns(l)+id
 	
 	temp[k]=0;
 	
-	//if ( fDebug ) fwprintf ( pFileOutputST , L"[%ls].\n",temp );
+	if ( g.fDebug ) fwprintf ( pFileOutputST , L"[%ls].\n",temp );
 
 	return gcWcsDup(temp) ;
 }
-*/
+
+
 // .............................................. show map
 
 void stShowMap(void)
 {
-	if (g.fDebug )
+	if ( g.fDebug ) // visualizza anche se ci sono errori, meglio.
 	{
 		if ( !whmapSize(mapST) )
 		{
@@ -121,19 +122,14 @@ void stShowMap(void)
 		}
 		else
 		{
+			for ( whmapIt_t* it=whmapBegin(mapST) ; it != whmapEnd(mapST) ; whmapNext(mapST,it) )  
+			{
+				fwprintf ( pFileOutputST , L"\n§§§ ((%ls,%p)) ", whmapData(it) , (void*)whmapFind(mapST, whmapData(it) ) );
+			}
+			fwprintf ( pFileOutputST,  L"\n");
 		} ;
 	} ;
-	
-	/*
-	if (!kError && g.fDebug ) 
-	{
-		for ( whmapIt_t* it=whmapBegin(mapST) ; it != whmapEnd(mapST) ; whmapNext(mapST,it) )  
-		{
-			fwprintf ( pFileOutputST , L"\n§§§ ((%ls,%p)) ", whmapData(it) , (void*)whmapFind(mapST, whmapData(it) ) );
-		}
-		fwprintf ( pFileOutputST,  L"\n");
-	}
-	*/
+
 }
 
 // .............................................. find simbol in map
@@ -159,7 +155,7 @@ psymTable_t stFindIDinMap(wchar_t* id)
 }
 */
 // .............................................. Make Sym Table and push in hasmap
-/*
+
 psymTable_t stMakeSymTable(void)
 {
 	if ( g.fDebug ) fwprintf ( pFileOutputST , L"# symTable   -> stMakeSymTable ...\n" );
@@ -183,22 +179,23 @@ psymTable_t stMakeSymTable(void)
 	
 	pstNew->size 	= 0 ;
 	pstNew->offset 	= 0 ; 
-	pstNew->address = NULL ; 
-	pstNew->typeID  = NULL ;
-	
+	//pstNew->address = NULL ; 
+	//pstNew->typeID  = NULL ;
 	//pstNew->value.integer  = 0 ; // default value
 	
     return pstNew ;
 }
-*/
+
 // .............................................. Debug Sym Table (node)
-/*
+
 void stDebugSymTableNode(psymTable_t pst)
 {
-	if ( g.fDebug ) // typeID = struct name
+	if ( g.fDebug ) 
 	{
+		// ................................................................................................. POINTER PST
 		fwprintf ( pFileOutputST , L"\n# DEBUG ST [%p] ->\n",pst );
 		
+		// ................................................................................................. SCOPE
 		fwprintf ( pFileOutputST , L"# symTable->scope   [%d] :: "				,pst->scope );
 		switch ( pst->scope )
 		{
@@ -208,9 +205,13 @@ void stDebugSymTableNode(psymTable_t pst)
 		}
 		fwprintf ( pFileOutputST , L"\n");
 		
+		// ................................................................................................. NS
 		fwprintf ( pFileOutputST , L"# symTable->ns      [%ls]\n"				,pst->ns 	 );
+		
+		// ................................................................................................. ID
 		fwprintf ( pFileOutputST , L"# symTable->id      [%ls]\n"				,pst->id 	 );
 		
+		// ................................................................................................. KIND
 		fwprintf ( pFileOutputST , L"# symTable->kind    [%d] :: " 				,pst->kind   );
 		switch ( pst->kind )
 		{
@@ -223,50 +224,64 @@ void stDebugSymTableNode(psymTable_t pst)
 			default : fwprintf ( pFileOutputST , L"[??]"); break ;
 		}
 		fwprintf ( pFileOutputST , L"\n");
-		
+
+		// ................................................................................................. TYPE
 		fwprintf ( pFileOutputST , L"# symTable->type    [%d] :: " 				,pst->type  );
 		switch ( pst->type )
 		{
-			case stTypeNull  	: fwprintf ( pFileOutputST , L"[stTypeNull]" 		); break ;
-			case stTypeInteger  : fwprintf ( pFileOutputST , L"[stTypeInteger]"		); break ;
-			case stTypeReal  	: fwprintf ( pFileOutputST , L"[stTypeReal]"		); break ;
-			case stTypeID  		: fwprintf ( pFileOutputST , L"[stTypeID]" 			); break ;  
-			case stTypeString   : fwprintf ( pFileOutputST , L"[stTypeString]"		); break ;
-			case stTypeChar  	: fwprintf ( pFileOutputST , L"[stTypeChar]"		); break ;
-			case stTypeByte  	: fwprintf ( pFileOutputST , L"[stTypeByte]"		); break ;
+			case stTypeNull  		: fwprintf ( pFileOutputST , L"[stTypeNull]" 		); break ;
+			case stTypeInteger  	: fwprintf ( pFileOutputST , L"[stTypeInteger]"		); break ;
+			case stTypeReal  		: fwprintf ( pFileOutputST , L"[stTypeReal]"		); break ;
+			case stTypeChar  		: fwprintf ( pFileOutputST , L"[stTypeChar]"		); break ;
+			case stTypeByte  		: fwprintf ( pFileOutputST , L"[stTypeByte]"		); break ;
+			case stTypeStruct  		: fwprintf ( pFileOutputST , L"[stTypeStruct]" 		); break ; 
+			case stTypeConstString	: fwprintf ( pFileOutputST , L"[stTypeConstString]"	); break ;
+
+
 			default: fwprintf ( pFileOutputST , L"[??]"	); 	break ;
 		} ;
 		
+		// ................................................................................................. ARRAY
 		fwprintf ( pFileOutputST , L"\n# symTable->nDim    [%d] / " 			,pst->nDim  );
 		for(size_t i=0;i<vectorSize(pst->aDim);i++) fwprintf ( pFileOutputST , L"[%d]" ,vectorAt(pst->aDim,i)  );
+		
+		// ................................................................................................. STRUCT
 		fwprintf ( pFileOutputST , L"\n# symTable->member  [%d] / " ,(int)vectorSize(pst->member)  );
 		for(size_t i=0;i<vectorSize(pst->member);i++) fwprintf ( pFileOutputST , L"[%p]" ,((void*)vectorAt(pst->member,i))  );
+		
+		// ................................................................................................. SIZE
 		fwprintf ( pFileOutputST , L"\n# symTable->size    [%d]\n" 				,(int)pst->size  );
+		
+		// ................................................................................................. OFFSET
 		fwprintf ( pFileOutputST , L"# symTable->offset  [%d]\n" 				,(int)pst->offset  );
-		fwprintf ( pFileOutputST , L"# symTable->address [%p]\n" 				,pst->address  );
-		fwprintf ( pFileOutputST , L"# symTable->typeID  [%ls]\n" 				,(pst->typeID == NULL) ? L"{NULL}" : pst->typeID );
 		
+		//fwprintf ( pFileOutputST , L"# symTable->address [%p]\n" 				,pst->address  );
+		//fwprintf ( pFileOutputST , L"# symTable->typeID  [%ls]\n" 				,(pst->typeID == NULL) ? L"{NULL}" : pst->typeID );
 		
+		// ................................................................................................. CONST VALUE
 		fwprintf ( pFileOutputST , L"# symTable->value   "  );
 		switch ( pst->type )
 		{
-			case stTypeNull  	: fwprintf ( pFileOutputST , L"[stTypeNull]"						); break ;
-			case stTypeInteger  : fwprintf ( pFileOutputST , L"[%ld]"		, pst->value.integer    ); break ;
-			case stTypeReal  	: fwprintf ( pFileOutputST , L"[%lf]"		, pst->value.real		); break ;
-			case stTypeID  		: fwprintf ( pFileOutputST , L"[STRUCT]" 							); break ;  
-			case stTypeString   : fwprintf ( pFileOutputST , L"[%lf]"		, pst->value.string		); break ;
-			case stTypeChar  	: fwprintf ( pFileOutputST , L"[%lc]"		, pst->value.character	); break ;
-			case stTypeByte  	: fwprintf ( pFileOutputST , L"[%u]"		, pst->value.byte		); break ;
+			case stTypeNull  		: fwprintf ( pFileOutputST , L"[stTypeNull]"						); break ;
+			case stTypeInteger  	: fwprintf ( pFileOutputST , L"[%ld]"		, pst->value.integer    ); break ;
+			case stTypeReal  		: fwprintf ( pFileOutputST , L"[%lf]"		, pst->value.real		); break ;
+			case stTypeStruct  		: fwprintf ( pFileOutputST , L"[MEMBER]" 							); break ;  
+			case stTypeConstString	: 
+				fwprintf ( pFileOutputST , L"[%lf]"		, g.outputSpecialCharInString(pst->value.wstring)	); 
+				break ;
+			case stTypeChar  		: 
+				fwprintf ( pFileOutputST , L"[%lc]"		, g.outputSpecialCharInChar(pst->value.wchar)	); 
+				break ;
+			case stTypeByte  		: fwprintf ( pFileOutputST , L"[%u]"		, pst->value.byte		); break ;
 			default:
 				fwprintf ( pFileOutputST , L"[??]"	); 
 				break ;
 		} ;
-		
-		
+
 		fwprintf ( pFileOutputST , L"\n\n");
 	}
 }
-*/
+
 
 #undef $CD
 

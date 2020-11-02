@@ -1,64 +1,71 @@
 
+	array a1 : [10][20] byte ;
+
+	const c1 = "str" ;
 
 
- array a1 : [10][20] byte ;
- 
- const c1 = "str" ;
- 
- 
- var v1a : integer := 100 ; 
+	var v1a : integer := 100 ; 
 
-type point 
-{ 
-	var p1x : integer ;
-	var p2y : integer ,
-		p3z : integer	;
-	array p4a : [12][13] real ;
-} ;
- 
- var v1b : point ; 
+	type point_t 
+	{ 
+		var p1x : integer ;
+		var p2y : integer ,
+			p3z : char	;
+		array p4a : [12][13] real ;
+	} ;
 
- const 	c2 = "a\nb" , 
-		c3 = '\n';
- 
- 
- const  c4 = 'c' ;
- 
- var v3a : real := 12.34 , v3b : char := 'x' ;
+	type line_t
+	{ 
+		var start : point_t ;
+		var stop : point_t ;
+	} ; 
 
- var v4 : char := "stringa" ;
- 
+	var v1b : point_t ; 
+	array linea : [20] line_t ;
 
- var v5 : byte := 0b00000101 ; 
- 
+	const 	c2 = "a\nb" , 
+	c3 = '\n';
 
-function f1 
-( 
-	var x : integer , y : integer ; 
-	array a  :[10] point ;
-) integer 
-{
-	var f1_a : real ;
 
-	8 ;
-	9 ;
+	const  c4 = 'c' ;
 
-} ;
- 
- 
- 1 ;
- 
+	var v3a : real := 12.34 , v3b : char := 'x' ;
+
+	var v4 : char := "stringa" ;
+
+
+	var v5 : byte := 0b00000101 ; 
+
+
+	function f1 
+	( 
+		var x : integer , y : integer ; 
+		array a  :[10] point ;
+	) integer 
+	{
+		var f1_a : real ;
+
+		8 ;
+		9 ;
+
+	} ;
+
+
+	1 ;
+
 
 	! 123 ;
-	 456 ;
+	456 ;
 
-"claudio" ; 1 ;  "" ; 42 ;3 ;
+	"claudio" ; 1 ;  "" ; 42 ;3 ;
 
 	arr[11][12] ;
-	
+
 	f1(100	,	x[21*2][-4]	,	300	); 
-	
+
 	variabile
 
 
-// qui puoi mettere o sym_pv o sym_end
+	// qui puoi mettere o sym_pv o sym_end
+
+

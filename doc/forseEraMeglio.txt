@@ -1,39 +1,46 @@
 
 // lexer 
 
-col senno di poi, creare un vettore di lexermi con già row,col,token e value
-così facevamo solo dei riferimenti nell'AST e node si evitava wcsdup
+	col senno di poi, creare un vettore di lexermi con già row,col,token e value
+	così facevamo solo dei riferimenti nell'AST e node si evitava wcsdup
 
-forse un vettore di strunghe facilitava l'inclusione dei file anzichè uno stack
+	forse un vettore di strunghe facilitava l'inclusione dei file anzichè uno stack
 
-gestire i file inclusi con un vettore e fare dei riferimenti ad esso per evitare wcsdup
+	gestire i file inclusi con un vettore e fare dei riferimenti ad esso per evitare wcsdup
 
-definire meglio
+	definire meglio
 
-row_start , col_start	:	punto di partenza token
-row , col 				:	errore attuale
-row_end , col_end		:	fine token
+	row_start , col_start	:	punto di partenza token
+	row , col 				:	errore attuale
+	row_end , col_end		:	fine token
 
 // ast
 
-meglio dfinire i nodi constInteger , constReal e intege e real ...
+	meglio definire i nodi constInteger , constReal e intege e real ...
 
-blocco :  creae un nodo generico blocco con una struttura a vettori
+	blocco :  creae un nodo generico blocco con una struttura a vettori
 
-blocco -> statement
-blocco -> field
-blocco -> type 
+	blocco -> statement
+	blocco -> field
+	blocco -> type 
 
 // parser
 
-meglio definire entrata e uscita per qunato riguarda l'espressioni
+	expressini posso ritornare NULL se non ci sono vedi array []
+	occorre controllare anche l'espressioni NULL
 
- 8 ; ... 9 }
+	 
  
 // error
- 
-anziche mantenere un vettore di errori , forse era meglio scrivere all'interno di una stringa e mantenere
-un fle di testo, si evitva molteplici wcsup
+	 
+	anziche mantenere un vettore di errori , forse era meglio scrivere all'interno di una stringa e mantenere
+	un fle di testo, si evitva molteplici wcsup
+
+// ast symTable
+
+	come in pico.c -> interpreter.h , li ha messo tutte le definizioni delle strutture e compagnia bella
+	con i riferimento ai file. io li ho suddivisi con qualche (codice bruttino vedi ast.h che include stScope...)
+
 
 
 

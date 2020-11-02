@@ -3,7 +3,18 @@
 
 #include "error.h"
 #include "lexer.h"
-#include "symTable.h"
+//#include "symTable.h"
+
+// .............................................. scope
+
+enum stScope_e
+{
+	stScopeGlobal	,
+	stScopeLocal	,
+	//stScopeFuncParam
+} ;
+
+typedef enum stScope_e stScope_t ;
 
 // .................................... enumerativi nodo
 
