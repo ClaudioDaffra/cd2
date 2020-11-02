@@ -1,1 +1,1 @@
-bin/cd -i tst/x.txt -d
+bin/cd -i tst/x.pas -d
