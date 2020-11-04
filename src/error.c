@@ -78,7 +78,8 @@ errMessage_t errMessage[] =
     { L"undeclared identifier"                                                          } , 
     { L"lvalue required as left operand of assignment"                					} , 
     { L"expected primary-expression before" 											} ,  
-    { L"expected primary-expression after" 												}       
+    { L"expected primary-expression after" 												} ,
+    { L"array bound is not an integer constant before ']'" 								} ,
 } ;
 
 // ................................................... push err log

@@ -123,7 +123,8 @@ typedef enum errMessage_e
     errMessage_undeclaredIdentifier	   		,   // identificatore non dichiarato
     errMessage_LValueRequired		   		,   // e' richiesto un valore sinistro
     errMessage_expectedPrimaryExprBefore	,   // expected primary-expression before [token]
-    errMessage_expectedPrimaryExprAfter   	,   // expected primary-expression before [token    
+    errMessage_expectedPrimaryExprAfter   	,   // expected primary-expression before [token 
+    errMessage_arrayBoundNotInteger			,	// array bound is not an integer constant before ']'    
 } e_errMessage_t;
 
 typedef struct errMessage_s

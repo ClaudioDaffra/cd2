@@ -175,7 +175,9 @@ psymTable_t stMakeSymTable(void)
 	pstNew->id 		= NULL ;
 	
 	pstNew->kind 	= stKindNull ;
+	
 	pstNew->type 	= stTypeNull ;
+	pstNew->typeID  = NULL ;	
 	
 	pstNew->nDim 	= 0 ;
 	vectorNew( pstNew->aDim 	, 3 ) ;
@@ -185,7 +187,7 @@ psymTable_t stMakeSymTable(void)
 	pstNew->size 	= 0 ;
 	pstNew->offset 	= 0 ; 
 	//pstNew->address = NULL ; 
-	pstNew->typeID  = NULL ;
+
 	pstNew->value.integer  = 0 ; // default value
 	
     return pstNew ;

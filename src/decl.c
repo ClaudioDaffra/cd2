@@ -361,7 +361,41 @@ pnode_t  parserArrayDim( pparser_t this )
 		
 		$MATCH( sym_pq0, L'[' ) ;
 		
-		vectorPushBack (  nArrayDim->arrayDim.ndx , parserExpr ( this ) ) ;
+		pnode_t nExpr = parserExpr ( this ) ;
+
+		vectorPushBack (  nArrayDim->arrayDim.ndx , nExpr ) ;
+		
+		$MATCH( sym_pq1, L']' ) ;
+		
+	} while ( this->lexer->sym == sym_pq0 ) ;
+	
+	return nArrayDim ;
+}
+
+pnode_t  parserArrayDimDecl( pparser_t this )
+{
+	node_t* nArrayDim 	=	NULL ;
+	
+	// ................................ [] index
+
+	// alloca un nuovo il blocco del	vettore di array nod	[][][]
+	
+	nArrayDim	=	astMakeNodeArrayDim( this->ast );
+	
+	vectorClear ( nArrayDim->arrayDim.ndx ) ; // azzeralo
+
+	do {
+		
+		$MATCH( sym_pq0, L'[' ) ;
+		
+		pnode_t nExpr = parserExpr ( this ) ;
+	
+		if ( nExpr->type != nTypeTermInteger )
+		{
+			$parserError(parse,arrayBoundNotInteger) ;
+		}
+	
+		vectorPushBack (  nArrayDim->arrayDim.ndx , nExpr ) ;
 		
 		$MATCH( sym_pq1, L']' ) ;
 		
@@ -409,8 +443,11 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 				{
 					parserGetToken(this);
 
-					// parser Array Dim [][][]
-					nArrayDim = parserArrayDim(this);
+					// parser Array Dim [][][] , 
+					// nelle dichiarazioni sono ammessi solo costante intere
+					// contrariamente nell'espressioni parseArrayDim
+					
+					nArrayDim = parserArrayDimDecl(this);
 					
 	// ............................... [integer,real,char,byte,id]
 	
