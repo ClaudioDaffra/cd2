@@ -432,19 +432,22 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 			wchar_t*	idTemp 			= NULL 		;
 			sym_t		symTemp 		= sym_end 	;
 			node_t*		ilTemp			= NULL		;	// initializer list
+			wchar_t*	idTypeTemp 		= NULL 		;
+			stType_t	typeTemp		= stTypeNull;
+			int			sizeTemp		= 0 ;
 			
 			parserGetToken(this);
 
 	// ............................... new sym table
-			//psymTable_t	pstNew = stMakeSymTable() ; // ................... ST
-			//pstNew->kind = stKindVar ; // .............................. ST
+			psymTable_t	pstNew = stMakeSymTable() ; // ................... ST
+			pstNew->kind = stKindArray ; // .............................. ST
  
 	// ............................... [id]
 			if ( this->lexer->sym==sym_id ) 
 			{
 				idTemp = gcWcsDup( this->lexer->token ) ;
 				
-				//pstNew->id = gcWcsDup( lexer.token ) ; // ................ ST
+				pstNew->id = gcWcsDup( this->lexer->token ) ; // ................ ST
 				parserGetToken(this);
 				
 	// ............................... ":"
@@ -465,20 +468,44 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 					switch(this->lexer->sym)
 					{
 						case sym_kw_integer	:
-						case sym_kw_real 	:
-						case sym_kw_char 	:
-						case sym_kw_byte 	:
-						case sym_id 		:
-
+							typeTemp = stTypeInteger ;
+							sizeTemp=sizeof(int64_t);
 							parserGetToken(this);
 							break ;
-						
-						default: 
-						
-							$syntaxError ; 
-							return NULL ;
-							
+						case sym_kw_real 	:
+							typeTemp = stTypeReal ;
+							sizeTemp=sizeof(double);
+							parserGetToken(this);
 							break ;
+						case sym_kw_char 	:
+							typeTemp = stTypeChar ;
+							sizeTemp=sizeof(wchar_t);
+							parserGetToken(this);
+							break ;
+						case sym_kw_byte 	:
+							typeTemp=stTypeByte;
+							sizeTemp=sizeof(unsigned char);
+							parserGetToken(this);
+							break ;
+						case sym_id 		:	// la struttua ha bisogno di un'initializer list
+						{
+							// cerca se l'identificativo è presente
+							psymTable_t pstTemp = stFindIDinMap(this->lexer->token); 
+							
+							idTypeTemp=this->lexer->token ; // memorizza il nome del tipo
+							typeTemp=stTypeStruct;
+							
+							sizeTemp=-1 ; // TODO RIMUOVERE E OTTENERE LA GIUSTA DIMENSIONE
+							
+							if ( !pstTemp ) 
+							{
+								$scannerErrorExtra(scanning,undeclaredIdentifier,this->lexer->fileInputName, this->lexer->token) ;
+								idTypeTemp=NULL;
+							}
+							parserGetToken(this);
+							break ;
+						}
+						default: $syntaxError ; break ;
 					}
 					
 	// ............................... (:=)?
@@ -506,22 +533,24 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 				$syntaxError ; 
 				return NULL ;
 			}
-		
-			//
-/*			
-			stDebugSymTableNode(pstNew) ; // DEBUG
+
 			// cerca se l'identificativo è già presente, nella ST il nuovo e' ancora da inserire
 			psymTable_t pstTemp = stFindIDinMap(pstNew->id); 
 			
 			if ( pstTemp ) 
 			{
-				$scannerErrorExtra(scanning,duplicateSymbolName,pstNew->id) ;
+				$scannerErrorExtra(scanning,duplicateSymbolName,this->lexer->fileInputName, pstNew->id) ;;
 			}
 			
 			whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew ); // altrimenti inserisci name space + id
-*/	
+			pstNew->typeID = gcWcsDup(idTypeTemp) ;
+			pstNew->type   = typeTemp ;
+			pstNew->size   = sizeTemp ;
+					
+			stDebugSymTableNode(pstNew) ; // DEBUG	
+			
 			// ---------------
-			// make node Var
+			// make node Array
 			// ---------------
 			
 			n = astMakeNodeDeclArray( this->ast , idTemp , nArrayDim , symTemp, ilTemp  , scope  ) ;
@@ -625,7 +654,7 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 				}
 				
 				// TODO inserisci la struttura senza dimensioni
-				whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew );t
+				whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew );
 			}
 			else 
 			{

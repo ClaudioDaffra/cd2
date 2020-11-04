@@ -20,11 +20,11 @@
 		var stop : point_t ;
 	} ; 
 
-/*
+
 	var v2 : point_t ; 
 	
 	array linea : [20] line_t ;
-*/
+
 	const 	c2 = "a\nb" , 
 	c3 = '\n';
 
@@ -38,11 +38,11 @@
 
 	var v6 : byte := 0b00000101 ; 
 
-/*
+
 	function f1 
 	( 
 		var f1_v7 : integer , f1_v8 : integer ; 
-		array a  :[10] point ;
+		array a  :[10] point_t ;
 	) integer 
 	{
 		var f1_v9 : real ;
@@ -52,7 +52,7 @@
 		9 ;
 
 	} ;
-*/
+
 
 	1 ;
 
