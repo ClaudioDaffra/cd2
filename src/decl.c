@@ -202,6 +202,7 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 			node_t*		exprTemp		= NULL		;
 			wchar_t*	idTypeTemp 		= NULL 		;
 			stType_t	typeTemp		= stTypeNull;
+			int			sizeTemp		= 0 ;
 			
 			parserGetToken(this);
 
@@ -234,18 +235,22 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 					{
 						case sym_kw_integer	:
 							typeTemp = stTypeInteger ;
+							sizeTemp=sizeof(int64_t);
 							parserGetToken(this);
 							break ;
 						case sym_kw_real 	:
 							typeTemp = stTypeReal ;
+							sizeTemp=sizeof(double);
 							parserGetToken(this);
 							break ;
 						case sym_kw_char 	:
 							typeTemp = stTypeChar ;
+							sizeTemp=sizeof(wchar_t);
 							parserGetToken(this);
 							break ;
 						case sym_kw_byte 	:
 							typeTemp=stTypeByte;
+							sizeTemp=sizeof(unsigned char);
 							parserGetToken(this);
 							break ;
 						case sym_id 		:	// la struttua ha bisogno di un'initializer list
@@ -255,6 +260,9 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 							
 							idTypeTemp=this->lexer->token ; // memorizza il nome del tipo
 							typeTemp=stTypeStruct;
+							
+							sizeTemp=-1 ; // TODO RIMUOVERE E OTTENERE LA GIUSTA DIMENSIONE
+							
 							if ( !pstTemp ) 
 							{
 								$scannerErrorExtra(scanning,undeclaredIdentifier,this->lexer->fileInputName, this->lexer->token) ;
@@ -305,6 +313,7 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 				whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew ); // altrimenti inserisci name space + id
 				pstNew->typeID = gcWcsDup(idTypeTemp) ;
 				pstNew->type   = typeTemp ;
+				pstNew->size   = sizeTemp ;
 			}
 			
 			stDebugSymTableNode(pstNew) ; // DEBUG
@@ -564,8 +573,6 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 		psymTable_t	pstNew = stMakeSymTable() ; // ................... ST
 		pstNew->kind = stKindStruct ; // ............................. ST
 	
-
-		
 	// ............................... [id]
 			if ( this->lexer->sym==sym_id ) 
 			{
@@ -617,6 +624,8 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 					}
 				}
 				
+				// TODO inserisci la struttura senza dimensioni
+				whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew );t
 			}
 			else 
 			{

@@ -114,6 +114,7 @@ typedef struct nodeDeclVar_s
 	sym_t		sym			;		//	sym_kw_integer , sym_kw_real , sym_kw_char , sym_kw_byte  , sym_id
 	stScope_t	scope		;		//	local global	
 	pnode_t		expr		;		//	expr
+	int			size		;		//  sizeof
 } nodeDeclVar_t ;
 
 // .................................... array dim [][][]
@@ -134,6 +135,7 @@ typedef struct nodeDeclArray_s
 	stScope_t	scope		;		//	local global	
 	pnode_t		dim			;		//  vettore dimensioni
 	pnode_t		il			;		//	initializer list
+	int			size		;		//  sizeof
 } nodeDeclArray_t ;
 
 // .................................... nodo	Var globali / locali

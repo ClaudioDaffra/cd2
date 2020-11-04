@@ -13,13 +13,13 @@
 			p3z : char	;
 		array p4a : [12][13] real ;
 	} ;
-/*
+
 	type line_t
 	{ 
 		var start : point_t ;
 		var stop : point_t ;
 	} ; 
-*/
+
 /*
 	var v2 : point_t ; 
 	

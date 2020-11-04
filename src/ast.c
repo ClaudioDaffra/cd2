@@ -271,7 +271,8 @@ pnode_t 	astMakeNodeDeclVar	( past_t this , wchar_t* id ,  sym_t sym , pnode_t _
 	nNew->declVar.sym		=	sym				;
 	nNew->declVar.expr		=	_expr			;
 	nNew->declVar.scope		=	scope 			;
-
+	//nNew->declVar.size  	=   0 ;
+	
 	return nNew ;
 }
 
@@ -291,7 +292,7 @@ pnode_t 	astMakeNodeDeclArray	( past_t this , wchar_t* id ,  pnode_t _dim  , sym
 	nNew->declArray.sym			=	sym				;
 	nNew->declArray.il			=	_il				;
 	nNew->declArray.scope		=	scope 			;
-
+	//nNew->declArray.size  		=   0 ;
 
 	return nNew ;
 }
@@ -391,7 +392,6 @@ pnode_t 	astMakeNodeTermArray	( past_t this , wchar_t* id  , pnode_t pArrayDim )
 	return nNew ;
 }
 
-
 // TERM FUNCTION
 
 pnode_t 	astMakeNodeTermFunction	( past_t this , wchar_t* id  , pnode_t pArrayParam ) 
@@ -408,8 +408,6 @@ pnode_t 	astMakeNodeTermFunction	( past_t this , wchar_t* id  , pnode_t pArrayPa
 
 	return nNew ;
 }
-
-
 
 // ***********
 // astDebug
