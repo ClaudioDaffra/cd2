@@ -6,7 +6,10 @@
 #include "symTable.h"
 
 
-// ................................................... declaration
+// ************
+// DECLARATION
+// ************
+
 
 /*
  
@@ -28,10 +31,6 @@
 pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 {
 	if ( kError ) return NULL  ;  
-	
-	// *****
-	// BEGIN
-	// *****
 
 	node_t* nBlock=astMakeNodeBlock(this->ast) ;
 
@@ -129,7 +128,6 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 				return NULL ;
 			}
 			
-			//
 			stDebugSymTableNode(pstNew) ; // DEBUG
 
 			// cerca se l'identificativo è già presente, nella ST il nuovo e' ancora da inserire
@@ -166,10 +164,6 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 	
 	}
 
-	// ***
-	// END
-	// ***
-		
 	if ( kError ) return NULL ; 
 
  return nBlock ;
@@ -192,10 +186,6 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 {
 	if ( kError ) return NULL  ;  
-	
-	// *****
-	// BEGIN
-	// *****
 
 	node_t* nBlock=astMakeNodeBlock(this->ast) ;
 
@@ -210,19 +200,21 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 			wchar_t*	idTemp 			= NULL 		;
 			sym_t		symTemp 		= sym_end 	;
 			node_t*		exprTemp		= NULL		;
-
+			wchar_t*	idTypeTemp 		= NULL 		;
+			
 			parserGetToken(this);
 
 	// ............................... new sym table
-			//psymTable_t	pstNew = stMakeSymTable() ; // ................... ST
-			//pstNew->kind = stKindVar ; // .............................. ST
+			psymTable_t	pstNew = stMakeSymTable() ; // ................... ST
+			pstNew->kind 	= stKindVar ; // ............................. ST
+			pstNew->scope 	= scope ; // ................................. ST
  
 	// ............................... [id]
 			if ( this->lexer->sym==sym_id ) 
 			{
 				idTemp = gcWcsDup( this->lexer->token ) ;
 				
-				//pstNew->id = gcWcsDup( lexer.token ) ; // ................ ST
+				pstNew->id = gcWcsDup( this->lexer->token ) ; // ......... ST
 				parserGetToken(this);
 				
 	// ............................... ":"
@@ -230,7 +222,7 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 				{
 					parserGetToken(this);
 
-	// ............................... [integer,real,char,byte]
+	// ............................... [integer,real,char,byte,id]
 	
 					symTemp = this->lexer->sym ;
 					
@@ -249,11 +241,22 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 							break ;
 							
 						case sym_id 		:	// la struttua ha bisogno di un'initializer list
-						
+						{
+							// cerca se l'identificativo è presente
+							psymTable_t pstTemp = stFindIDinMap(this->lexer->token); 
+							
+							idTypeTemp=this->lexer->token ; // memorizza il nome del tipo
+							
+							if ( !pstTemp ) 
+							{
+								$scannerErrorExtra(scanning,undeclaredIdentifier,this->lexer->fileInputName, this->lexer->token) ;
+								idTypeTemp=NULL;
+							}
 							fInitializerTerm = 0 ;
 							parserGetToken(this);
-							break ;
 						
+							break ;
+						}
 						default: $syntaxError ; break ;
 					}
 					
@@ -264,8 +267,9 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 						if ( this->lexer->sym==sym_assign ) 
 						{
 							parserGetToken(this);
-							
-							exprTemp = parserExpr(this);
+							// essendo un espressione non sappiamo ancora il tipo che ritorna
+							// verrà analizzato più tardi nella fase di assemblaggio ( push/pop term )
+							exprTemp = parserExpr(this); // pu0 anche essere NULL e assegnato il tipo di default.
 						}
 					}
 					
@@ -282,19 +286,21 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 				return NULL ;
 			}
 		
-			//
-/*			
 			stDebugSymTableNode(pstNew) ; // DEBUG
+
 			// cerca se l'identificativo è già presente, nella ST il nuovo e' ancora da inserire
 			psymTable_t pstTemp = stFindIDinMap(pstNew->id); 
 			
 			if ( pstTemp ) 
 			{
-				$scannerErrorExtra(scanning,duplicateSymbolName,pstNew->id) ;
+				$scannerErrorExtra(scanning,duplicateSymbolName,this->lexer->fileInputName, pstNew->id) ;
+			}
+			else
+			{
+				whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew ); // altrimenti inserisci name space + id
+				pstNew->typeID = gcWcsDup(idTypeTemp) ;
 			}
 			
-			whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew ); // altrimenti inserisci name space + id
-*/	
 			// ---------------
 			// make node Var
 			// ---------------
@@ -313,15 +319,10 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 	
 	}
 
-	// ***
-	// END
-	// ***
-		
 	if ( kError ) return NULL ; 
 
  return nBlock ;
 }
-
 
 /*
  
@@ -364,11 +365,7 @@ pnode_t  parserArrayDim( pparser_t this )
 pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 {
 	if ( kError ) return NULL  ;  
-	
-	// *****
-	// BEGIN
-	// *****	
-	
+
 	node_t* nBlock		=	astMakeNodeBlock(this->ast) ;	// alloca il blocco del vettore di nodi			decl,decl,decl
 
 	node_t* nArrayDim 	=	NULL ; // global all'interno della funzione
@@ -498,10 +495,6 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 	
 	}
 
-	// ***
-	// END
-	// ***
-		
 	if ( kError ) return NULL ; 
 
  return nBlock ;
@@ -522,11 +515,7 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 {
 	if ( kError ) return NULL  ;  
-	
-	// *****
-	// BEGIN
-	// *****	
-	
+
 	node_t* 	nBlock				=	astMakeNodeBlock(this->ast) ;	// alloca il blocco del vettore di nodi			field,field,field
 	node_t*		pnode 				= 	NULL ;
 	node_t* 	nBlockVectorTemp 	= 	NULL ;
@@ -595,10 +584,6 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 		$MATCH( sym_pv , L';' ) ;
 	}
 
-	// ***
-	// END
-	// ***
-		
 	if ( kError ) return NULL ; 
 
  return pnode ;
@@ -643,7 +628,6 @@ pnode_t parserDeclaration( pparser_t this , node_t* nBlock , stScope_t	scope )
 	return nBlock ;
 }
 
-
 /*
  
 	### {parserDeclFunction}
@@ -658,10 +642,6 @@ pnode_t parserDeclaration( pparser_t this , node_t* nBlock , stScope_t	scope )
 pnode_t  parserDeclFunction( pparser_t this )
 {
 	if ( kError ) return NULL  ;  
-
-	// *****
-	// BEGIN
-	// *****	
 
 	node_t* 	nBlockParam			=	astMakeNodeBlock(this->ast) ;	// alloca il blocco del vettore di nodi			param,param,param
 	node_t* 	nBlockCode			=	astMakeNodeBlock(this->ast) ;
@@ -760,7 +740,6 @@ pnode_t  parserDeclFunction( pparser_t this )
 			
 			// crea nodo type 
 			pnode = astMakeNodeDeclFunction( this->ast , idTemp ,  retTypeTemp ,  NULL , nBlockCode ) ;
- ;
 
 /*			
 			// inserisci i nodi nel vettore campi ( field )
@@ -782,10 +761,6 @@ pnode_t  parserDeclFunction( pparser_t this )
 		$MATCH( sym_pv , L';' ) ;
 	}
 
-	// ***
-	// END
-	// ***
-		
 	if ( kError ) return NULL ; 
 
  return pnode ;

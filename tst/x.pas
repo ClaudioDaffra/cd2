@@ -4,7 +4,7 @@
 	const c1 = "str" ;
 
 
-	var v1a : integer := 100 ; 
+	var v1 : integer := 100 ; 
 
 	type point_t 
 	{ 
@@ -13,44 +13,46 @@
 			p3z : char	;
 		array p4a : [12][13] real ;
 	} ;
-
+/*
 	type line_t
 	{ 
 		var start : point_t ;
 		var stop : point_t ;
 	} ; 
-
-	var v1b : point_t ; 
+*/
+/*
+	var v2 : point_t ; 
+	
 	array linea : [20] line_t ;
-
+*/
 	const 	c2 = "a\nb" , 
 	c3 = '\n';
 
 
 	const  c4 = 'c' ;
 
-	var v3a : real := 12.34 , v3b : char := 'x' ;
+	var v3 : real := 12.34 , v4 : char := 'x' ;
 
-	var v4 : char := "stringa" ;
-
-
-	var v5 : byte := 0b00000101 ; 
+	var v5 : char := "stringa" ;
 
 
+	var v6 : byte := 0b00000101 ; 
+
+/*
 	function f1 
 	( 
-		var x : integer , y : integer ; 
+		var f1_v7 : integer , f1_v8 : integer ; 
 		array a  :[10] point ;
 	) integer 
 	{
-		var f1_a : real ;
-		const f1_c = 0xffff ;
+		var f1_v9 : real ;
+		const f1_c5 = 0xffff ;
 		
 		8 ;
 		9 ;
 
 	} ;
-
+*/
 
 	1 ;
 

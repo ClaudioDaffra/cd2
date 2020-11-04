@@ -80,7 +80,8 @@ struct symTable_s
 	wstring_t 				ns 	 		 ; // path
 	wstring_t 				id 			 ; // name
 	stKind_t				kind 		 ; // categoria 	: Const/Var/Array/Type/Function
-	stType_t 				type 		 ; // tipo	atomico	: Integer/Real/String/Char/Byte
+	stType_t 				type 		 ; // tipo	atomico	: Integer/Real/String/Char/Byte/Struct
+	wstring_t 				typeID 	 	 ; // struct name
 	
 	uint32_t				nDim		 ; // numero delle dimensioni dell'array
 	vectorStruct(pnode_t,   aDim)		 ; // dimensioni dell'array MAXX,MAXY,MAXZ ... ( DIM / NDX ) ;
@@ -90,7 +91,7 @@ struct symTable_s
  	size_t					size		 ; // dimesioni dell'oggetto
  	size_t					offset		 ; // posizione dell'oggetto
  	//void*					address		 ; // indirizzo nello HEAP(global) / STACK(local)
-	//wstring_t 			typeID 	 	 ; // struct name
+
 	
 	
 	union // mantenuto solo per le const

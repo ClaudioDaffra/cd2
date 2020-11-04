@@ -185,7 +185,7 @@ psymTable_t stMakeSymTable(void)
 	pstNew->size 	= 0 ;
 	pstNew->offset 	= 0 ; 
 	//pstNew->address = NULL ; 
-	//pstNew->typeID  = NULL ;
+	pstNew->typeID  = NULL ;
 	pstNew->value.integer  = 0 ; // default value
 	
     return pstNew ;
