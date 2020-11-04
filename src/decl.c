@@ -13,7 +13,7 @@
 
 /*
  
-	### {parserDeclConst}
+	### {parserDeclConst+st}
 
 	"const" -> #1	[id] 	-> "=" 	|->	const 	integer		|->		|				->	";" -> #2
 									|->	const	real		|-^		|-> "," -> #1
@@ -127,8 +127,7 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 				$syntaxError ; 
 				return NULL ;
 			}
-			
-			stDebugSymTableNode(pstNew) ; // DEBUG
+
 
 			// cerca se l'identificativo è già presente, nella ST il nuovo e' ancora da inserire
 			psymTable_t pstTemp = stFindIDinMap(pstNew->id); 
@@ -141,6 +140,8 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 			{
 				whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew ); // altrimenti inserisci name space + id
 			}
+			
+			stDebugSymTableNode(pstNew) ; // DEBUG
 			
 			// ---------------
 			// make node const
@@ -171,7 +172,7 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 
 /*
  
-	### {parserDeclVar}
+	### {parserDeclVar+st}
 
 	"Var" -> #1	[id] 	-> ":"	|->		integer		|->		|										->	";" -> #2
 								|->		real		|-^		|-> 					->	"," -> #1
@@ -179,7 +180,6 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 								|->		byte		|-^
 								|->		id			|		|->	:=	->	InitList	->
 	#2
-
 
 */
 
@@ -201,6 +201,7 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 			sym_t		symTemp 		= sym_end 	;
 			node_t*		exprTemp		= NULL		;
 			wchar_t*	idTypeTemp 		= NULL 		;
+			stType_t	typeTemp		= stTypeNull;
 			
 			parserGetToken(this);
 
@@ -232,21 +233,28 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 					switch(this->lexer->sym)
 					{
 						case sym_kw_integer	:
-						case sym_kw_real 	:
-						case sym_kw_char 	:
-						case sym_kw_byte 	:
-
-							fInitializerTerm = 1;
+							typeTemp = stTypeInteger ;
 							parserGetToken(this);
 							break ;
-							
+						case sym_kw_real 	:
+							typeTemp = stTypeReal ;
+							parserGetToken(this);
+							break ;
+						case sym_kw_char 	:
+							typeTemp = stTypeChar ;
+							parserGetToken(this);
+							break ;
+						case sym_kw_byte 	:
+							typeTemp=stTypeByte;
+							parserGetToken(this);
+							break ;
 						case sym_id 		:	// la struttua ha bisogno di un'initializer list
 						{
 							// cerca se l'identificativo è presente
 							psymTable_t pstTemp = stFindIDinMap(this->lexer->token); 
 							
 							idTypeTemp=this->lexer->token ; // memorizza il nome del tipo
-							
+							typeTemp=stTypeStruct;
 							if ( !pstTemp ) 
 							{
 								$scannerErrorExtra(scanning,undeclaredIdentifier,this->lexer->fileInputName, this->lexer->token) ;
@@ -254,7 +262,6 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 							}
 							fInitializerTerm = 0 ;
 							parserGetToken(this);
-						
 							break ;
 						}
 						default: $syntaxError ; break ;
@@ -286,8 +293,6 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 				return NULL ;
 			}
 		
-			stDebugSymTableNode(pstNew) ; // DEBUG
-
 			// cerca se l'identificativo è già presente, nella ST il nuovo e' ancora da inserire
 			psymTable_t pstTemp = stFindIDinMap(pstNew->id); 
 			
@@ -299,7 +304,10 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 			{
 				whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew ); // altrimenti inserisci name space + id
 				pstNew->typeID = gcWcsDup(idTypeTemp) ;
+				pstNew->type   = typeTemp ;
 			}
+			
+			stDebugSymTableNode(pstNew) ; // DEBUG
 			
 			// ---------------
 			// make node Var
@@ -400,19 +408,8 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 				if ( this->lexer->sym==sym_dp ) 
 				{
 					parserGetToken(this);
-/*
-	// ................................ [] index
 
-					// alloca un nuovo il blocco del	vettore di array nod	[][][]
-					nArrayDim	=	astMakeNodeArrayDim( this->ast );	
-					vectorClear ( nArrayDim->arrayDim.ndx ) ; // azzeralo
-					
-					do {
-						$MATCH( sym_pq0, L'[' ) ;
-						vectorPushBack (  nArrayDim->arrayDim.ndx , parserExpr ( this ) ) ;
-						$MATCH( sym_pq1, L']' ) ;
-					} while ( this->lexer->sym == sym_pq0) ;
-*/
+					// parser Array Dim [][][]
 					nArrayDim = parserArrayDim(this);
 					
 	// ............................... [integer,real,char,byte,id]
@@ -500,7 +497,6 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
  return nBlock ;
 }
 
-
 /*
  
 	### {parserDeclType}
@@ -528,17 +524,25 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 	{ 
 		parserGetToken(this);
 		
+		psymTable_t	pstNew = stMakeSymTable() ; // ................... ST
+		pstNew->kind = stKindStruct ; // ............................. ST
+	
+
+		
 	// ............................... [id]
 			if ( this->lexer->sym==sym_id ) 
 			{
+				vectorPushBack(stNameSpace,gcWcsDup( this->lexer->token )) ; // . ST
+				
 				idTemp = gcWcsDup( this->lexer->token ) ;
 				
-				//pstNew->id = gcWcsDup( lexer.token ) ; // ................ ST
+				pstNew->id = gcWcsDup( this->lexer->token ) ; // ................ ST
+				
 				parserGetToken(this);
 		
 				$MATCH( sym_pg0 , L'{' ) ; 
 		
-				do {
+				do {	// dal ciclo vengono eliminate le dichiarazioni delle Const.
 					
 					fDecl=0; 
 					
@@ -557,30 +561,31 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 						
 				$MATCH( sym_pg1 , L'}' ) ;
 				
+				vectorPopBack(stNameSpace ) ; // ................................ ST
+				
+				// crea nodo type 
+				pnode = astMakeNodeDeclType( this->ast , idTemp ,  scope ) ;
+				
+				// inserisci i nodi nel vettore campi ( field )
+				
+				// TODO struct without field -> error
+				// TODO CALCOLA LA DIMENSIONE DELLA STRUTTURA
+				const size_t kVectorSize = vectorSize ( nBlock->block.next ) ;
+				for ( uint32_t i = 0 ; i < kVectorSize ; i++ )
+				{
+					pnode_t  node = nBlock->block.next.data[i] ;
+					if ( node != NULL ) 
+					{
+						vectorPushBack( pnode->declType.field , node  ) ;
+					}
+				}
+				
 			}
 			else 
 			{
 				$syntaxError ; 
 				return NULL ;
 			} 
-			
-			// crea nodo type 
-			pnode = astMakeNodeDeclType( this->ast , idTemp ,  scope ) ;
-			
-			// inserisci i nodi nel vettore campi ( field )
-			
-			// TODO struct without field -> error
-			
-			const size_t kVectorSize = vectorSize ( nBlock->block.next ) ;
-			for ( uint32_t i = 0 ; i < kVectorSize ; i++ )
-			{
-				pnode_t  node = nBlock->block.next.data[i] ;
-				if ( node != NULL ) 
-				{
-					vectorPushBack( pnode->declType.field , node  ) ;
-				}
-			}
-
 		$MATCH( sym_pv , L';' ) ;
 	}
 

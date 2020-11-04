@@ -48,6 +48,8 @@ char* makeFileWithNewExt( char* pFileName , char* newExt )
 
 wchar_t	outputSpecialCharInChar( wchar_t _wchar )
 {
+	if ( _wchar==0 ) return L'§';
+	
 	// \r viene saltato \f \v \t \f \' \" \\ vengono trasformati
 	wchar_t wchar = _wchar ;
 	
@@ -68,6 +70,8 @@ wchar_t	outputSpecialCharInChar( wchar_t _wchar )
 
 wchar_t*	outputSpecialCharInString( wchar_t* token )
 {
+	if ( token == NULL ) return gcWcsDup(L"{null}");
+	
 	for ( size_t i=0; i < wcslen( token ) ; i++ )
 	{
 		token[i] = outputSpecialCharInChar( token[i] ) ;

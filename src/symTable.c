@@ -261,7 +261,7 @@ void stDebugSymTableNode(psymTable_t pst)
 		fwprintf ( pFileOutputST , L"# symTable->offset  [%d]\n" 				,(int)pst->offset  );
 		
 		//fwprintf ( pFileOutputST , L"# symTable->address [%p]\n" 				,pst->address  );
-		//fwprintf ( pFileOutputST , L"# symTable->typeID  [%ls]\n" 				,(pst->typeID == NULL) ? L"{NULL}" : pst->typeID );
+		fwprintf ( pFileOutputST , L"# symTable->typeID  [%ls]\n" 				,(pst->typeID == NULL) ? L"{NULL}" : pst->typeID );
 		
 		// ................................................................................................. CONST VALUE
 		fwprintf ( pFileOutputST , L"# symTable->value   "  );
