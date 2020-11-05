@@ -1,13 +1,15 @@
 
-file node            : [0x0000561ea240ee40] -> [tst/x.node          ]
+file node            : [0x000055ee9206cd90] -> [tst/x.node          ]
 
-node [0x0000561ea241e8b0] block     
+node [0x000055ee9207c710] block     
 
-node [0x0000561ea241e8b0] -> [000/000]::[0x0000561ea2446ee0]
-node [0x0000561ea2446ee0] DeclType   :: id[line_t]  : scope[000]
+node [0x000055ee9207c710] -> [000/000]::[0x000055ee920a49e0]
+node [0x000055ee920a49e0] DeclType   :: id[line_t]  : scope[000]
 
 {
-node [0x0000561ea2434f50] DeclVar    :: id[start] sym[105] expr[             (nil)] scope[000]
-node [0x0000561ea2445fd0] DeclVar    :: id[stop] sym[106] expr[             (nil)] scope[000]
+node [0x000055ee92092da0] DeclVar    :: id[vvv] sym[105] expr[             (nil)] scope[000]
+node [0x000055ee92097b90] term integer :: [10] { 079/023 :: 10 }
+node [0x000055ee92097630] ArrayDim   :: dim[1]
+node [0x000055ee920a3f90] DeclArray  :: id[aaa]  : dim[0x000055ee92097630] sym[106] il[             (nil)] scope[000]
 }
 

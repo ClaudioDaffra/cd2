@@ -279,7 +279,17 @@ void stDebugSymTableNode(psymTable_t pst)
 			case stTypeNull  		: fwprintf ( pFileOutputST , L"[stTypeNull]"						); break ;
 			case stTypeInteger  	: fwprintf ( pFileOutputST , L"[%ld]"		, pst->value.integer    ); break ;
 			case stTypeReal  		: fwprintf ( pFileOutputST , L"[%lf]"		, pst->value.real		); break ;
-			case stTypeStruct  		: fwprintf ( pFileOutputST , L"[MEMBER]" 							); break ;  
+			case stTypeStruct  		: 
+			{
+			fwprintf ( pFileOutputST , L"[MEMBER]::"	);
+			const size_t kVectorSize = vectorSize ( pst->member ) ;
+
+			for ( uint32_t i = 0 ; i < kVectorSize ; i++ )
+			{
+				fwprintf ( pFileOutputST , L" {%ls} " , pst->member.data[i] ) ;
+			}
+			break ;  
+			}
 			case stTypeConstString	: fwprintf ( pFileOutputST , L"[%ls]"		, g.outputSpecialCharInString(pst->value.wstring)	); break ;
 			case stTypeChar  		: fwprintf ( pFileOutputST , L"[%lc]"		, g.outputSpecialCharInChar(pst->value.wchar)		); break ;
 			case stTypeByte  		: fwprintf ( pFileOutputST , L"[%u]"		, pst->value.byte		); break ;
@@ -288,21 +298,38 @@ void stDebugSymTableNode(psymTable_t pst)
 				break ;
 		} ;
 
-fwprintf ( pFileOutputST , L"\n------------------------------------------\n");
-
-	const size_t kVectorSize = vectorSize ( pst->member ) ;
-
-	for ( uint32_t i = 0 ; i < kVectorSize ; i++ )
-	{
-	fwprintf ( pFileOutputST , L"{{{%ls}}}" , pst->member.data[i] ) ;
-	}
-
-fwprintf ( pFileOutputST , L"\n------------------------------------------\n");
-
 		fwprintf ( pFileOutputST , L"\n\n");
 	}
 }
 
+
+size_t stGetSize( pnode_t node )
+{
+	psymTable_t	pstTemp = NULL ;
+
+	//fwprintf ( stderr , L"\n@@@[%d]",(int)pstTemp->size) ;
+	
+	size_t size = 0 ;
+	
+	switch ( node->type )
+	{
+		case nTypeDeclVar :
+			pstTemp = stFindIDinMap(node->declVar.id) ;
+			break;
+			
+		case nTypeDeclArray :
+			pstTemp = stFindIDinMap(node->declArray.id) ;
+			break;
+			
+		default:
+			fwprintf(stderr, L"\n?? internal error :: stGetSize -> switch ( node->type ) = unknown.\n");
+			exit(-1);
+			break;
+	}
+	
+	if ( pstTemp != NULL ) size = pstTemp->size ;	
+	return size ;
+}
 
 #undef $CD
 

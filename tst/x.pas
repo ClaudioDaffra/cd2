@@ -75,6 +75,6 @@
 
 	type line_t
 	{ 
-		var start : integer ;
-		var stop : real ;
+		var  	vvv : integer ;
+		array 	aaa : [10] real ;
 	} ; 

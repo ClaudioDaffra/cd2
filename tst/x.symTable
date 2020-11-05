@@ -5,14 +5,14 @@
 # symTable   -> stGet_nsid [\].
 # symTable   -> stMakeSymTable ...
 # symTable   -> stGet_nsid [\line_t].
-# symTable   -> stGet_nsid [\start].
-# symTable   -> stGet_nsid [\line_tstart].
-# symTable   -> stGet_nsid [\line_tstart].
+# symTable   -> stGet_nsid [\vvv].
+# symTable   -> stGet_nsid [\line_tvvv].
+# symTable   -> stGet_nsid [\line_tvvv].
 
-# DEBUG ST [0x561ea2424900] ->
+# DEBUG ST [0x55ee92082760] ->
 # symTable->scope   [0] :: [Global]
 # symTable->ns      [\line_t]
-# symTable->id      [start]
+# symTable->id      [vvv]
 # symTable->kind    [2] :: [Var]
 # symTable->type    [1] :: [stTypeInteger]
 # symTable->nDim    [0] / 
@@ -21,59 +21,51 @@
 # symTable->offset  [0]
 # symTable->typeID  [{NULL}]
 # symTable->value   [0]
-------------------------------------------
-
-------------------------------------------
-
 
 # symTable   -> stMakeSymTable ...
 # symTable   -> stGet_nsid [\line_t].
-# symTable   -> stGet_nsid [\stop].
-# symTable   -> stGet_nsid [\line_tstop].
-# symTable   -> stGet_nsid [\line_tstop].
+# symTable   -> stGet_nsid [\aaa].
+# symTable   -> stGet_nsid [\line_taaa].
+# symTable   -> stGet_nsid [\line_taaa].
 
-# DEBUG ST [0x561ea2435a40] ->
+# DEBUG ST [0x55ee920933d0] ->
 # symTable->scope   [0] :: [Global]
 # symTable->ns      [\line_t]
-# symTable->id      [stop]
-# symTable->kind    [2] :: [Var]
+# symTable->id      [aaa]
+# symTable->kind    [3] :: [Array]
 # symTable->type    [2] :: [stTypeReal]
-# symTable->nDim    [0] / 
+# symTable->nDim    [1] / [10]
 # symTable->member  [0] / 
-# symTable->size    [8]
+# symTable->size    [80]
 # symTable->offset  [0]
 # symTable->typeID  [{NULL}]
 # symTable->value   [0.000000]
-------------------------------------------
 
-------------------------------------------
+# symTable   -> stGet_nsid [\line_tline_t].
+# symTable   -> stGet_nsid [\vvv].
+# symTable   -> stGet_nsid [\line_tvvv].
+# symTable   -> stGet_nsid [\aaa].
+# symTable   -> stGet_nsid [\line_taaa].
 
-
-# symTable   -> stGet_nsid [\line_t].
-
-# DEBUG ST [0x561ea24200d0] ->
+# DEBUG ST [0x55ee9207df30] ->
 # symTable->scope   [0] :: [Global]
 # symTable->ns      [\]
 # symTable->id      [line_t]
 # symTable->kind    [4] :: [Struct]
-# symTable->type    [4] :: [stTypeByte]
+# symTable->type    [5] :: [stTypeStruct]
 # symTable->nDim    [0] / 
-# symTable->member  [2] / [0x561ea244b1f0][0x561ea244b240]
-# symTable->size    [0]
+# symTable->member  [2] / [0x55ee920a8d00][0x55ee920b0e90]
+# symTable->size    [88]
 # symTable->offset  [0]
 # symTable->typeID  [{NULL}]
-# symTable->value   [0]
-------------------------------------------
-{{{start}}}{{{stop}}}
-------------------------------------------
-
+# symTable->value   [MEMBER]:: {vvv}  {aaa} 
 
 
 §§§ List symbol in table : 
 
-§§§ ((\line_tstart        ,0x561ea2424900)) 
-§§§ ((\line_tstop         ,0x561ea2435a40)) 
-§§§ ((\line_t             ,0x561ea24200d0)) 
+§§§ ((\line_tvvv          ,0x55ee92082760)) 
+§§§ ((\line_taaa          ,0x55ee920933d0)) 
+§§§ ((\line_tline_t       ,0x55ee9207df30)) 
 
 # symTable   -> denitialized . 
 

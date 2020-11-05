@@ -129,6 +129,7 @@ void 		stShowMap				(void) ;
 #define 	stGetFullName(ID) 		stGet_nsid(0,ID)
 
 psymTable_t stFindIDinMap			(wchar_t* id) ;
+size_t 		stGetSize				( pnode_t node ) ;
 
 #endif
 

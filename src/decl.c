@@ -128,7 +128,6 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
 				return NULL ;
 			}
 
-
 			// cerca se l'identificativo è già presente, nella ST il nuovo e' ancora da inserire
 			psymTable_t pstTemp = stFindIDinMap(pstNew->id); 
 			
@@ -616,7 +615,7 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 		
 		psymTable_t	pstNew = stMakeSymTable() ; // ................... ST
 		pstNew->kind = stKindStruct ; // ............................. ST
-		pstNew->type = stKindStruct ; // ............................. ST
+		pstNew->type = stTypeStruct ; // ............................. ST
 		
 	// ............................... [id]
 			if ( this->lexer->sym==sym_id ) 
@@ -650,7 +649,7 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 						
 				$MATCH( sym_pg1 , L'}' ) ;
 				
-				vectorPopBack(stNameSpace ) ; // ................................ ST
+//vectorPopBack(stNameSpace ) ; // ................................ ST
 				
 				// crea nodo type 
 				pnode = astMakeNodeDeclType( this->ast , idTemp ,  scope ) ;
@@ -663,6 +662,7 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 				whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew );
 				
 				const size_t kVectorSize = vectorSize ( nBlock->block.next ) ;
+				size_t structSize=0;
 				for ( uint32_t i = 0 ; i < kVectorSize ; i++ )
 				{
 					pnode_t  node = nBlock->block.next.data[i] ;
@@ -670,15 +670,23 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 					{
 						vectorPushBack( pnode->declType.field , node  ) ;
 						// inserisci i campi nel tipo
-						if ( node->type == nTypeDeclVar 	) vectorPushBack( pstNew->member , gcWcsDup(node->declVar.id) 	) ;
-						if ( node->type == nTypeDeclArray 	) vectorPushBack( pstNew->member , gcWcsDup(node->declArray.id) ) ;
+						if ( node->type == nTypeDeclVar 	) 
+						{
+								vectorPushBack( pstNew->member , gcWcsDup(node->declVar.id) 	) ;
+								structSize+=(int)stGetSize(node) ;	
+						}
+						if ( node->type == nTypeDeclArray 	) 
+						{
+								vectorPushBack( pstNew->member , gcWcsDup(node->declArray.id) ) ;
+								structSize+=(int)stGetSize(node) ;
+						}
 					}
 				}
+				vectorPopBack(stNameSpace ) ; // ................................ ST
+		
+				pstNew->size = structSize ;
 
-fwprintf ( stderr,L"\n@@@ %ls %d\n",idTemp,vectorSize( pstNew->member) ) ;
-fwprintf ( stderr,L"\n@@@ %ls %ls[0]\n",idTemp,  pstNew->member.data[0] ) ;
-
-				stDebugSymTableNode(pstNew) ; // DEBUG	
+				stDebugSymTableNode(pstNew) ; // DEBUG
 			}
 			else 
 			{

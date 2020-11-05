@@ -1,5 +1,5 @@
 
-file ast             : [0x0000561ea2409a80] -> [tst/x.ast           ]
+file ast             : [0x000055ee92067a20] -> [tst/x.ast           ]
 astMakeNodeBlock               
 astMakeNodeBlock               
 astMakeNodeBlock               
@@ -7,17 +7,17 @@ astMakeNodeBlock
 astMakeNodeBlock               
 astMakeNodeBlock               
 astMakeNodeDeclVar             
-astPushNodeBlock               :: [block]:[0x0000561ea24243f0] -> [next]:[0x0000561ea2434f50]
-astPushNodeBlock               :: [block]:[0x0000561ea241fbb0] -> [next]:[0x0000561ea2434f50]
+astPushNodeBlock               :: [block]:[0x000055ee92082250] -> [next]:[0x000055ee92092da0]
+astPushNodeBlock               :: [block]:[0x000055ee9207da10] -> [next]:[0x000055ee92092da0]
 astMakeNodeBlock               
-astMakeNodeBlock               
-astMakeNodeDeclVar             
-astPushNodeBlock               :: [block]:[0x0000561ea2435530] -> [next]:[0x0000561ea2445fd0]
-astPushNodeBlock               :: [block]:[0x0000561ea241fbb0] -> [next]:[0x0000561ea2445fd0]
-astMakeNodeBlock               
+astMakeNodeArrayDim            
+astMakeNodeTermInteger         :: [10]
+astMakeNodeDeclArray           
+astPushNodeBlock               :: [block]:[0x000055ee92092ec0] -> [next]:[0x000055ee920a3f90]
+astPushNodeBlock               :: [block]:[0x000055ee9207da10] -> [next]:[0x000055ee920a3f90]
 astMakeNodeBlock               
 astMakeNodeBlock               
 astMakeNodeDeclArray           
-astPushNodeBlock               :: [block]:[0x0000561ea241e8b0] -> [next]:[0x0000561ea2446ee0]
+astPushNodeBlock               :: [block]:[0x000055ee9207c710] -> [next]:[0x000055ee920a49e0]
 astMakeNodeBlock               
 astMakeNodeBlock               
