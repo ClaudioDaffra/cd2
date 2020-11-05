@@ -1,0 +1,79 @@
+
+# symTable   -> initializing ...
+
+# symTable   -> stMakeSymTable ...
+# symTable   -> stGet_nsid [\].
+# symTable   -> stMakeSymTable ...
+# symTable   -> stGet_nsid [\line_t].
+# symTable   -> stGet_nsid [\start].
+# symTable   -> stGet_nsid [\line_tstart].
+# symTable   -> stGet_nsid [\line_tstart].
+
+# DEBUG ST [0x561ea2424900] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [\line_t]
+# symTable->id      [start]
+# symTable->kind    [2] :: [Var]
+# symTable->type    [1] :: [stTypeInteger]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [8]
+# symTable->offset  [0]
+# symTable->typeID  [{NULL}]
+# symTable->value   [0]
+------------------------------------------
+
+------------------------------------------
+
+
+# symTable   -> stMakeSymTable ...
+# symTable   -> stGet_nsid [\line_t].
+# symTable   -> stGet_nsid [\stop].
+# symTable   -> stGet_nsid [\line_tstop].
+# symTable   -> stGet_nsid [\line_tstop].
+
+# DEBUG ST [0x561ea2435a40] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [\line_t]
+# symTable->id      [stop]
+# symTable->kind    [2] :: [Var]
+# symTable->type    [2] :: [stTypeReal]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [8]
+# symTable->offset  [0]
+# symTable->typeID  [{NULL}]
+# symTable->value   [0.000000]
+------------------------------------------
+
+------------------------------------------
+
+
+# symTable   -> stGet_nsid [\line_t].
+
+# DEBUG ST [0x561ea24200d0] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [\]
+# symTable->id      [line_t]
+# symTable->kind    [4] :: [Struct]
+# symTable->type    [4] :: [stTypeByte]
+# symTable->nDim    [0] / 
+# symTable->member  [2] / [0x561ea244b1f0][0x561ea244b240]
+# symTable->size    [0]
+# symTable->offset  [0]
+# symTable->typeID  [{NULL}]
+# symTable->value   [0]
+------------------------------------------
+{{{start}}}{{{stop}}}
+------------------------------------------
+
+
+
+§§§ List symbol in table : 
+
+§§§ ((\line_tstart        ,0x561ea2424900)) 
+§§§ ((\line_tstop         ,0x561ea2435a40)) 
+§§§ ((\line_t             ,0x561ea24200d0)) 
+
+# symTable   -> denitialized . 
+

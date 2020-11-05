@@ -63,14 +63,15 @@ pnode_t 	parserMainBlock	( pparser_t this ) ;
 
 // decl.c
 
-pnode_t  	parserDeclConst		( pparser_t this , stScope_t scope ) ; 
-pnode_t  	parserDeclVar		( pparser_t this , stScope_t scope ) ;
-pnode_t  	parserArrayDim		( pparser_t this ) ;
-pnode_t  	parserArrayDimDecl	( pparser_t this ) ;
-pnode_t  	parserDeclArray		( pparser_t this , stScope_t scope ) ;
-pnode_t  	parserDeclType		( pparser_t this , stScope_t scope ) ;
-pnode_t 	parserDeclaration	( pparser_t this , node_t* nBlock , stScope_t	scope ) ;
-pnode_t  	parserDeclFunction	( pparser_t this ) ;
+pnode_t  	parserDeclConst			( pparser_t this , stScope_t scope ) ; 
+pnode_t  	parserDeclVar			( pparser_t this , stScope_t scope ) ;
+pnode_t  	parserArrayDim			( pparser_t this ) ;
+pnode_t  	parserArrayDimDecl		( pparser_t this ) ;
+size_t		calcoloDimensioniArray	( pnode_t nArrayDim , size_t sizeTemp ) ;
+pnode_t  	parserDeclArray			( pparser_t this , stScope_t scope ) ;
+pnode_t  	parserDeclType			( pparser_t this , stScope_t scope ) ;
+pnode_t 	parserDeclaration		( pparser_t this , node_t* nBlock , stScope_t	scope ) ;
+pnode_t  	parserDeclFunction		( pparser_t this ) ;
 
 // expr.c
 

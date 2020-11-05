@@ -1,0 +1,23 @@
+
+file ast             : [0x0000561ea2409a80] -> [tst/x.ast           ]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeDeclVar             
+astPushNodeBlock               :: [block]:[0x0000561ea24243f0] -> [next]:[0x0000561ea2434f50]
+astPushNodeBlock               :: [block]:[0x0000561ea241fbb0] -> [next]:[0x0000561ea2434f50]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeDeclVar             
+astPushNodeBlock               :: [block]:[0x0000561ea2435530] -> [next]:[0x0000561ea2445fd0]
+astPushNodeBlock               :: [block]:[0x0000561ea241fbb0] -> [next]:[0x0000561ea2445fd0]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeDeclArray           
+astPushNodeBlock               :: [block]:[0x0000561ea241e8b0] -> [next]:[0x0000561ea2446ee0]
+astMakeNodeBlock               
+astMakeNodeBlock               

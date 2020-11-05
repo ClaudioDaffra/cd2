@@ -168,7 +168,7 @@ psymTable_t stMakeSymTable(void)
 	psymTable_t pstNew   = NULL ; // new node Symbol Table
     
     pstNew = gcMalloc ( sizeof(struct symTable_s) ) ;
-    if ( pstNew==NULL ) $scannerInternal ( malloc , outOfMemory , L"symTable.c" , L"stMakeNode") ;
+    if ( pstNew==NULL ) $scannerInternal ( malloc , outOfMemory , L"symTable.c" , L"stMakeSymTable") ;
 
 	pstNew->scope	= stScope ;
  	pstNew->ns		= stGet_nsid(0,NULL) ;
@@ -179,9 +179,8 @@ psymTable_t stMakeSymTable(void)
 	pstNew->type 	= stTypeNull ;
 	pstNew->typeID  = NULL ;	
 	
-	pstNew->nDim 	= 0 ;
-	vectorNew( pstNew->aDim 	, 3 ) ;
-	
+	pstNew->array	= NULL ;
+
 	vectorNew( pstNew->member 	, 8 ) ;
 	
 	pstNew->size 	= 0 ;
@@ -244,14 +243,22 @@ void stDebugSymTableNode(psymTable_t pst)
 			case stTypeStruct  		: fwprintf ( pFileOutputST , L"[stTypeStruct]" 		); break ; 
 			case stTypeConstString	: fwprintf ( pFileOutputST , L"[stTypeConstString]"	); break ;
 
-
 			default: fwprintf ( pFileOutputST , L"[??]"	); 	break ;
 		} ;
 		
 		// ................................................................................................. ARRAY
-		fwprintf ( pFileOutputST , L"\n# symTable->nDim    [%d] / " 			,pst->nDim  );
-		for(size_t i=0;i<vectorSize(pst->aDim);i++) fwprintf ( pFileOutputST , L"[%d]" ,vectorAt(pst->aDim,i)  );
-		
+
+		if ( pst->array != NULL )
+		{
+			size_t nDim = pst->array->arrayDim.ndx.size ;
+			fwprintf ( pFileOutputST , L"\n# symTable->nDim    [%d] / " 				,(int) nDim  );
+			for(size_t i=0;i<nDim;i++) fwprintf ( pFileOutputST , L"[%d]" ,pst->array->arrayDim.ndx.data[i]->term.integer  );
+		}
+		else
+ 		{
+			fwprintf ( pFileOutputST , L"\n# symTable->nDim    [0] / "  );
+		}
+
 		// ................................................................................................. STRUCT
 		fwprintf ( pFileOutputST , L"\n# symTable->member  [%d] / " ,(int)vectorSize(pst->member)  );
 		for(size_t i=0;i<vectorSize(pst->member);i++) fwprintf ( pFileOutputST , L"[%p]" ,((void*)vectorAt(pst->member,i))  );
@@ -280,6 +287,17 @@ void stDebugSymTableNode(psymTable_t pst)
 				fwprintf ( pFileOutputST , L"[??]"	); 
 				break ;
 		} ;
+
+fwprintf ( pFileOutputST , L"\n------------------------------------------\n");
+
+	const size_t kVectorSize = vectorSize ( pst->member ) ;
+
+	for ( uint32_t i = 0 ; i < kVectorSize ; i++ )
+	{
+	fwprintf ( pFileOutputST , L"{{{%ls}}}" , pst->member.data[i] ) ;
+	}
+
+fwprintf ( pFileOutputST , L"\n------------------------------------------\n");
 
 		fwprintf ( pFileOutputST , L"\n\n");
 	}

@@ -83,17 +83,13 @@ struct symTable_s
 	stType_t 				type 		 ; // tipo	atomico	: Integer/Real/String/Char/Byte/Struct
 	wstring_t 				typeID 	 	 ; // struct name
 	
-	uint32_t				nDim		 ; // numero delle dimensioni dell'array
-	vectorStruct(pnode_t,   aDim)		 ; // dimensioni dell'array MAXX,MAXY,MAXZ ... ( DIM / NDX ) ;
-	
+	pnode_t					array		 ; // dimensione e nodi ;
+
 	vectorStruct(pwchar_t,  member)   ; // membri della struttura.
 	
  	size_t					size		 ; // dimesioni dell'oggetto
  	size_t					offset		 ; // posizione dell'oggetto
- 	//void*					address		 ; // indirizzo nello HEAP(global) / STACK(local)
 
-	
-	
 	union // mantenuto solo per le const
 	{
 	  int64_t	integer 	;

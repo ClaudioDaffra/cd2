@@ -1,4 +1,4 @@
-
+/*
 	array a1 : [10][20] byte ;
 
 	const c1 = "str" ;
@@ -22,7 +22,7 @@
 
 
 	var v2 : point_t ; 
-	
+
 	array linea : [20] line_t ;
 
 	const 	c2 = "a\nb" , 
@@ -68,7 +68,13 @@
 
 	variabile
 
-
+*/
 	// qui puoi mettere o sym_pv o sym_end
 
 
+
+	type line_t
+	{ 
+		var start : integer ;
+		var stop : real ;
+	} ; 

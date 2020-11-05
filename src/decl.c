@@ -413,6 +413,16 @@ pnode_t  parserArrayDimDecl( pparser_t this )
 	return nArrayDim ;
 }
 
+size_t	calcoloDimensioniArray( pnode_t nArrayDim , size_t sizeTemp )
+{
+	// calcolo effettivo dimensioni array
+	int 	kSize=1;
+	size_t 	nDim=nArrayDim->arrayDim.ndx.size;
+	for(size_t i=0;i<nDim;i++) kSize *= nArrayDim->arrayDim.ndx.data[i]->term.integer ;
+	kSize*=sizeTemp;
+	return sizeTemp=kSize;
+}
+
 pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 {
 	if ( kError ) return NULL  ;  
@@ -539,13 +549,18 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 			
 			if ( pstTemp ) 
 			{
-				$scannerErrorExtra(scanning,duplicateSymbolName,this->lexer->fileInputName, pstNew->id) ;;
+				$scannerErrorExtra(scanning,duplicateSymbolName,this->lexer->fileInputName, pstNew->id) ;
 			}
-			
+			else
+			{
+				sizeTemp=calcoloDimensioniArray( nArrayDim , sizeTemp ) ;
+			}
+
 			whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew ); // altrimenti inserisci name space + id
-			pstNew->typeID = gcWcsDup(idTypeTemp) ;
-			pstNew->type   = typeTemp ;
-			pstNew->size   = sizeTemp ;
+			pstNew->typeID	= gcWcsDup(idTypeTemp) ;
+			pstNew->type	= typeTemp ;
+			pstNew->size	= sizeTemp ;
+			pstNew->array	= nArrayDim ;
 					
 			stDebugSymTableNode(pstNew) ; // DEBUG	
 			
@@ -601,7 +616,8 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 		
 		psymTable_t	pstNew = stMakeSymTable() ; // ................... ST
 		pstNew->kind = stKindStruct ; // ............................. ST
-	
+		pstNew->type = stKindStruct ; // ............................. ST
+		
 	// ............................... [id]
 			if ( this->lexer->sym==sym_id ) 
 			{
@@ -643,6 +659,9 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 				
 				// TODO struct without field -> error
 				// TODO CALCOLA LA DIMENSIONE DELLA STRUTTURA
+				
+				whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew );
+				
 				const size_t kVectorSize = vectorSize ( nBlock->block.next ) ;
 				for ( uint32_t i = 0 ; i < kVectorSize ; i++ )
 				{
@@ -650,11 +669,16 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 					if ( node != NULL ) 
 					{
 						vectorPushBack( pnode->declType.field , node  ) ;
+						// inserisci i campi nel tipo
+						if ( node->type == nTypeDeclVar 	) vectorPushBack( pstNew->member , gcWcsDup(node->declVar.id) 	) ;
+						if ( node->type == nTypeDeclArray 	) vectorPushBack( pstNew->member , gcWcsDup(node->declArray.id) ) ;
 					}
 				}
-				
-				// TODO inserisci la struttura senza dimensioni
-				whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew );
+
+fwprintf ( stderr,L"\n@@@ %ls %d\n",idTemp,vectorSize( pstNew->member) ) ;
+fwprintf ( stderr,L"\n@@@ %ls %ls[0]\n",idTemp,  pstNew->member.data[0] ) ;
+
+				stDebugSymTableNode(pstNew) ; // DEBUG	
 			}
 			else 
 			{
