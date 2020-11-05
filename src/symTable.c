@@ -109,7 +109,6 @@ wchar_t* stGet_nsid(size_t level,wchar_t* id) // ns(l)+id
 	return gcWcsDup(temp) ;
 }
 
-
 // .............................................. show map
 
 void stShowMap(void)
@@ -177,7 +176,7 @@ psymTable_t stMakeSymTable(void)
 	pstNew->kind 	= stKindNull ;
 	
 	pstNew->type 	= stTypeNull ;
-	pstNew->typeID  = NULL ;	
+	pstNew->typeID  = NULL ;
 	
 	pstNew->array	= NULL ;
 
@@ -185,8 +184,6 @@ psymTable_t stMakeSymTable(void)
 	vectorNew( pstNew->offset 	, 8 ) ;
 	
 	pstNew->size 	= 0 ;
-
-	//pstNew->address = NULL ; 
 
 	pstNew->value.integer  = 0 ; // default value
 	
@@ -310,6 +307,7 @@ void stDebugSymTableNode(psymTable_t pst)
 	}
 }
 
+// .............................................. st get size of symbol 
 
 size_t stGetSize( pnode_t node )
 {

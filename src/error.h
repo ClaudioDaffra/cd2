@@ -124,7 +124,8 @@ typedef enum errMessage_e
     errMessage_LValueRequired		   		,   // e' richiesto un valore sinistro
     errMessage_expectedPrimaryExprBefore	,   // expected primary-expression before [token]
     errMessage_expectedPrimaryExprAfter   	,   // expected primary-expression before [token 
-    errMessage_arrayBoundNotInteger			,	// array bound is not an integer constant before ']'    
+    errMessage_arrayBoundNotInteger			,	// array bound is not an integer constant before ']' 
+    errMessage_typeVoid						,	// nessun campo trovato nella struttura       
 } e_errMessage_t;
 
 typedef struct errMessage_s
@@ -281,6 +282,18 @@ void printErrLog(void); // error.printLog
             gcWcsDup(EXTRA)\
         ) ;
 
+#define $parserInternalExtra( ACTION,ERRMESSAGE,FILE,EXTRA )\
+        pushErrLog(\
+            sender_parser,\
+            type_internal,\
+            action_##ACTION,\
+            errMessage_##ERRMESSAGE,\
+			this->lexer->row_start,\
+			this->lexer->col_start,\
+            gcWcsDup((wchar_t*)FILE),\
+            gcWcsDup(EXTRA)\
+        ) ;
+        
 #define $parserError( ACTION,ERRMESSAGE )\
         pushErrLog(\
             sender_parser,\

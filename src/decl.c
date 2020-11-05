@@ -237,36 +237,40 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 							sizeTemp=sizeof(int64_t);
 							parserGetToken(this);
 							break ;
+							
 						case sym_kw_real 	:
 							typeTemp = stTypeReal ;
 							sizeTemp=sizeof(double);
 							parserGetToken(this);
 							break ;
+							
 						case sym_kw_char 	:
 							typeTemp = stTypeChar ;
 							sizeTemp=sizeof(wchar_t);
 							parserGetToken(this);
 							break ;
+							
 						case sym_kw_byte 	:
 							typeTemp=stTypeByte;
 							sizeTemp=sizeof(unsigned char);
 							parserGetToken(this);
 							break ;
-						case sym_id 		:	// la struttua ha bisogno di un'initializer list
+							
+						case sym_id 		:	// la struttura ha bisogno di un'initializer list
 						{
 							// cerca se l'identificativo è presente
 							psymTable_t pstTemp = stFindIDinMap(this->lexer->token); 
-							
-							idTypeTemp=this->lexer->token ; // memorizza il nome del tipo
+
+							idTypeTemp=gcWcsDup(this->lexer->token) ; // memorizza il nome del tipo
 							typeTemp=stTypeStruct;
-							
-							sizeTemp=-1 ; // TODO RIMUOVERE E OTTENERE LA GIUSTA DIMENSIONE
-							
+
 							if ( !pstTemp ) 
 							{
 								$scannerErrorExtra(scanning,undeclaredIdentifier,this->lexer->fileInputName, this->lexer->token) ;
 								idTypeTemp=NULL;
 							}
+							if ( pstTemp!=NULL ) sizeTemp=pstTemp->size ; // dimensioni tipo
+							
 							fInitializerTerm = 0 ;
 							parserGetToken(this);
 							break ;
@@ -283,7 +287,10 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 							parserGetToken(this);
 							// essendo un espressione non sappiamo ancora il tipo che ritorna
 							// verrà analizzato più tardi nella fase di assemblaggio ( push/pop term )
-							exprTemp = parserExpr(this); // pu0 anche essere NULL e assegnato il tipo di default.
+							exprTemp = parserExpr(this); // può anche essere NULL e assegnato il tipo di default.
+							
+							// p.s. : si è scelto negli array di obbligare il tipo const integer
+							// 		: viene effettuato un controllo nel nodo parseDeclArray
 						}
 					}
 					
@@ -310,7 +317,7 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 			else
 			{
 				whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew ); // altrimenti inserisci name space + id
-				pstNew->typeID = gcWcsDup(idTypeTemp) ;
+				pstNew->typeID = idTypeTemp ;
 				pstNew->type   = typeTemp ;
 				pstNew->size   = sizeTemp ;
 			}
@@ -353,6 +360,8 @@ pnode_t  parserDeclVar( pparser_t this , stScope_t scope )
 
 */
 
+// .............................................. array dim in expr
+
 pnode_t  parserArrayDim( pparser_t this )
 {
 	node_t* nArrayDim 	=	NULL ;
@@ -379,6 +388,8 @@ pnode_t  parserArrayDim( pparser_t this )
 	
 	return nArrayDim ;
 }
+
+// .............................................. array dim in decl	:	controllo -> const integer
 
 pnode_t  parserArrayDimDecl( pparser_t this )
 {
@@ -412,6 +423,8 @@ pnode_t  parserArrayDimDecl( pparser_t this )
 	return nArrayDim ;
 }
 
+// .............................................. calcoloDimensioniArray
+
 size_t	calcoloDimensioniArray( pnode_t nArrayDim , size_t sizeTemp )
 {
 	// calcolo effettivo dimensioni array
@@ -421,6 +434,8 @@ size_t	calcoloDimensioniArray( pnode_t nArrayDim , size_t sizeTemp )
 	kSize*=sizeTemp;
 	return sizeTemp=kSize;
 }
+
+// .............................................. parse array decl
 
 pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 {
@@ -481,36 +496,39 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 							sizeTemp=sizeof(int64_t);
 							parserGetToken(this);
 							break ;
+							
 						case sym_kw_real 	:
 							typeTemp = stTypeReal ;
 							sizeTemp=sizeof(double);
 							parserGetToken(this);
 							break ;
+							
 						case sym_kw_char 	:
 							typeTemp = stTypeChar ;
 							sizeTemp=sizeof(wchar_t);
 							parserGetToken(this);
 							break ;
+							
 						case sym_kw_byte 	:
 							typeTemp=stTypeByte;
 							sizeTemp=sizeof(unsigned char);
 							parserGetToken(this);
 							break ;
+							
 						case sym_id 		:	// la struttua ha bisogno di un'initializer list
 						{
 							// cerca se l'identificativo è presente
 							psymTable_t pstTemp = stFindIDinMap(this->lexer->token); 
 							
-							idTypeTemp=this->lexer->token ; // memorizza il nome del tipo
+							idTypeTemp=gcWcsDup(this->lexer->token) ; // memorizza il nome del tipo
 							typeTemp=stTypeStruct;
-							
-							sizeTemp=-1 ; // TODO RIMUOVERE E OTTENERE LA GIUSTA DIMENSIONE
-							
+
 							if ( !pstTemp ) 
 							{
 								$scannerErrorExtra(scanning,undeclaredIdentifier,this->lexer->fileInputName, this->lexer->token) ;
 								idTypeTemp=NULL;
 							}
+							if ( pstTemp!=NULL ) sizeTemp=pstTemp->size ; // dimensioni tipo
 							parserGetToken(this);
 							break ;
 						}
@@ -524,10 +542,8 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 						parserGetToken(this);
 						
 						ilTemp = NULL ;
-						
-						fwprintf ( stderr , L" !! array : initializer list not implemented yet\n") ;
-					
-						// initializer list
+
+						$parserInternalExtra(parse,notImplemetedYet, this->lexer->fileInputName,L"Initializer List" ) ;
 					}
 
 				}
@@ -556,7 +572,7 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 			}
 
 			whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew ); // altrimenti inserisci name space + id
-			pstNew->typeID	= gcWcsDup(idTypeTemp) ;
+			pstNew->typeID	= idTypeTemp ;
 			pstNew->type	= typeTemp ;
 			pstNew->size	= sizeTemp ;
 			pstNew->array	= nArrayDim ;
@@ -648,19 +664,11 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 						) ;
 						
 				$MATCH( sym_pg1 , L'}' ) ;
-				
-//vectorPopBack(stNameSpace ) ; // ................................ ST
-				
+
 				// crea nodo type 
+				
 				pnode = astMakeNodeDeclType( this->ast , idTemp ,  scope ) ;
-				
-				// inserisci i nodi nel vettore campi ( field )
-				
-				
-				//  calcola le dimensioni della stuttura
-				
-				whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew );
-				
+
 				const size_t kVectorSize = vectorSize ( nBlock->block.next ) ;
 				
 				size_t structSize=0;
@@ -674,9 +682,13 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 						if ( node != NULL ) 
 						{
 							vectorPushBack( pnode->declType.field , node  ) ;
-							// inserisci i campi nel tipo
+							
+							// inserisci i nodi nel vettore campi ( field )
+							//  calcola le dimensioni della stuttura
+							
 							if ( node->type == nTypeDeclVar 	) 
 							{
+								
 								vectorPushBack( pstNew->member , gcWcsDup(node->declVar.id) 	) ;
 								vectorPushBack( pstNew->offset , structSize 	) ;
 								structSize+=(int)stGetSize(node) ;
@@ -692,11 +704,13 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 				}
 				else
 				{
-					fwprintf(stderr,L"struttura con nessun membro\n");
-					exit(-1);
+					$parserError(parse,typeVoid) 
+					return NULL ;
 				}
 				vectorPopBack(stNameSpace ) ; // ................................ ST
-		
+				
+				whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew ) ;
+				
 				pstNew->size = structSize ;
 
 				stDebugSymTableNode(pstNew) ; // DEBUG

@@ -80,6 +80,7 @@ errMessage_t errMessage[] =
     { L"expected primary-expression before" 											} ,  
     { L"expected primary-expression after" 												} ,
     { L"array bound is not an integer constant before ']'" 								} ,
+    { L"type void not allowed" 															} ,    
 } ;
 
 // ................................................... push err log

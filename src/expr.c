@@ -182,9 +182,9 @@ node_t* parserTerm( pparser_t this )
 							break;
 
 					default:
-							// variabile	:	termVar
-							// costante		:	return Term const
-							// tipo			:	termID
+							// [v] variabile	:	termVar
+							// [] costante		:	return Term const
+							// [] tipo			:	termID
 							{
 								n=astMakeNodeTermVar ( this->ast , idTemp , rowTemp , colTemp ) ;
 							}

@@ -78,3 +78,5 @@
 		var  	vvv : integer ;
 		array 	aaa : [10] real ;
 	} ; 
+	var 	lllvvv : line_t ;
+	array 	lllaaa : [10][10] line_t  ;

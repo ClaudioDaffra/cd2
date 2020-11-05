@@ -13,18 +13,8 @@
 #include "error.h"
 #include "ast.h"
 
-/*
-// .............................................. scope
+// stScope in ast.h
 
-enum stScope_e
-{
-	stScopeGlobal	,
-	stScopeLocal	,
-	//stScopeFuncParam
-} ;
-
-typedef enum stScope_e stScope_t ;
-*/
 // .............................................. kind
 
 enum stKind_e
@@ -85,11 +75,10 @@ struct symTable_s
 	
 	pnode_t					array		 ; // dimensione e nodi ;
 
-	vectorStruct(pwchar_t,  member)   ; // membri della struttura.
-	vectorStruct(size_t  ,  offset)   ; // offset dei membri della struttura
+	vectorStruct(pwchar_t,  member)   	 ; // membri della struttura.
+	vectorStruct(size_t  ,  offset)   	 ; // offset dei membri della struttura
 	
  	size_t					size		 ; // dimesioni dell'oggetto
- 	//size_t					offset		 ; // posizione dell'oggetto
 
 	union // mantenuto solo per le const
 	{
@@ -130,7 +119,7 @@ void 		stShowMap				(void) ;
 #define 	stGetFullName(ID) 		stGet_nsid(0,ID)
 
 psymTable_t stFindIDinMap			(wchar_t* id) ;
-size_t 		stGetSize				( pnode_t node ) ;
+size_t 		stGetSize				(pnode_t node) ;
 
 #endif
 
