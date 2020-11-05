@@ -86,9 +86,10 @@ struct symTable_s
 	pnode_t					array		 ; // dimensione e nodi ;
 
 	vectorStruct(pwchar_t,  member)   ; // membri della struttura.
+	vectorStruct(size_t  ,  offset)   ; // offset dei membri della struttura
 	
  	size_t					size		 ; // dimesioni dell'oggetto
- 	size_t					offset		 ; // posizione dell'oggetto
+ 	//size_t					offset		 ; // posizione dell'oggetto
 
 	union // mantenuto solo per le const
 	{

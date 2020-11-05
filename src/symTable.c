@@ -182,9 +182,10 @@ psymTable_t stMakeSymTable(void)
 	pstNew->array	= NULL ;
 
 	vectorNew( pstNew->member 	, 8 ) ;
+	vectorNew( pstNew->offset 	, 8 ) ;
 	
 	pstNew->size 	= 0 ;
-	pstNew->offset 	= 0 ; 
+
 	//pstNew->address = NULL ; 
 
 	pstNew->value.integer  = 0 ; // default value
@@ -199,9 +200,11 @@ void stDebugSymTableNode(psymTable_t pst)
 	if ( g.fDebug ) 
 	{
 		// ................................................................................................. POINTER PST
+		
 		fwprintf ( pFileOutputST , L"\n# DEBUG ST [%p] ->\n",pst );
 		
 		// ................................................................................................. SCOPE
+		
 		fwprintf ( pFileOutputST , L"# symTable->scope   [%d] :: "				,pst->scope );
 		switch ( pst->scope )
 		{
@@ -212,12 +215,15 @@ void stDebugSymTableNode(psymTable_t pst)
 		fwprintf ( pFileOutputST , L"\n");
 		
 		// ................................................................................................. NS
+		
 		fwprintf ( pFileOutputST , L"# symTable->ns      [%ls]\n"				,pst->ns 	 );
 		
 		// ................................................................................................. ID
+		
 		fwprintf ( pFileOutputST , L"# symTable->id      [%ls]\n"				,pst->id 	 );
 		
 		// ................................................................................................. KIND
+		
 		fwprintf ( pFileOutputST , L"# symTable->kind    [%d] :: " 				,pst->kind   );
 		switch ( pst->kind )
 		{
@@ -232,6 +238,7 @@ void stDebugSymTableNode(psymTable_t pst)
 		fwprintf ( pFileOutputST , L"\n");
 
 		// ................................................................................................. TYPE
+		
 		fwprintf ( pFileOutputST , L"# symTable->type    [%d] :: " 				,pst->type  );
 		switch ( pst->type )
 		{
@@ -260,19 +267,19 @@ void stDebugSymTableNode(psymTable_t pst)
 		}
 
 		// ................................................................................................. STRUCT
+		
 		fwprintf ( pFileOutputST , L"\n# symTable->member  [%d] / " ,(int)vectorSize(pst->member)  );
 		for(size_t i=0;i<vectorSize(pst->member);i++) fwprintf ( pFileOutputST , L"[%p]" ,((void*)vectorAt(pst->member,i))  );
 		
 		// ................................................................................................. SIZE
-		fwprintf ( pFileOutputST , L"\n# symTable->size    [%d]\n" 				,(int)pst->size  );
 		
-		// ................................................................................................. OFFSET
-		fwprintf ( pFileOutputST , L"# symTable->offset  [%d]\n" 				,(int)pst->offset  );
+		fwprintf ( pFileOutputST , L"\n# symTable->size    [%d]\n" 				,(int)pst->size  );
 		
 		//fwprintf ( pFileOutputST , L"# symTable->address [%p]\n" 				,pst->address  );
 		fwprintf ( pFileOutputST , L"# symTable->typeID  [%ls]\n" 				,(pst->typeID == NULL) ? L"{NULL}" : pst->typeID );
 		
 		// ................................................................................................. CONST VALUE
+		
 		fwprintf ( pFileOutputST , L"# symTable->value   "  );
 		switch ( pst->type )
 		{
@@ -284,9 +291,10 @@ void stDebugSymTableNode(psymTable_t pst)
 			fwprintf ( pFileOutputST , L"[MEMBER]::"	);
 			const size_t kVectorSize = vectorSize ( pst->member ) ;
 
-			for ( uint32_t i = 0 ; i < kVectorSize ; i++ )
+			for ( uint32_t i = 0 ; i < kVectorSize ; i++ ) // ........................................... member & offset
 			{
-				fwprintf ( pFileOutputST , L" {%ls} " , pst->member.data[i] ) ;
+				fwprintf ( pFileOutputST , L" {%ls/%d} " , pst->member.data[i],(int)pst->offset.data[i] ) ;
+				
 			}
 			break ;  
 			}
@@ -307,8 +315,6 @@ size_t stGetSize( pnode_t node )
 {
 	psymTable_t	pstTemp = NULL ;
 
-	//fwprintf ( stderr , L"\n@@@[%d]",(int)pstTemp->size) ;
-	
 	size_t size = 0 ;
 	
 	switch ( node->type )

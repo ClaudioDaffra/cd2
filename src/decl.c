@@ -656,31 +656,44 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
 				
 				// inserisci i nodi nel vettore campi ( field )
 				
-				// TODO struct without field -> error
-				// TODO CALCOLA LA DIMENSIONE DELLA STRUTTURA
+				
+				//  calcola le dimensioni della stuttura
 				
 				whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew );
 				
 				const size_t kVectorSize = vectorSize ( nBlock->block.next ) ;
+				
 				size_t structSize=0;
-				for ( uint32_t i = 0 ; i < kVectorSize ; i++ )
+				
+				if (kVectorSize)
 				{
-					pnode_t  node = nBlock->block.next.data[i] ;
-					if ( node != NULL ) 
+					
+					for ( uint32_t i = 0 ; i < kVectorSize ; i++ )
 					{
-						vectorPushBack( pnode->declType.field , node  ) ;
-						// inserisci i campi nel tipo
-						if ( node->type == nTypeDeclVar 	) 
+						pnode_t  node = nBlock->block.next.data[i] ;
+						if ( node != NULL ) 
 						{
+							vectorPushBack( pnode->declType.field , node  ) ;
+							// inserisci i campi nel tipo
+							if ( node->type == nTypeDeclVar 	) 
+							{
 								vectorPushBack( pstNew->member , gcWcsDup(node->declVar.id) 	) ;
-								structSize+=(int)stGetSize(node) ;	
-						}
-						if ( node->type == nTypeDeclArray 	) 
-						{
-								vectorPushBack( pstNew->member , gcWcsDup(node->declArray.id) ) ;
+								vectorPushBack( pstNew->offset , structSize 	) ;
 								structSize+=(int)stGetSize(node) ;
+							}
+							if ( node->type == nTypeDeclArray 	) 
+							{
+								vectorPushBack( pstNew->member , gcWcsDup(node->declArray.id) ) ;
+								vectorPushBack( pstNew->offset , structSize 	) ;
+								structSize+=(int)stGetSize(node) ;
+							}
 						}
 					}
+				}
+				else
+				{
+					fwprintf(stderr,L"struttura con nessun membro\n");
+					exit(-1);
 				}
 				vectorPopBack(stNameSpace ) ; // ................................ ST
 		
