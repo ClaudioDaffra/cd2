@@ -218,7 +218,7 @@ struct node_s
         
     union 
     {
-        nodeTerm_t              term          ;
+        nodeTerm_t              term          ;	// integer real wchar wstring id
         nodeBinOp_t             binOp         ;
         nodePrefix_t            prefix        ;
         nodeBlock_t             block         ;

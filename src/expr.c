@@ -135,8 +135,8 @@ node_t* parserTerm( pparser_t this )
                 
                 1) id    [    :    array
                 2) id    (    :    function
-                3) id        :    const
-                4)             :    var
+                3) id         :    const
+                4)            :    var
                 5)            :    field
 
         */
@@ -153,7 +153,7 @@ node_t* parserTerm( pparser_t this )
                 
                 switch ( this->lexer->sym )
                 {
-                    case    sym_pq0    :    // ARRAY [
+                    case    sym_pq0    :    // #1 ARRAY [
                             {
                                 node_t* nArrayDim    =    parserArrayDim(this);
                                 if (nArrayDim!=NULL )
@@ -163,7 +163,7 @@ node_t* parserTerm( pparser_t this )
                             }
                             break;
                             
-                    case    sym_p0:        // FUNZIONE (
+                    case    sym_p0:        // #2 FUNZIONE (
                             {
                                 node_t*     nBlockParam            =    astMakeNodeBlock(this->ast) ;
                                 
@@ -195,8 +195,8 @@ node_t* parserTerm( pparser_t this )
                     default:
                     {
                         // [v] variabile    :    termVar
-                        // [] costante        :    return Term const
-                        // [] tipo            :    termID
+                        // [] costante      :    return Term const
+                        // [] tipo          :    termID
 
                         psymTable_t pstTemp = stFindIDinMap(idTemp);
 
@@ -208,21 +208,50 @@ node_t* parserTerm( pparser_t this )
                         }
                         else
                         {
-                            //n=astMakeNodeTermVar ( this->ast , idTemp , rowTemp , colTemp ) ;
-                            fwprintf ( stderr , L"\nexpr -> type id [%d]\n",(int)pstTemp->kind ) ;
+                            // sostituisci la constante simbolo con la costante intera
                             
                             switch ( pstTemp->kind ) 
                             {
-                                case    stKindConst    :
+                                case    stKindConst    : // ............. #3
                                         // replace const
+                                        if ( wcslen(idTemp) > maxTokenSize ) idTemp[maxTokenSize-1]=0;
+                                        wcscpy ( this->lexer->token 	, 	idTemp ) ;
+                                        this->lexer->row	=	rowTemp ;
+                                        this->lexer->col	=	colTemp ;
+                                        
+                                        switch (pstTemp->type)
+                                        {
+											case	stTypeInteger  :
+												n=astMakeNodeTermInteger(this->ast,this->lexer,pstTemp->value.integer ) ;
+												break;
+												
+											case	stTypeReal  :
+												n=astMakeNodeTermReal(this->ast,this->lexer,pstTemp->value.real ) ;
+												break;
+												
+											case	stTypeChar  :
+												n=astMakeNodeTermChar(this->ast,this->lexer,pstTemp->value.wchar ) ;
+												break;
+												
+											case	stTypeConstString  :
+												n=astMakeNodeTermString(this->ast,this->lexer,pstTemp->value.wstring ) ;
+												break;
+												
+											default:
+												$pushErrLog
+												(parser,internal,parseExpr,errUnknown,rowTemp,(colTemp-wcslen(idTemp)+1),L"expr.c" 
+												, L"parserTerm -> .... switch ( pstTemp->kind ) -> switch (pstTemp->type)" ) ;
+												n=NULL ;
+											break;
+										}
+
+                                        break;
+                                        
+                                case    stKindVar    :  // .............. #4
                                         n=astMakeNodeTermVar ( this->ast , idTemp , rowTemp , colTemp ) ;
                                         break;
                                         
-                                case    stKindVar    :
-                                        n=astMakeNodeTermVar ( this->ast , idTemp , rowTemp , colTemp ) ;
-                                        break;
-                                        
-                                default:
+                                default: // ............................. #5
                                         $pushErrLog
                                         (parser,error,parseExpr,invalidUseOf,rowTemp,(colTemp-wcslen(idTemp)+1),this->lexer->fileInputName , idTemp) ;
                                         n=NULL ;
@@ -234,60 +263,7 @@ node_t* parserTerm( pparser_t this )
                 }
         }
         break;
-/*
-        case sym_id:
 
-            fwprintf ( this->pFileOutputParser , L"%-30ls :: [%ls].\n",L"sym_id",this->lexer->value.id );
-
-            // #1 const
-            psymTable_t pID=stFindIDinMap(this->lexer->value.id) ;
-                
-            if ( pID==NULL )
-            {
-                // allora e' una variabile : x ... gestione post fix in seguito [] ()
-        n=makeNodeTermVar(lexer.id);
-            }
-            else // e' un tipo gia' definito
-            {
-                // un volta accertato che l'identificatore esiste ...
-                switch( pID->kind )
-                {
-                    case stKindConst : // SE è una costante ...
-                    
-                            switch( pID->type ) // sostituiamo il simbolo con la costante a seconda del tipo
-                            {
-                                case stTypeInteger : 
-                                    n = astMakeNodeTermInteger( this->ast,this->lexer,pID->value.integer ) ; // valore della costante nella ST
-                                break;
-                                
-                                case stTypeReal :
-                                    n = astMakeNodeTermReal( this->ast,this->lexer,pID->value.real ) ;
-                                break;
-                                
-                                default: 
-                                    $parserInternal(parseExpr,notImplemetedYet,L"expr.c",L"case sym_id->switch( pID->type )");
-                                    n=NULL ;
-                                break ;
-                            }
-                    
-                    break ;
-                    
-                    //case stKindVar : // errore vengono gestiti qui solo le costanti !
-
-                    break ;
-                    
-                    default:
-                        $parserInternal(parseExpr,notImplemetedYet,L"expr.c",L"case sym_id->switch( pID->kind )");
-                        n=NULL ;
-                    break ;
-                }
-                
-            }
-
-            cdParserGetToken();
-
-        break;
-*/
         default:
             
             /*

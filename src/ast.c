@@ -356,6 +356,8 @@ pnode_t     astMakeNodeDeclType    ( past_t this , wchar_t* id , stScope_t    sc
 
 pnode_t     astMakeNodeDeclFunction    ( past_t this , wchar_t* id , sym_t retType , pnode_t pParamList , pnode_t pBlockCode ) 
 {
+	(void)pParamList ;
+	
     if ( this->fDebug ) fwprintf ( this->pFileOutputAST , L"%-30ls \n",L"astMakeNodeDeclFunction" );
     node_t* nNew   = NULL ; // new node
     

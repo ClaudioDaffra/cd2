@@ -40,8 +40,8 @@ typedef int errno_t;
 
 //
 
-wchar_t*      cdConvertFromStringToWString     ( const char* _ansi_string ) ;
-int         cdFileWOpen                        ( FILE** pf,char* fileName,const char* flag,const char* ccs ) ; 
+wchar_t*    cdConvertFromStringToWString     ( const char* _ansi_string ) ;
+int         cdFileWOpen                      ( FILE** pf,char* fileName,const char* flag,const char* ccs ) ; 
 
 #define $2WS(X) cdConvertFromStringToWString(X)
 

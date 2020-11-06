@@ -82,11 +82,11 @@ struct symTable_s
 
     union // mantenuto solo per le const
     {
-      int64_t    integer     ;
-      double    real         ;
-      wchar_t*    wstring    ;
-      wchar_t    wchar       ;
-      uint8_t   byte         ;
+      int64_t   integer     ;
+      double    real        ;
+      wchar_t*  wstring     ;
+      wchar_t   wchar       ;
+      uint8_t   byte        ;
     } value ;
     
 } ;
