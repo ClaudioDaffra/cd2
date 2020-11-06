@@ -125,7 +125,9 @@ typedef enum errMessage_e
     errMessage_expectedPrimaryExprBefore	,   // expected primary-expression before [token]
     errMessage_expectedPrimaryExprAfter   	,   // expected primary-expression before [token 
     errMessage_arrayBoundNotInteger			,	// array bound is not an integer constant before ']' 
-    errMessage_typeVoid						,	// nessun campo trovato nella struttura       
+    errMessage_typeVoid						,	// nessun campo trovato nella struttura 
+    errMessage_symbolNotDeclared			,   // simbol was not declared in this scope 
+    errMessage_invalidUseOf					, 	// invalid use of (symbol)
 } e_errMessage_t;
 
 typedef struct errMessage_s

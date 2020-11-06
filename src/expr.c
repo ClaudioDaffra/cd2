@@ -130,6 +130,17 @@ node_t* parserTerm( pparser_t this )
 
 		break;
 		
+		/*
+				Gestione Array Function Const Var Field
+			    
+			    1) id	[	:	array
+			    2) id	(	:	function
+			    3) id		:	const
+			    4) 			:	var
+			    5)			:	field
+
+		*/
+		 
 		case sym_id : // Array || Function || Const || Var || Field
 		{
 				wchar_t*	idTemp = gcWcsDup ( this->lexer->token)  ;
@@ -182,15 +193,44 @@ node_t* parserTerm( pparser_t this )
 							break;
 
 					default:
-							// [v] variabile	:	termVar
-							// [] costante		:	return Term const
-							// [] tipo			:	termID
+					{
+						// [v] variabile	:	termVar
+						// [] costante		:	return Term const
+						// [] tipo			:	termID
+
+						psymTable_t pstTemp = stFindIDinMap(idTemp);
+
+						if ( !pstTemp ) // se != 0 è già presente
+						{
+							$pushErrLog
+							(parser,error,parseExpr,symbolNotDeclared,rowTemp,(colTemp-wcslen(idTemp)+1),this->lexer->fileInputName , idTemp) ;
+							n=NULL ;
+						}
+						else
+						{
+							//n=astMakeNodeTermVar ( this->ast , idTemp , rowTemp , colTemp ) ;
+							fwprintf ( stderr , L"\nexpr -> type id [%d]\n",(int)pstTemp->kind ) ;
+							
+							switch ( pstTemp->kind ) 
 							{
-								n=astMakeNodeTermVar ( this->ast , idTemp , rowTemp , colTemp ) ;
+								case	stKindConst	:
+										// replace const
+										n=astMakeNodeTermVar ( this->ast , idTemp , rowTemp , colTemp ) ;
+										break;
+										
+								case	stKindVar	:
+										n=astMakeNodeTermVar ( this->ast , idTemp , rowTemp , colTemp ) ;
+										break;
+										
+								default:
+										$pushErrLog
+										(parser,error,parseExpr,invalidUseOf,rowTemp,(colTemp-wcslen(idTemp)+1),this->lexer->fileInputName , idTemp) ;
+										n=NULL ;
+										break;
 							}
-					
-						return n ;
-					break;
+						}
+						break;
+					}
 				}
 		}
 		break;
@@ -253,8 +293,7 @@ node_t* parserTerm( pparser_t this )
 			/*
 			 * Le espressioni come le frasi del parser possono ritornare NULL, 
 			 * come possiamo vedere nella definizione degli array C : int a[] ...
-			 * per tanto andraà gestita l'espressione NULL e con quanto ne consgue.
-			 * 
+			 * per tanto andra gestita l'espressione NULL e con quanto ne consgue. 
 			 */
 			
 			//$syntaxError

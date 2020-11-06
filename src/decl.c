@@ -562,7 +562,7 @@ pnode_t  parserDeclArray( pparser_t this , stScope_t scope )
 			// cerca se l'identificativo è già presente, nella ST il nuovo e' ancora da inserire
 			psymTable_t pstTemp = stFindIDinMap(pstNew->id); 
 			
-			if ( pstTemp ) 
+			if ( pstTemp ) // se != 0 è già presente
 			{
 				$scannerErrorExtra(scanning,duplicateSymbolName,this->lexer->fileInputName, pstNew->id) ;
 			}

@@ -80,7 +80,9 @@ errMessage_t errMessage[] =
     { L"expected primary-expression before" 											} ,  
     { L"expected primary-expression after" 												} ,
     { L"array bound is not an integer constant before ']'" 								} ,
-    { L"type void not allowed" 															} ,    
+    { L"type void not allowed" 															} , 
+    { L"was not declared in this scope" 												} ,    
+    { L"invalid use of" 																} ,        
 } ;
 
 // ................................................... push err log

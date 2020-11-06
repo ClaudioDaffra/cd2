@@ -71,7 +71,7 @@
 */
 	// qui puoi mettere o sym_pv o sym_end
 
-
+	const ccc = 123 ;
 
 	type line_t
 	{ 
@@ -80,3 +80,10 @@
 	} ; 
 	var 	lllvvv : line_t ;
 	array 	lllaaa : [10][10] line_t  ;
+	
+	
+	ccc ;
+	lllvvv  ;
+	line_t ;
+	
+	
