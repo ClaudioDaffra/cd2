@@ -7,26 +7,26 @@
 
 wchar_t* doMatchMessage( wchar_t C0 , wchar_t* token ) 
 {
-	wchar_t* extra0 = gcWcsDup(L" expected [?] instead -> [") ; // [ 11 ] posizione
-    extra0[11] 		= C0 ;
+    wchar_t* extra0 = gcWcsDup(L" expected [?] instead -> [") ; // [ 11 ] posizione
+    extra0[11]         = C0 ;
 
-	if ( wcslen(token) > 20 ) 
-	{
-		token[20]=0;
-		token[19]=L'.';
-		token[18]=L'.';
-		token[17]=L'.';
-	}
+    if ( wcslen(token) > 20 ) 
+    {
+        token[20]=0;
+        token[19]=L'.';
+        token[18]=L'.';
+        token[17]=L'.';
+    }
 
-	uint32_t extraSize = wcslen( extra0 ) ;
-	uint32_t tokenSize = wcslen( token  ) ;	
-	wchar_t* extra = gcMalloc( sizeof(wchar_t) * (tokenSize + extraSize + 3 ) ) ;
+    uint32_t extraSize = wcslen( extra0 ) ;
+    uint32_t tokenSize = wcslen( token  ) ;    
+    wchar_t* extra = gcMalloc( sizeof(wchar_t) * (tokenSize + extraSize + 3 ) ) ;
 
-	wcscpy ( extra , extra0 ) ;
-	wcscat ( extra , token ) ;
-	wcscat ( extra , L"] " ) ;
+    wcscpy ( extra , extra0 ) ;
+    wcscat ( extra , token ) ;
+    wcscat ( extra , L"] " ) ;
 
-	return extra ;
+    return extra ;
 }
 
 // ......................................................... parserPrintToken
@@ -46,10 +46,10 @@ int parserPrintToken( pparser_t this )
         fwprintf ( this->pFileOutputParser,L"[%-20.20ls]"    ,this->lexer->fileInputName ) ;
     
     fwprintf ( this->pFileOutputParser , L"[%03d,%03d] len(%02d) sym(%03d) "
-		,	this->lexer->row_start
-		,	this->lexer->col_start-1
-		,	(int)this->lexer->tokenSize
-		,	(uint32_t)this->lexer->sym
+        ,    this->lexer->row_start
+        ,    this->lexer->col_start-1
+        ,    (int)this->lexer->tokenSize
+        ,    (uint32_t)this->lexer->sym
     ) ;    
 
     if ( wcslen(this->lexer->token) > 20 )
@@ -66,7 +66,7 @@ int parserPrintToken( pparser_t this )
 
     if ( this->lexer->sym==sym_char    )  fwprintf ( this->pFileOutputParser , L" -> [[%lc]]",g.outputSpecialCharInChar(this->lexer->value.wchar)     ) ;
     
-    if ( this->lexer->sym==sym_string  )  fwprintf ( this->pFileOutputParser , L" -> [[%ls]]",g.outputSpecialCharInString(this->lexer->value.wstring)   ) ;
+    if ( this->lexer->sym==sym_string  )  fwprintf ( this->pFileOutputParser , L" -> [[%ls]]",g.outputSpecialCharInString(this->lexer->value.wstring) ) ;
     
     fwprintf ( this->pFileOutputParser , L"\n" ) ;
     
@@ -82,7 +82,7 @@ sym_t parserGetToken( pparser_t this )
 
     if ( this->fDebug ) 
     {
-		parserPrintToken(this);
+        parserPrintToken(this);
     }
 
    return this->lexer->sym ;    
@@ -90,97 +90,97 @@ sym_t parserGetToken( pparser_t this )
 
 // ......................................................... parser alloc
 
-pparser_t  	parserAlloc			( void )
+pparser_t      parserAlloc            ( void )
 {
-	pparser_t pParser = gcMalloc( sizeof(parser_t) ) ;
-	
-	if ( pParser==NULL )
-	{
-		$parserInternal( malloc , outOfMemory , NULL , NULL ) ;
-	}
-	else // init default parameter
-	{
-		pParser->fDebug 				= 0 		;
-		pParser->pFileOutputParser 		= NULL   	;  
-		pParser->fileNameOutputParser	= NULL	    ;
-		pParser->fileInputName			= NULL		;
-		pParser->lexer 					= NULL		; 
-		pParser->ast					= NULL 		;
-	}
+    pparser_t pParser = gcMalloc( sizeof(parser_t) ) ;
+    
+    if ( pParser==NULL )
+    {
+        $parserInternal( malloc , outOfMemory , NULL , NULL ) ;
+    }
+    else // init default parameter
+    {
+        pParser->fDebug                 = 0         ;
+        pParser->pFileOutputParser      = NULL      ;  
+        pParser->fileNameOutputParser   = NULL      ;
+        pParser->fileInputName          = NULL      ;
+        pParser->lexer                  = NULL      ; 
+        pParser->ast                    = NULL      ;
+    }
 
-	return pParser ;
+    return pParser ;
 }
 
 // ......................................................... parser dealloc
 
-void  	parserDealloc			( pparser_t this )
+void      parserDealloc            ( pparser_t this )
 {
-	if ( this!=NULL )
-	{
-		
-		gcFree(this);
-	}
-	else
-	{
-		$parserInternal( dealloc , errUnknown , NULL , NULL );
-	}
+    if ( this!=NULL )
+    {
+        
+        gcFree(this);
+    }
+    else
+    {
+        $parserInternal( dealloc , errUnknown , NULL , NULL );
+    }
 }
 
 // ......................................................... parser constructor
 
 void parserCtor( pparser_t this )
 {
-	// file debug parser
-	
-	if ( this->fDebug ) 
-	{
-		if ( this->fileInputName!=NULL )
-		{
-				this->fileNameOutputParser  = g.makeFileWithNewExt( this->fileInputName , ".parser"  ) ;
-				stdFileWOpen ( &this->pFileOutputParser , this->fileNameOutputParser , "w+","ccs=UTF-8" ) ;
-				
-				if ( this->pFileOutputParser != NULL )
-				{
-					fwprintf ( this->pFileOutputParser , L"\n%-20ls : [%018p] -> [%-20hs]\n" 
-						,L"file parser"	    
-						,this->pFileOutputParser 
-						,this->fileNameOutputParser
-					) ;
-				}
-				
-				// *********
-				//  LEXER
-				// *********
+    // file debug parser
+    
+    if ( this->fDebug ) 
+    {
+        if ( this->fileInputName!=NULL )
+        {
+                this->fileNameOutputParser  = g.makeFileWithNewExt( this->fileInputName , ".parser"  ) ;
+                stdFileWOpen ( &this->pFileOutputParser , this->fileNameOutputParser , "w+","ccs=UTF-8" ) ;
+                
+                if ( this->pFileOutputParser != NULL )
+                {
+                    fwprintf ( this->pFileOutputParser , L"\n%-20ls : [%018p] -> [%-20hs]\n" 
+                        ,L"file parser"        
+                        ,this->pFileOutputParser 
+                        ,this->fileNameOutputParser
+                    ) ;
+                }
+                
+                // *********
+                //  LEXER
+                // *********
 
-				plexer_t lexer = lexerAlloc();
+                plexer_t lexer = lexerAlloc();
 
-				lexerCtor(lexer);
+                lexerCtor(lexer);
 
-				if ( this->fDebug == 1 ) lexer->fDebug = 1 ;
+                if ( this->fDebug == 1 ) lexer->fDebug = 1 ;
 
-				this->lexer = lexer ;
+                this->lexer = lexer ;
 
-				// *********
-				//  AST
-				// *********
+                // *********
+                //  AST
+                // *********
 
-				past_t	ast = astAlloc();
+                past_t    ast = astAlloc();
 
-				if ( this->fDebug == 1 ) ast->fDebug = 1 ;
+                if ( this->fDebug == 1 ) ast->fDebug = 1 ;
 
-				astCtor(ast,this->fileInputName);
+                astCtor(ast,this->fileInputName);
 
-				this->ast =ast ;
+                this->ast =ast ;
 
-		}
-		else
-		{
-			this->lexer = NULL ;
-			this->ast	= NULL ;
-			this->pFileOutputParser = NULL ;
-			$parserInternal( checkFileExists , noInputFiles , L"{null}" , NULL );
-		}
-	}
+        }
+        else
+        {
+            this->lexer = NULL ;
+            this->ast    = NULL ;
+            this->pFileOutputParser = NULL ;
+            $parserInternal( checkFileExists , noInputFiles , L"{null}" , NULL );
+        }
+    }
 
 }
 
@@ -188,153 +188,153 @@ void parserCtor( pparser_t this )
 
 void parserDtor( pparser_t this )
 {
-	if ( this->fDebug) 	if ( this->pFileOutputParser!=NULL ) fclose(this->pFileOutputParser);
+    if ( this->fDebug)     if ( this->pFileOutputParser!=NULL ) fclose(this->pFileOutputParser);
 
-	if ( this->lexer != NULL )
-	{
-		lexerDtor(this->lexer);
+    if ( this->lexer != NULL )
+    {
+        lexerDtor(this->lexer);
 
-		lexerDealloc(this->lexer);
-	}
+        lexerDealloc(this->lexer);
+    }
 
-	if ( this->ast != NULL )
-	{
-		astDtor(this->ast);
+    if ( this->ast != NULL )
+    {
+        astDtor(this->ast);
 
-		astDealloc(this->ast);
-	}
+        astDealloc(this->ast);
+    }
 }
 
 // ......................................................... parser statement
 
 pnode_t parserStatement( pparser_t this , node_t* nBlock ) 
 {
-	pnode_t 	pnode = NULL ;
-	//node_t* 	nBlockVectorTemp 	= NULL 	;
-	//size_t 		fDecl=0;
-	
-	// -----------
-	// EXPR
-	// -----------
+    pnode_t     pnode = NULL ;
+    //node_t*     nBlockVectorTemp     = NULL     ;
+    //size_t         fDecl=0;
+    
+    // -----------
+    // EXPR
+    // -----------
 
-	pnode = NULL ;
+    pnode = NULL ;
 
-	do {
-		
-		if  ( this->lexer->sym==sym_pv)  parserGetToken(this);
+    do {
+        
+        if  ( this->lexer->sym==sym_pv)  parserGetToken(this);
 
-		if ( kError ) break ;
-		
-		pnode=parserExpr(this);
-		
-		if ( pnode!=NULL ) astPushNodeBlock( this->ast , nBlock , pnode );
-		
-		//if  ( this->lexer->sym==sym_pv) $MATCH( sym_pv , L';' ) else break ;
-		
-	} while ( 		pnode!=NULL 
-				&&  this->lexer->sym != sym_end 
-				&&  this->lexer->sym == sym_pv
-				&&  !kError 
-			) ;
-			
-	//if ( this->lexer->sym==sym_pv) $MATCH( sym_pv , L';' ) ;
+        if ( kError ) break ;
+        
+        pnode=parserExpr(this);
+        
+        if ( pnode!=NULL ) astPushNodeBlock( this->ast , nBlock , pnode );
+        
+        //if  ( this->lexer->sym==sym_pv) $MATCH( sym_pv , L';' ) else break ;
+        
+    } while (       pnode!=NULL 
+                &&  this->lexer->sym != sym_end 
+                &&  this->lexer->sym == sym_pv
+                &&  !kError 
+            ) ;
+            
+    //if ( this->lexer->sym==sym_pv) $MATCH( sym_pv , L';' ) ;
 
-	return nBlock ;
+    return nBlock ;
 }
 
 // ......................................................... parser Function
 
 pnode_t parserFunction( pparser_t this , node_t* nBlock ) 
 {
-	pnode_t 	pnode = NULL ;
+    pnode_t     pnode = NULL ;
 
-	// -----------
-	// Function
-	// -----------
+    // -----------
+    // Function
+    // -----------
 
-	pnode = NULL ;
+    pnode = NULL ;
 
-	do {
+    do {
 
-		if ( kError ) break ;
-		
-		pnode=parserDeclFunction(this);
-		
-		if ( pnode!=NULL ) astPushNodeBlock( this->ast , nBlock , pnode );
-		
-	} while ( 		pnode!=NULL 
-				&&  this->lexer->sym != sym_end 
-				&&  !kError 
-			) ;
+        if ( kError ) break ;
+        
+        pnode=parserDeclFunction(this);
+        
+        if ( pnode!=NULL ) astPushNodeBlock( this->ast , nBlock , pnode );
+        
+    } while (         pnode!=NULL 
+                &&  this->lexer->sym != sym_end 
+                &&  !kError 
+            ) ;
 
-	return nBlock ;
+    return nBlock ;
 }
 
 // ......................................................... parser block : Declaration , Statement
 
-pnode_t parserBlock( pparser_t this , stScope_t	scope )
+pnode_t parserBlock( pparser_t this , stScope_t    scope )
 {
-	// *********
-	//  BLOCK
-	// *********
+    // *********
+    //  BLOCK
+    // *********
 
-	node_t* nBlock=astMakeNodeBlock(this->ast);
+    node_t* nBlock=astMakeNodeBlock(this->ast);
 
-	nBlock = parserDeclaration( this ,  nBlock , scope ) ;
+    nBlock = parserDeclaration( this ,  nBlock , scope ) ;
 
-	nBlock = parserStatement( this ,  nBlock ) ;
+    nBlock = parserStatement( this ,  nBlock ) ;
 
-	return nBlock ;
+    return nBlock ;
 }
 
 // ......................................................... parser block : Declaration , Function , statement
 
 pnode_t parserMainBlock( pparser_t this )
 {
-	// *********
-	//  MAIN
-	// *********
+    // *********
+    //  MAIN
+    // *********
 
-	node_t* nBlock=astMakeNodeBlock(this->ast);
+    node_t* nBlock=astMakeNodeBlock(this->ast);
 
-	nBlock = parserDeclaration( this ,  nBlock , stScopeGlobal ) ;
+    nBlock = parserDeclaration( this ,  nBlock , stScopeGlobal ) ;
 
-	nBlock = parserFunction( this ,  nBlock ) ;
-	
-	nBlock = parserStatement( this ,  nBlock ) ;
+    nBlock = parserFunction( this ,  nBlock ) ;
+    
+    nBlock = parserStatement( this ,  nBlock ) ;
 
-	//fwprintf ( stderr, L"\n§§§[%ls %d]\n",this->lexer->token,this->lexer->sym ) ;
+    //fwprintf ( stderr, L"\n§§§[%ls %d]\n",this->lexer->token,this->lexer->sym ) ;
 
-	if ( this->lexer->sym != sym_end ) $syntaxError ;
+    if ( this->lexer->sym != sym_end ) $syntaxError ;
 
-	return nBlock ;
+    return nBlock ;
 }
 
 // ......................................................... parser scan 
 
 pnode_t parserScan( pparser_t this )
 {
-	// parser start message
-		
-	if ( this->fDebug ) fwprintf ( this->pFileOutputParser,L"\n# Parser  -> scanning ...\n\n"  );
-	
-	// parser init
+    // parser start message
+        
+    if ( this->fDebug ) fwprintf ( this->pFileOutputParser,L"\n# Parser  -> scanning ...\n\n"  );
+    
+    // parser init
 
-		pnode_t	pnode = NULL ;
+        pnode_t    pnode = NULL ;
 
-		lexerInclude ( this->lexer , this->fileInputName ) ;
+        lexerInclude ( this->lexer , this->fileInputName ) ;
 
-		parserGetToken(this);
-		
-	// parser begin
-	
-		pnode = parserMainBlock( this ) ; // decl(global); Function; statement[expr];
-	
-	// parser end
+        parserGetToken(this);
+        
+    // parser begin
+    
+        pnode = parserMainBlock( this ) ; // decl(global); Function; statement[expr];
+    
+    // parser end
 
-	// ritorna il nodo principale ( GC for deallocation )
+    // ritorna il nodo principale ( GC for deallocation )
 
-	return pnode ;
+    return pnode ;
 }
 
 
@@ -345,61 +345,61 @@ pnode_t parserScan( pparser_t this )
 
 /* 
   
-		// parser init
-		
-			// *********
-			//  LEXER
-			// *********
+        // parser init
+        
+            // *********
+            //  LEXER
+            // *********
 
-			plexer_t lexer = lexerAlloc();
-			
-			lexerCtor(lexer);
-			
-			if ( this->fDebug == 1 ) lexer->fDebug = 1 ;
+            plexer_t lexer = lexerAlloc();
+            
+            lexerCtor(lexer);
+            
+            if ( this->fDebug == 1 ) lexer->fDebug = 1 ;
 
-			// *********
-			//  NODE
-			// *********
-			
-			pnode_t	pnode = NULL ;
-					
-			// *********
-			//  AST
-			// *********
-			
-			past_t	ast = astAlloc(pnode);
-			
-			if ( this->fDebug == 1 ) ast->fDebug = 1 ;
-			
-			astCtor(ast,fileInputName);
+            // *********
+            //  NODE
+            // *********
+            
+            pnode_t    pnode = NULL ;
+                    
+            // *********
+            //  AST
+            // *********
+            
+            past_t    ast = astAlloc(pnode);
+            
+            if ( this->fDebug == 1 ) ast->fDebug = 1 ;
+            
+            astCtor(ast,fileInputName);
 
-		// parser loop
+        // parser loop
 
-			// LEXER
-			
-				lexerInclude ( lexer , fileInputName ) ;
-				for(;;)
-				{
-					lexerGetToken(lexer) ;
-					if ( lexer->sym == sym_end ) break; 
-				}
-				
-			// END LEXER
-				
-		// parser exit	
-				
-			lexerDtor(lexer);
-			
-			lexerDealloc(lexer);
+            // LEXER
+            
+                lexerInclude ( lexer , fileInputName ) ;
+                for(;;)
+                {
+                    lexerGetToken(lexer) ;
+                    if ( lexer->sym == sym_end ) break; 
+                }
+                
+            // END LEXER
+                
+        // parser exit    
+                
+            lexerDtor(lexer);
+            
+            lexerDealloc(lexer);
 
-			astDtor(ast);
-			
-			astDealloc(ast);
-			
-			// ritorna il nodo principale
-			// ( GC for deallocation )
-			
-		return pnode ;
+            astDtor(ast);
+            
+            astDealloc(ast);
+            
+            // ritorna il nodo principale
+            // ( GC for deallocation )
+            
+        return pnode ;
 
 */
 

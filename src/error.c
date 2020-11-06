@@ -58,7 +58,7 @@ errMessage_t errMessage[] =
     { L"file Not Found"                                                                 } ,
     { L"no input files"                                                                 } ,    
     { L"reached end of file"                                                            } ,
-    { L"found end */  before begin /*"   												} ,
+    { L"found end */  before begin /*"                                                  } ,
     { L"text length exceed token max size"                                              } ,    
   //  { L"unable to find numeric literal after"                                         } ,
     { L"invalid argument"                                                               } ,
@@ -76,13 +76,13 @@ errMessage_t errMessage[] =
     { L"division by zero"                                                               } , 
     { L"duplicate symbol name"                                                          } , 
     { L"undeclared identifier"                                                          } , 
-    { L"lvalue required as left operand of assignment"                					} , 
-    { L"expected primary-expression before" 											} ,  
-    { L"expected primary-expression after" 												} ,
-    { L"array bound is not an integer constant before ']'" 								} ,
-    { L"type void not allowed" 															} , 
-    { L"was not declared in this scope" 												} ,    
-    { L"invalid use of" 																} ,        
+    { L"lvalue required as left operand of assignment"                                  } , 
+    { L"expected primary-expression before"                                             } ,  
+    { L"expected primary-expression after"                                              } ,
+    { L"array bound is not an integer constant before ']'"                              } ,
+    { L"type void not allowed"                                                          } , 
+    { L"was not declared in this scope"                                                 } ,    
+    { L"invalid use of"                                                                 } ,        
 } ;
 
 // ................................................... push err log
@@ -144,7 +144,7 @@ void printErrLog(void)
  
         if ( (*itv)->fileInput != NULL )
         {
-			
+            
         if ( wcslen((*itv)->fileInput) > 20 )
             fwprintf ( stderr,L"[%-17.17ls...]" ,(*itv)->fileInput ) ;
         else
@@ -164,8 +164,8 @@ void printErrLog(void)
 
         if ( (*itv)->extra != NULL )
         {
-			wchar_t* temp = gcWcsDup( (wchar_t*) (*itv)->extra ) ;
-			fwprintf ( stderr , L": (%ls)", g.outputSpecialCharInString( temp ) );
+            wchar_t* temp = gcWcsDup( (wchar_t*) (*itv)->extra ) ;
+            fwprintf ( stderr , L": (%ls)", g.outputSpecialCharInString( temp ) );
         }
         fwprintf ( stderr , L"." ) ;  
        

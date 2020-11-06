@@ -9,314 +9,314 @@
 // ................................................... private prefix in expr
 
 static
-psPrefixOp_t	parserPrefixNew( plexer_t lexer )
+psPrefixOp_t    parserPrefixNew( plexer_t lexer )
 {
-	psPrefixOp_t	prefix	= gcMalloc( sizeof(struct sPrefixOp_s) ) ;
-	
-	if ( prefix == NULL )
-	{
-		 $astInternal ( malloc , outOfMemory , L"expr.c" , L"parserMakePrefix") ;
-	}
-	else
-	{
-		prefix->sym 			= lexer->sym ;
-		prefix->row_start		= lexer->row_start ;
-		prefix->col_start 		= lexer->col_start ;
-		prefix->token 			= gcWcsDup( lexer->token ) ;
-		prefix->fileInputName 	= gcWcsDup( (wchar_t*)lexer->fileInputName ) ;
-	}
-	return prefix ;
+    psPrefixOp_t    prefix    = gcMalloc( sizeof(struct sPrefixOp_s) ) ;
+    
+    if ( prefix == NULL )
+    {
+         $astInternal ( malloc , outOfMemory , L"expr.c" , L"parserMakePrefix") ;
+    }
+    else
+    {
+        prefix->sym             = lexer->sym ;
+        prefix->row_start        = lexer->row_start ;
+        prefix->col_start         = lexer->col_start ;
+        prefix->token             = gcWcsDup( lexer->token ) ;
+        prefix->fileInputName     = gcWcsDup( (wchar_t*)lexer->fileInputName ) ;
+    }
+    return prefix ;
 }
 
 static
-psPrefixOp_t	parserPrefixDelete( psPrefixOp_t prefix )
+psPrefixOp_t    parserPrefixDelete( psPrefixOp_t prefix )
 {
-	if ( prefix != NULL )
-	{
-		 gcFree(prefix->token);
-		 prefix = NULL ;
-	}
-	return prefix ;
+    if ( prefix != NULL )
+    {
+         gcFree(prefix->token);
+         prefix = NULL ;
+    }
+    return prefix ;
 }
 
 // ................................................... TERM
 
 node_t* parserTerm( pparser_t this )
 {
-	// PREFIX PUSH
+    // PREFIX PUSH
 
-		stackType( psPrefixOp_t , sPrefixOp ) ;
-		stackNew ( sPrefixOp , 128 ) ;
+        stackType( psPrefixOp_t , sPrefixOp ) ;
+        stackNew ( sPrefixOp , 128 ) ;
 
-		while ( this->lexer->sym == sym_add
-			||	this->lexer->sym == sym_sub
-			||	this->lexer->sym == sym_not
-		)
-		{
-			if ( this->lexer->sym != sym_add ) // prefix -> skip '+'
-			{
-				if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserPrefix push [%d]\n",this->lexer->sym );
-				
-				psPrefixOp_t pprefix = parserPrefixNew( this->lexer ) ;
-				
-				stackPush ( sPrefixOp , pprefix  ) ;
-			}
-			parserGetToken(this);
-		}
+        while ( this->lexer->sym == sym_add
+            ||    this->lexer->sym == sym_sub
+            ||    this->lexer->sym == sym_not
+        )
+        {
+            if ( this->lexer->sym != sym_add ) // prefix -> skip '+'
+            {
+                if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserPrefix push [%d]\n",this->lexer->sym );
+                
+                psPrefixOp_t pprefix = parserPrefixNew( this->lexer ) ;
+                
+                stackPush ( sPrefixOp , pprefix  ) ;
+            }
+            parserGetToken(this);
+        }
 
-	// END PREFIX PUSH
+    // END PREFIX PUSH
 
-	node_t* n=NULL ;
+    node_t* n=NULL ;
 
-	if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserTerm\n" );
+    if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserTerm\n" );
 
-	switch ( this->lexer->sym )
-	{
-		case sym_p0 :
+    switch ( this->lexer->sym )
+    {
+        case sym_p0 :
 
-			if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parser Match ( .\n" );
+            if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parser Match ( .\n" );
 
-			$MATCH( sym_p0, L'(' ) ;
+            $MATCH( sym_p0, L'(' ) ;
 
-			n=parserExpr(this);
+            n=parserExpr(this);
 
-			$MATCH( sym_p1, L')' ) ;
+            $MATCH( sym_p1, L')' ) ;
 
-			if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parser Match ) . \n" );
+            if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parser Match ) . \n" );
 
-		break ;
+        break ;
 
-		case sym_integer :
+        case sym_integer :
 
-			#ifdef _MSC_VER
-				fwprintf ( this->pFileOutputParser , L"%-30ls :: [%lld].\n",L"sym_integer",this->lexer->value.integer );
-			#else
-				fwprintf ( this->pFileOutputParser , L"%-30ls :: [%ld].\n" ,L"sym_integer",this->lexer->value.integer );
-			#endif
+            #ifdef _MSC_VER
+                fwprintf ( this->pFileOutputParser , L"%-30ls :: [%lld].\n",L"sym_integer",this->lexer->value.integer );
+            #else
+                fwprintf ( this->pFileOutputParser , L"%-30ls :: [%ld].\n" ,L"sym_integer",this->lexer->value.integer );
+            #endif
 
-			n = astMakeNodeTermInteger( this->ast,this->lexer,this->lexer->value.integer ) ;
+            n = astMakeNodeTermInteger( this->ast,this->lexer,this->lexer->value.integer ) ;
 
-			parserGetToken(this);
+            parserGetToken(this);
 
-		break;
+        break;
 
-		case sym_real:
+        case sym_real:
 
-			fwprintf ( this->pFileOutputParser , L"%-30ls :: [%lf].\n",L"sym_real",this->lexer->value.real );
+            fwprintf ( this->pFileOutputParser , L"%-30ls :: [%lf].\n",L"sym_real",this->lexer->value.real );
 
-			n = astMakeNodeTermReal( this->ast,this->lexer,this->lexer->value.real ) ;
+            n = astMakeNodeTermReal( this->ast,this->lexer,this->lexer->value.real ) ;
 
-			parserGetToken(this);
+            parserGetToken(this);
 
-		break;
+        break;
 
-		case sym_char :
+        case sym_char :
 
-			fwprintf ( this->pFileOutputParser , L"%-30ls :: [%lc].\n",L"sym_char",g.outputSpecialCharInChar(this->lexer->value.wchar) ) ;
+            fwprintf ( this->pFileOutputParser , L"%-30ls :: [%lc].\n",L"sym_char",g.outputSpecialCharInChar(this->lexer->value.wchar) ) ;
 
-			n = astMakeNodeTermChar( this->ast,this->lexer, this->lexer->value.wchar ) ;
+            n = astMakeNodeTermChar( this->ast,this->lexer, this->lexer->value.wchar ) ;
 
-			parserGetToken(this);
+            parserGetToken(this);
 
-		break;
+        break;
 
-		case sym_string :
+        case sym_string :
 
-			fwprintf ( this->pFileOutputParser , L"%-30ls :: [%ls].\n",L"sym_string",g.outputSpecialCharInString(this->lexer->value.wstring) );
+            fwprintf ( this->pFileOutputParser , L"%-30ls :: [%ls].\n",L"sym_string",g.outputSpecialCharInString(this->lexer->value.wstring) );
 
-			n = astMakeNodeTermString( this->ast,this->lexer, this->lexer->value.wstring ) ;
+            n = astMakeNodeTermString( this->ast,this->lexer, this->lexer->value.wstring ) ;
 
-			parserGetToken(this);
+            parserGetToken(this);
 
-		break;
-		
-		/*
-				Gestione Array Function Const Var Field
-			    
-			    1) id	[	:	array
-			    2) id	(	:	function
-			    3) id		:	const
-			    4) 			:	var
-			    5)			:	field
+        break;
+        
+        /*
+                Gestione Array Function Const Var Field
+                
+                1) id    [    :    array
+                2) id    (    :    function
+                3) id        :    const
+                4)             :    var
+                5)            :    field
 
-		*/
-		 
-		case sym_id : // Array || Function || Const || Var || Field
-		{
-				wchar_t*	idTemp = gcWcsDup ( this->lexer->token)  ;
-				uint32_t	rowTemp = this->lexer->row ;
-				uint32_t	colTemp = this->lexer->col ;
-				 
-				fwprintf ( this->pFileOutputParser , L"%-30ls :: [%ls].\n",L"ID",this->lexer->value.id );
-					
-				parserGetToken(this);
-				
-				switch ( this->lexer->sym )
-				{
-					case	sym_pq0	:	// ARRAY [
-							{
-								node_t* nArrayDim	=	parserArrayDim(this);
-								if (nArrayDim!=NULL )
-								{
-									n=astMakeNodeTermArray	( this->ast , idTemp  , nArrayDim ) ;
-								} ;
-							}
-							break;
-							
-					case	sym_p0:		// FUNZIONE (
-							{
-								node_t* 	nBlockParam			=	astMakeNodeBlock(this->ast) ;
-								
-								$MATCH( sym_p0 , L'(' ) ;
-								
-									int fLoop=0;
-									do {
-										fLoop=0; // REPETITA JUVANT :
-										pnode_t nTemp	=	parserExpr(this); // -> esce con termine nuovo, è all'entrata che ocorre getToken.
+        */
+         
+        case sym_id : // Array || Function || Const || Var || Field
+        {
+                wchar_t*    idTemp = gcWcsDup ( this->lexer->token)  ;
+                uint32_t    rowTemp = this->lexer->row ;
+                uint32_t    colTemp = this->lexer->col ;
+                 
+                fwprintf ( this->pFileOutputParser , L"%-30ls :: [%ls].\n",L"ID",this->lexer->value.id );
+                    
+                parserGetToken(this);
+                
+                switch ( this->lexer->sym )
+                {
+                    case    sym_pq0    :    // ARRAY [
+                            {
+                                node_t* nArrayDim    =    parserArrayDim(this);
+                                if (nArrayDim!=NULL )
+                                {
+                                    n=astMakeNodeTermArray    ( this->ast , idTemp  , nArrayDim ) ;
+                                } ;
+                            }
+                            break;
+                            
+                    case    sym_p0:        // FUNZIONE (
+                            {
+                                node_t*     nBlockParam            =    astMakeNodeBlock(this->ast) ;
+                                
+                                $MATCH( sym_p0 , L'(' ) ;
+                                
+                                    int fLoop=0;
+                                    do {
+                                        fLoop=0; // REPETITA JUVANT :
+                                        pnode_t nTemp    =    parserExpr(this); // -> esce con termine nuovo, è all'entrata che ocorre getToken.
 
-										astPushNodeBlock ( this->ast , nBlockParam , nTemp ) ; // controllo automatico NULL
+                                        astPushNodeBlock ( this->ast , nBlockParam , nTemp ) ; // controllo automatico NULL
 
-										if ( this->lexer->sym == sym_v ) { fLoop=1; parserGetToken(this); } ;
-									} while ( 
-												fLoop==1  	&&
-												this->lexer->sym != sym_end 	&&
-												!kError 
-											) ;
+                                        if ( this->lexer->sym == sym_v ) { fLoop=1; parserGetToken(this); } ;
+                                    } while ( 
+                                                fLoop==1      &&
+                                                this->lexer->sym != sym_end     &&
+                                                !kError 
+                                            ) ;
 
-								$MATCH( sym_p1 , L')' ) ;
+                                $MATCH( sym_p1 , L')' ) ;
 
-								if (nBlockParam!=NULL )
-								{
-										n=astMakeNodeTermFunction	( this->ast , idTemp  , nBlockParam ) ;
-								} ;
-							}
-							break;
+                                if (nBlockParam!=NULL )
+                                {
+                                        n=astMakeNodeTermFunction    ( this->ast , idTemp  , nBlockParam ) ;
+                                } ;
+                            }
+                            break;
 
-					default:
-					{
-						// [v] variabile	:	termVar
-						// [] costante		:	return Term const
-						// [] tipo			:	termID
+                    default:
+                    {
+                        // [v] variabile    :    termVar
+                        // [] costante        :    return Term const
+                        // [] tipo            :    termID
 
-						psymTable_t pstTemp = stFindIDinMap(idTemp);
+                        psymTable_t pstTemp = stFindIDinMap(idTemp);
 
-						if ( !pstTemp ) // se != 0 è già presente
-						{
-							$pushErrLog
-							(parser,error,parseExpr,symbolNotDeclared,rowTemp,(colTemp-wcslen(idTemp)+1),this->lexer->fileInputName , idTemp) ;
-							n=NULL ;
-						}
-						else
-						{
-							//n=astMakeNodeTermVar ( this->ast , idTemp , rowTemp , colTemp ) ;
-							fwprintf ( stderr , L"\nexpr -> type id [%d]\n",(int)pstTemp->kind ) ;
-							
-							switch ( pstTemp->kind ) 
-							{
-								case	stKindConst	:
-										// replace const
-										n=astMakeNodeTermVar ( this->ast , idTemp , rowTemp , colTemp ) ;
-										break;
-										
-								case	stKindVar	:
-										n=astMakeNodeTermVar ( this->ast , idTemp , rowTemp , colTemp ) ;
-										break;
-										
-								default:
-										$pushErrLog
-										(parser,error,parseExpr,invalidUseOf,rowTemp,(colTemp-wcslen(idTemp)+1),this->lexer->fileInputName , idTemp) ;
-										n=NULL ;
-										break;
-							}
-						}
-						break;
-					}
-				}
-		}
-		break;
+                        if ( !pstTemp ) // se != 0 è già presente
+                        {
+                            $pushErrLog
+                            (parser,error,parseExpr,symbolNotDeclared,rowTemp,(colTemp-wcslen(idTemp)+1),this->lexer->fileInputName , idTemp) ;
+                            n=NULL ;
+                        }
+                        else
+                        {
+                            //n=astMakeNodeTermVar ( this->ast , idTemp , rowTemp , colTemp ) ;
+                            fwprintf ( stderr , L"\nexpr -> type id [%d]\n",(int)pstTemp->kind ) ;
+                            
+                            switch ( pstTemp->kind ) 
+                            {
+                                case    stKindConst    :
+                                        // replace const
+                                        n=astMakeNodeTermVar ( this->ast , idTemp , rowTemp , colTemp ) ;
+                                        break;
+                                        
+                                case    stKindVar    :
+                                        n=astMakeNodeTermVar ( this->ast , idTemp , rowTemp , colTemp ) ;
+                                        break;
+                                        
+                                default:
+                                        $pushErrLog
+                                        (parser,error,parseExpr,invalidUseOf,rowTemp,(colTemp-wcslen(idTemp)+1),this->lexer->fileInputName , idTemp) ;
+                                        n=NULL ;
+                                        break;
+                            }
+                        }
+                        break;
+                    }
+                }
+        }
+        break;
 /*
-		case sym_id:
+        case sym_id:
 
-			fwprintf ( this->pFileOutputParser , L"%-30ls :: [%ls].\n",L"sym_id",this->lexer->value.id );
+            fwprintf ( this->pFileOutputParser , L"%-30ls :: [%ls].\n",L"sym_id",this->lexer->value.id );
 
-			// #1 const
-			psymTable_t pID=stFindIDinMap(this->lexer->value.id) ;
-				
-			if ( pID==NULL )
-			{
-				// allora e' una variabile : x ... gestione post fix in seguito [] ()
-		n=makeNodeTermVar(lexer.id);
-			}
-			else // e' un tipo gia' definito
-			{
-				// un volta accertato che l'identificatore esiste ...
-				switch( pID->kind )
-				{
-					case stKindConst : // SE è una costante ...
-					
-							switch( pID->type ) // sostituiamo il simbolo con la costante a seconda del tipo
-							{
-								case stTypeInteger : 
-									n = astMakeNodeTermInteger( this->ast,this->lexer,pID->value.integer ) ; // valore della costante nella ST
-								break;
-								
-								case stTypeReal :
-									n = astMakeNodeTermReal( this->ast,this->lexer,pID->value.real ) ;
-								break;
-								
-								default: 
-									$parserInternal(parseExpr,notImplemetedYet,L"expr.c",L"case sym_id->switch( pID->type )");
-									n=NULL ;
-								break ;
-							}
-					
-					break ;
-					
-					//case stKindVar : // errore vengono gestiti qui solo le costanti !
+            // #1 const
+            psymTable_t pID=stFindIDinMap(this->lexer->value.id) ;
+                
+            if ( pID==NULL )
+            {
+                // allora e' una variabile : x ... gestione post fix in seguito [] ()
+        n=makeNodeTermVar(lexer.id);
+            }
+            else // e' un tipo gia' definito
+            {
+                // un volta accertato che l'identificatore esiste ...
+                switch( pID->kind )
+                {
+                    case stKindConst : // SE è una costante ...
+                    
+                            switch( pID->type ) // sostituiamo il simbolo con la costante a seconda del tipo
+                            {
+                                case stTypeInteger : 
+                                    n = astMakeNodeTermInteger( this->ast,this->lexer,pID->value.integer ) ; // valore della costante nella ST
+                                break;
+                                
+                                case stTypeReal :
+                                    n = astMakeNodeTermReal( this->ast,this->lexer,pID->value.real ) ;
+                                break;
+                                
+                                default: 
+                                    $parserInternal(parseExpr,notImplemetedYet,L"expr.c",L"case sym_id->switch( pID->type )");
+                                    n=NULL ;
+                                break ;
+                            }
+                    
+                    break ;
+                    
+                    //case stKindVar : // errore vengono gestiti qui solo le costanti !
 
-					break ;
-					
-					default:
-						$parserInternal(parseExpr,notImplemetedYet,L"expr.c",L"case sym_id->switch( pID->kind )");
-						n=NULL ;
-					break ;
-			    }
-				
-			}
+                    break ;
+                    
+                    default:
+                        $parserInternal(parseExpr,notImplemetedYet,L"expr.c",L"case sym_id->switch( pID->kind )");
+                        n=NULL ;
+                    break ;
+                }
+                
+            }
 
-			cdParserGetToken();
+            cdParserGetToken();
 
-		break;
+        break;
 */
-		default:
-			
-			/*
-			 * Le espressioni come le frasi del parser possono ritornare NULL, 
-			 * come possiamo vedere nella definizione degli array C : int a[] ...
-			 * per tanto andra gestita l'espressione NULL e con quanto ne consgue. 
-			 */
-			
-			//$syntaxError
+        default:
+            
+            /*
+               Le espressioni come le frasi del parser possono ritornare NULL, 
+               come possiamo vedere nella definizione degli array C : int a[] ...
+               per tanto andra gestita l'espressione NULL e con quanto ne consgue. 
+            */
+            
+            //$syntaxError
 
-			n=NULL ; // non trova espressione allora ritorna NULL !
-			
-		break;
-	}
+            n=NULL ; // non trova espressione allora ritorna NULL !
+            
+        break;
+    }
 
-	// PREFIX POP
+    // PREFIX POP
 
-		while(stackSize(sPrefixOp))
-		{
-			if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserPrefix pop [%d]\n",this->lexer->sym );
-			
-			n = astMakeNodePrefix( this->ast,stackTop(sPrefixOp) , n ) ;
-			
-			parserPrefixDelete(stackTop(sPrefixOp));
-			
-			stackPop(sPrefixOp);
-		}
+        while(stackSize(sPrefixOp))
+        {
+            if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserPrefix pop [%d]\n",this->lexer->sym );
+            
+            n = astMakeNodePrefix( this->ast,stackTop(sPrefixOp) , n ) ;
+            
+            parserPrefixDelete(stackTop(sPrefixOp));
+            
+            stackPop(sPrefixOp);
+        }
 
-	// END PREFIX POP
+    // END PREFIX POP
 
  return n ;
 }
@@ -325,45 +325,45 @@ node_t* parserTerm( pparser_t this )
 
 node_t* parserMulDivMod( pparser_t this )
 {
-	node_t *left=NULL;
+    node_t *left=NULL;
 
-	if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserMulDivMod\n" );
+    if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserMulDivMod\n" );
 
-	left=parserTerm(this);
+    left=parserTerm(this);
 
-	while ( 	this->lexer->sym == sym_mul
-		||		this->lexer->sym == sym_div
-		||		this->lexer->sym == sym_mod
-		)
-	{
-		sym_t 		symSave  	= this->lexer->sym ;
-		wchar_t*	tokenSave 	= gcWcsDup(this->lexer->token);
-		uint32_t	rowSave 	= this->lexer->row_start ;
-		uint32_t	colSave 	= this->lexer->col_start ;
-		
-		node_t *right=NULL;
+    while (     this->lexer->sym == sym_mul
+        ||        this->lexer->sym == sym_div
+        ||        this->lexer->sym == sym_mod
+        )
+    {
+        sym_t         symSave      = this->lexer->sym ;
+        wchar_t*    tokenSave     = gcWcsDup(this->lexer->token);
+        uint32_t    rowSave     = this->lexer->row_start ;
+        uint32_t    colSave     = this->lexer->col_start ;
+        
+        node_t *right=NULL;
 
-		parserGetToken(this);
+        parserGetToken(this);
 
-		right=parserTerm(this);
-		
-		if ( ( symSave == sym_div ) || ( symSave == sym_mod ) )
-		{
-			if ( right->type == nTypeTermInteger) 
-				if ( right->term.integer == 0 )
-					$parserError( parseExpr , division_by_zero );
+        right=parserTerm(this);
+        
+        if ( ( symSave == sym_div ) || ( symSave == sym_mod ) )
+        {
+            if ( right->type == nTypeTermInteger) 
+                if ( right->term.integer == 0 )
+                    $parserError( parseExpr , division_by_zero );
 
-			if ( right->type == nTypeTermReal) 
-				if ( right->term.real == 0.0 )
-					$parserError( parseExpr , division_by_zero );
+            if ( right->type == nTypeTermReal) 
+                if ( right->term.real == 0.0 )
+                    $parserError( parseExpr , division_by_zero );
 
-		} ;
-	    
-	    left = astMakeNodeBinOP( this->ast,this->lexer,symSave , right,left ) ;
-	    
-		left->token = 	tokenSave 	; 
-		left->row	=	rowSave 	;
-		left->col	=	colSave 	;
+        } ;
+        
+        left = astMakeNodeBinOP( this->ast,this->lexer,symSave , right,left ) ;
+        
+        left->token =     tokenSave     ; 
+        left->row    =    rowSave     ;
+        left->col    =    colSave     ;
     } 
 
  return left ;
@@ -373,33 +373,33 @@ node_t* parserMulDivMod( pparser_t this )
 
 node_t* parserAddSub( pparser_t this )
 {
-	node_t *left=NULL;
+    node_t *left=NULL;
 
-	if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserAddSub\n" );
+    if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserAddSub\n" );
 
-	left=parserMulDivMod(this);
+    left=parserMulDivMod(this);
 
-	while ( 	this->lexer->sym == sym_add
-		||		this->lexer->sym == sym_sub
-		)
-	{
-		sym_t 		symSave  	= this->lexer->sym ;
-		wchar_t*	tokenSave 	= gcWcsDup(this->lexer->token);
-		uint32_t	rowSave 	= this->lexer->row_start ;
-		uint32_t	colSave 	= this->lexer->col_start ;
-		
-		node_t *right=NULL;
+    while (     this->lexer->sym == sym_add
+        ||        this->lexer->sym == sym_sub
+        )
+    {
+        sym_t         symSave      = this->lexer->sym ;
+        wchar_t*    tokenSave     = gcWcsDup(this->lexer->token);
+        uint32_t    rowSave     = this->lexer->row_start ;
+        uint32_t    colSave     = this->lexer->col_start ;
+        
+        node_t *right=NULL;
 
-		parserGetToken(this);
+        parserGetToken(this);
 
-		right=parserMulDivMod(this);
+        right=parserMulDivMod(this);
 
-		left = astMakeNodeBinOP( this->ast,this->lexer,symSave , right,left ) ;
-		
-		left->token = 	tokenSave 	; 
-		left->row	=	rowSave 	;
-		left->col	=	colSave 	;
-	} ;
+        left = astMakeNodeBinOP( this->ast,this->lexer,symSave , right,left ) ;
+        
+        left->token =     tokenSave     ; 
+        left->row    =    rowSave     ;
+        left->col    =    colSave     ;
+    } ;
 
  return left ;
 }
@@ -408,22 +408,22 @@ node_t* parserAddSub( pparser_t this )
 
 node_t* parserAssign( pparser_t this )
 {
-	node_t *left=NULL;
+    node_t *left=NULL;
 
-	if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserAssign\n" );
+    if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserAssign\n" );
 
-	left=parserAddSub(this);
+    left=parserAddSub(this);
 
-	while ( this->lexer->sym == sym_assign )
-	{
-		node_t *right=NULL;
+    while ( this->lexer->sym == sym_assign )
+    {
+        node_t *right=NULL;
 
-		parserGetToken(this);
+        parserGetToken(this);
 
-		right=parserAddSub(this);
+        right=parserAddSub(this);
 
-		left = astMakeNodeAssign( this->ast,this->lexer,left,right ) ; // invertiti
-	} ;
+        left = astMakeNodeAssign( this->ast,this->lexer,left,right ) ; // invertiti
+    } ;
 
  return left ;
 }
@@ -432,13 +432,13 @@ node_t* parserAssign( pparser_t this )
 
 node_t* parserExpr( pparser_t this )
 {
-	if ( this->lexer->sym == sym_end ) return NULL ;
+    if ( this->lexer->sym == sym_end ) return NULL ;
 
-	node_t *n=NULL;
+    node_t *n=NULL;
 
-	if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserExpr\n" );
+    if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserExpr\n" );
 
-	n=parserAssign(this);
+    n=parserAssign(this);
 
  return n ;
 }

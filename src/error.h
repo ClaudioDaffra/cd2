@@ -81,8 +81,8 @@ typedef enum action_e
     action_debug            ,   // mentre debug ( node o altro ) 
     action_running          ,   // mentre siamo in esecuzione del codice 
     action_assembling       ,   // mentre sto assemblando codice macchina 
-    action_scanning       	,   // mentre sto analizzando semanticamente
-    action_tokenizing		,	// metre sto analissado col lexer   
+    action_scanning         ,   // mentre sto analizzando semanticamente
+    action_tokenizing       ,   // metre sto analissado col lexer   
             
 } e_action_t ;
 
@@ -99,35 +99,35 @@ extern action_t action[]  ;
 
 typedef enum errMessage_e
 {
-    errMessage_noErr                   		,   // nessun errore
-    errMessage_fileNotFound            		,   // file no trovato
-    errMessage_noInputFiles            		,   // nessun file in input    
-    errMessage_eof                     		,   // raggiunta la fine del file
-    errMessage_eoRem                   		,   // trovato commento multilinea di chiusura, iniziale
-    errMessage_overflowTokenText       		,   // la lunghezza del token eccede quella del buffer    
-  //  errMessage_expectedNumericLiteral  	,   // atteso numero esadecimale
-    errMessage_invalid_argument        		,   // argometo non valido
-    errMessage_out_of_range            		,   // fuori range    
-  //  errMessage_expectedExponent        	,   // hexadecimal floating constants require an exponent
-    errMessage_expectedExponentDigit   		,   // exponent has no digit
-  //  errMessage_outOfRangeNDX           	,   // indice vettore fouri dai limiti
-  //  errMessage_unexpectedSym           	,   // simbolo inatteso
-    errMessage_errUnknown              		,   // errore sconosciuto
-    errMessage_unexpectedToken         		,   // token inatteso     
-  //  errMessage_didYouMean              	,   // intendevi forse ?
-    errMessage_syntaxError             		,   // errore di sintassi
-    errMessage_outOfMemory             		,   // mancanza di memoria !  
-    errMessage_notImplemetedYet        		,   // non ancora implementato 
-    errMessage_division_by_zero        		,   // 1 / 0 ;
-    errMessage_duplicateSymbolName	   		,   // identificare già presente nella tabella dei simboli
-    errMessage_undeclaredIdentifier	   		,   // identificatore non dichiarato
-    errMessage_LValueRequired		   		,   // e' richiesto un valore sinistro
-    errMessage_expectedPrimaryExprBefore	,   // expected primary-expression before [token]
-    errMessage_expectedPrimaryExprAfter   	,   // expected primary-expression before [token 
-    errMessage_arrayBoundNotInteger			,	// array bound is not an integer constant before ']' 
-    errMessage_typeVoid						,	// nessun campo trovato nella struttura 
-    errMessage_symbolNotDeclared			,   // simbol was not declared in this scope 
-    errMessage_invalidUseOf					, 	// invalid use of (symbol)
+    errMessage_noErr                           ,   // nessun errore
+    errMessage_fileNotFound                    ,   // file no trovato
+    errMessage_noInputFiles                    ,   // nessun file in input    
+    errMessage_eof                             ,   // raggiunta la fine del file
+    errMessage_eoRem                           ,   // trovato commento multilinea di chiusura, iniziale
+    errMessage_overflowTokenText               ,   // la lunghezza del token eccede quella del buffer    
+  //  errMessage_expectedNumericLiteral        ,   // atteso numero esadecimale
+    errMessage_invalid_argument                ,   // argometo non valido
+    errMessage_out_of_range                    ,   // fuori range    
+  //  errMessage_expectedExponent              ,   // hexadecimal floating constants require an exponent
+    errMessage_expectedExponentDigit           ,   // exponent has no digit
+  //  errMessage_outOfRangeNDX                 ,   // indice vettore fouri dai limiti
+  //  errMessage_unexpectedSym                 ,   // simbolo inatteso
+    errMessage_errUnknown                      ,   // errore sconosciuto
+    errMessage_unexpectedToken                 ,   // token inatteso     
+  //  errMessage_didYouMean                    ,   // intendevi forse ?
+    errMessage_syntaxError                     ,   // errore di sintassi
+    errMessage_outOfMemory                     ,   // mancanza di memoria !  
+    errMessage_notImplemetedYet                ,   // non ancora implementato 
+    errMessage_division_by_zero                ,   // 1 / 0 ;
+    errMessage_duplicateSymbolName             ,   // identificare già presente nella tabella dei simboli
+    errMessage_undeclaredIdentifier            ,   // identificatore non dichiarato
+    errMessage_LValueRequired                  ,   // e' richiesto un valore sinistro
+    errMessage_expectedPrimaryExprBefore       ,   // expected primary-expression before [token]
+    errMessage_expectedPrimaryExprAfter        ,   // expected primary-expression before [token 
+    errMessage_arrayBoundNotInteger            ,   // array bound is not an integer constant before ']' 
+    errMessage_typeVoid                        ,   // nessun campo trovato nella struttura 
+    errMessage_symbolNotDeclared               ,   // simbol was not declared in this scope 
+    errMessage_invalidUseOf                    ,   // invalid use of (symbol)
 } e_errMessage_t;
 
 typedef struct errMessage_s
@@ -216,8 +216,8 @@ void printErrLog(void); // error.printLog
             type_##TYPE,\
             action_##ACTION,\
             errMessage_##ERRMESSAGE,\
-			this->row_start,\
-			this->col_start,\
+            this->row_start,\
+            this->col_start,\
             gcWcsDup((wchar_t*)FILE),\
             gcWcsDup((wchar_t*)EXTRA)\
         ) ;
@@ -228,8 +228,8 @@ void printErrLog(void); // error.printLog
             type_warning,\
             action_##ACTION,\
             errMessage_##ERRMESSAGE,\
-			this->row_start,\
-			this->col_start,\
+            this->row_start,\
+            this->col_start,\
             gcWcsDup((wchar_t*)this->fileInputName),\
             NULL\
         ) ;
@@ -240,8 +240,8 @@ void printErrLog(void); // error.printLog
             type_error,\
             action_##ACTION,\
             errMessage_##ERRMESSAGE,\
-			this->row_start,\
-			this->col_start,\
+            this->row_start,\
+            this->col_start,\
             gcWcsDup((wchar_t*)this->fileInputName),\
             NULL\
         ) ;
@@ -290,8 +290,8 @@ void printErrLog(void); // error.printLog
             type_internal,\
             action_##ACTION,\
             errMessage_##ERRMESSAGE,\
-			this->lexer->row_start,\
-			this->lexer->col_start,\
+            this->lexer->row_start,\
+            this->lexer->col_start,\
             gcWcsDup((wchar_t*)FILE),\
             gcWcsDup(EXTRA)\
         ) ;
@@ -302,8 +302,8 @@ void printErrLog(void); // error.printLog
             type_error,\
             action_##ACTION,\
             errMessage_##ERRMESSAGE,\
-			this->lexer->row_start,\
-			this->lexer->col_start,\
+            this->lexer->row_start,\
+            this->lexer->col_start,\
             gcWcsDup((wchar_t*)this->lexer->fileInputName),\
             NULL\
         ) ;
@@ -314,8 +314,8 @@ void printErrLog(void); // error.printLog
             type_error,\
             action_##ACTION,\
             errMessage_##ERRMESSAGE,\
-			this->lexer->row_start,\
-			this->lexer->col_start,\
+            this->lexer->row_start,\
+            this->lexer->col_start,\
             gcWcsDup((wchar_t*)this->lexer->fileInputName),\
             gcWcsDup(EXTRA)\
         ) ;
