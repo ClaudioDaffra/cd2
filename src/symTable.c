@@ -74,7 +74,13 @@ void stDeInitSymTable(void)
 
 wchar_t* stGet_nsid(size_t level,wchar_t* id) // ns(l)+id
 {
-    if ( g.fDebug ) fwprintf ( pFileOutputST , L"# symTable   -> stGet_nsid " );
+	if ( id == NULL )
+	{
+		if ( g.fDebug ) fwprintf ( pFileOutputST , L"# symTable   -> stGet_nsid -> [id::{nil}]\n" ) ;
+		return NULL ;
+	}
+	
+    if ( g.fDebug ) fwprintf ( pFileOutputST , L"# symTable   -> stGet_nsid looking for [%ls]",id==NULL?L"{nil}":id );
     
     size_t MAXBUFFER = 4096 ;
     wchar_t* temp = gcMalloc( sizeof(wchar_t) * MAXBUFFER ) ;
@@ -82,7 +88,7 @@ wchar_t* stGet_nsid(size_t level,wchar_t* id) // ns(l)+id
     size_t k=0;
     
     // 0         :    from 0 to vectorSize(stNameSpace)
-    // 1 - x     :     from 0 to level
+    // 1 - x     :    from 0 to level
     if ( level==0 ) level=vectorSize(stNameSpace) ;
     
     if ( level<=vectorSize(stNameSpace) )
@@ -104,7 +110,7 @@ wchar_t* stGet_nsid(size_t level,wchar_t* id) // ns(l)+id
     
     temp[k]=0;
     
-    if ( g.fDebug ) fwprintf ( pFileOutputST , L"[%ls].\n",temp );
+    if ( g.fDebug ) fwprintf ( pFileOutputST , L" found [%ls].\n",temp );
 
     return gcWcsDup(temp) ;
 }

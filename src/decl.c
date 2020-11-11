@@ -139,7 +139,7 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
             {
                 whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew ); // altrimenti inserisci name space + id
             }
-            
+
             stDebugSymTableNode(pstNew) ; // DEBUG
             
             // ---------------
@@ -635,6 +635,9 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
     // ............................... [id]
             if ( this->lexer->sym==sym_id ) 
             {
+				
+				//fwprintf ( stderr , L"\nparserDeclType token for NS [%ls]\n" ,this->lexer->token) ;
+				
                 vectorPushBack(stNameSpace,gcWcsDup( this->lexer->token )) ; // . ST
                 
                 idTemp = gcWcsDup( this->lexer->token ) ;
@@ -706,7 +709,7 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
                     $parserError(parse,typeVoid) 
                     return NULL ;
                 }
-                vectorPopBack(stNameSpace ) ; // ................................ ST
+                vectorPopBack(stNameSpace) ; // ................................ ST
                 
                 whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew ) ;
                 

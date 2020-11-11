@@ -297,6 +297,71 @@ node_t* parserTerm( pparser_t this )
  return n ;
 }
 
+// ................................................... dot .
+
+node_t* parserDot( pparser_t this )
+{
+	node_t *left=NULL;
+	 
+	left=parserTerm(this);
+	 
+	if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserDot\n" );
+	
+	
+		size_t vSizeSave = vectorSize(stNameSpace) ; 
+		// salva le dimensione del name space in quanto per ogni iterazione viene aggiunto il livello di ricerca
+	
+		psymTable_t pstTemp = NULL ;
+	
+		while (	this->lexer->sym == sym_dot	)
+		{
+			if ( ( left->type != nTypeTermVar )	&& ( left->type != nTypeTermArray) ) 
+			{
+				fwprintf ( stderr, L"\n!! [expr.c::parserDot] : term not var or array\n") ;	
+				exit(-1) ;
+			}
+			if ( ( left->type != nTypeTermVar 	)	) //	campo var
+			{
+					vectorPushBack(stNameSpace,left->termVar.id 	) ;
+					pstTemp = stFindIDinMap(left->termVar.id);
+			}
+			if ( ( left->type != nTypeTermArray	) 	) //	campo array
+			{
+					vectorPushBack(stNameSpace,left->termArray.id 	) ;
+					pstTemp = stFindIDinMap(left->termArray.id);
+			}
+
+			fwprintf ( stderr, L"\n!! [expr.c::parserDot] : pst[%p]\n",pstTemp) ;
+			exit(-1);
+			
+			sym_t       symSave   	= this->lexer->sym ;
+			wchar_t*    tokenSave   = gcWcsDup(this->lexer->token);
+			uint32_t    rowSave     = this->lexer->row_start ;
+			uint32_t    colSave     = this->lexer->col_start ;
+			
+			node_t *right=NULL;
+
+			parserGetToken(this);
+
+			right=parserTerm(this);
+			
+			//#1  mettere il termine in un vettore e ritornare il vettore
+			
+					
+			//left = astMakeNodeBinOP( this->ast,this->lexer,symSave , right,left ) ;
+			
+			
+			//left->token 	=  	tokenSave	; 
+			//left->row    	= 	rowSave     ;
+			//left->col    	= 	colSave     ;
+		}
+
+		// ripristina le dimensionie del name space
+		stNameSpace.size = vSizeSave ;
+
+	return left ;
+}
+
 // ................................................... mul div mod * / % 
 
 node_t* parserMulDivMod( pparser_t this )
@@ -305,15 +370,15 @@ node_t* parserMulDivMod( pparser_t this )
 
     if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserMulDivMod\n" );
 
-    left=parserTerm(this);
+    left=parserDot(this);
 
     while (     this->lexer->sym == sym_mul
-        ||        this->lexer->sym == sym_div
-        ||        this->lexer->sym == sym_mod
+        || 		this->lexer->sym == sym_div
+        ||    	this->lexer->sym == sym_mod
         )
     {
-        sym_t         symSave      = this->lexer->sym ;
-        wchar_t*    tokenSave     = gcWcsDup(this->lexer->token);
+        sym_t       symSave   	= this->lexer->sym ;
+        wchar_t*    tokenSave   = gcWcsDup(this->lexer->token);
         uint32_t    rowSave     = this->lexer->row_start ;
         uint32_t    colSave     = this->lexer->col_start ;
         
@@ -321,7 +386,7 @@ node_t* parserMulDivMod( pparser_t this )
 
         parserGetToken(this);
 
-        right=parserTerm(this);
+        right=parserDot(this);
         
         if ( ( symSave == sym_div ) || ( symSave == sym_mod ) )
         {
@@ -337,9 +402,9 @@ node_t* parserMulDivMod( pparser_t this )
         
         left = astMakeNodeBinOP( this->ast,this->lexer,symSave , right,left ) ;
         
-        left->token =     tokenSave     ; 
-        left->row    =    rowSave     ;
-        left->col    =    colSave     ;
+        left->token 	=  	tokenSave	; 
+        left->row    	= 	rowSave     ;
+        left->col    	= 	colSave     ;
     } 
 
  return left ;

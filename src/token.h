@@ -56,17 +56,19 @@ typedef enum e_sym
     
     sym_op1=250    ,
     
-    sym_add        ,   // +1 binop/prefix   +
-    sym_sub        ,   // +2 binop/prefix   -
-    
-    sym_not        ,   // +3 prefix         !    
-        
+    sym_not        ,   // +1 prefix         !    
+         
+    sym_add        ,   // +2 binop/prefix   +
+    sym_sub        ,   // +3 binop/prefix   -
+   
     sym_mul        ,   // +4 binop          * / %
     sym_div        ,   // +5
     sym_mod        ,   // +6
+
+    sym_dot        ,   // +7 				.
         
-    sym_eq         ,   // +7 =
- 
+    sym_eq         ,   // +8 =
+        
     //
     
     sym_lexema      ,  // carattere non riconosciuto

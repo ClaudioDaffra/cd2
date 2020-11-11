@@ -75,11 +75,12 @@ pnode_t      parserDeclFunction       ( pparser_t this ) ;
 
 // expr.c
 
-node_t*     parserTerm        ( pparser_t this ) ;
-node_t*     parserMulDivMod   ( pparser_t this ) ;
-node_t*     parserAddSub      ( pparser_t this ) ;
-node_t*     parserAssign      ( pparser_t this ) ;
-node_t*     parserExpr        ( pparser_t this ) ;
+node_t*     parserTerm    	( pparser_t this ) ;
+node_t* 	parserDot		( pparser_t this ) ;
+node_t*     parserMulDivMod	( pparser_t this ) ;
+node_t*     parserAddSub	( pparser_t this ) ;
+node_t*     parserAssign 	( pparser_t this ) ;
+node_t*     parserExpr   	( pparser_t this ) ;
 
 
 

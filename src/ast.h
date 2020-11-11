@@ -26,24 +26,24 @@ enum enodeType
     nTypeTermReal       ,   // 2 
     nTypeTermChar       ,   // 3
     nTypeTermString     ,   // 4 
-     
-    nTypeTermVar        ,   // 5
-    nTypeTermArray      ,   // 6
-    nTypeTermFunction   ,   // 7
-    nTypeTermField      ,   // 8
+    nTypeTermField      ,   // 5  	1 campo della struttura 
+	nTypeTermStruct		,	// 6	+ campi della struttura
+    nTypeTermVar        ,   // 7
+    nTypeTermArray      ,   // 8
+    nTypeTermFunction   ,   // 9
 
-    nTypeBinOp          ,   // 9
-    nTypePrefix         ,   // 10
-    nTypeBlock          ,   // 11
+    nTypeBinOp          ,   // 10
+    nTypePrefix         ,   // 11
+    nTypeBlock          ,   // 12
     
-    nTypeDeclConst      ,    // 12 decl const global local 
-    nTypeDeclVar        ,    // 13 decl var     global local    
-    nTypeDeclArray      ,    // 14 decl array global local   
-    nTypeArrayDim       ,    // 15 array dim [][][] ...   
-    nTypeDeclType       ,    // 16 type declaration 
-    nTypeDeclFunction   ,    // 17 dichiarazione di funzione   
+    nTypeDeclConst      ,    // 13 decl const global local 
+    nTypeDeclVar        ,    // 14 decl var     global local    
+    nTypeDeclArray      ,    // 15 decl array global local   
+    nTypeArrayDim       ,    // 16 array dim [][][] ...   
+    nTypeDeclType       ,    // 17 type declaration 
+    nTypeDeclFunction   ,    // 18 dichiarazione di funzione   
     
-    nTypeAssign         ,    // 18 :=           
+    nTypeAssign         ,    // 19 :=           
 } ;
 
 typedef enum enodeType     enodeType_t;
@@ -175,13 +175,22 @@ typedef struct nodeTermVar_s
     
 } nodeTermVar_t ;
 
-// .................................... nodo campo della stuttura :    point.x 
+// .................................... nodo campo della stuttura :    var or array of type of not : a[10] ; x ; ( single ) 
 
 typedef struct nodeTermField_s
 {
     wchar_t*    id            ;
     
 } nodeTermField_t ;
+
+
+// .................................... nodo campo della stuttura :    var or array of type of not : a[10].x ; ( multi ) 
+
+typedef struct nodeTermStruct_s
+{
+    vectorStruct( pnode_t , vField )    ;	// vettore campi
+    
+} nodeTermStruct_t ;
 
 
 // .................................... nodo  lhs := rhs
@@ -219,6 +228,12 @@ struct node_s
     union 
     {
         nodeTerm_t              term          ;	// integer real wchar wstring id
+        nodeTermArray_t         termArray     ; 
+        nodeTermFunction_t      termFunction  ;
+        nodeTermVar_t           termVar       ;
+        nodeTermField_t         termField     ;	// 1 campo    
+        nodeTermStruct_t        termStruct    ; // + campi
+                      
         nodeBinOp_t             binOp         ;
         nodePrefix_t            prefix        ;
         nodeBlock_t             block         ;
@@ -229,10 +244,7 @@ struct node_s
         nodeArrayDim_t          arrayDim      ; 
         nodeDeclType_t          declType      ;
         nodeDeclFunction_t      declFunction  ;   
-        nodeTermArray_t         termArray     ; 
-        nodeTermFunction_t      termFunction  ;
-        nodeTermVar_t           termVar       ;
-        nodeTermField_t         termField     ;                    
+                  
     } ;
     
 } ;

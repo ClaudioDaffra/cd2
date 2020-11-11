@@ -503,9 +503,9 @@ int lexerScan( plexer_t this )
         
         if ( $c0==_WEOF ) 
         {
-            this->sym         = sym_weof  ;
-            this->token[0]     = 0         ;
-            this->tokenSize = 0         ;
+            this->sym        	= sym_weof  ;
+            this->token[0]  	= 0         ;
+            this->tokenSize 	= 0         ;
             break ;
         }
         
@@ -803,7 +803,8 @@ int lexerScan( plexer_t this )
             case L'[' : symOp=sym_pq0 ; break;
             case L']' : symOp=sym_pq1 ; break;  
             case L'{' : symOp=sym_pg0 ; break;
-            case L'}' : symOp=sym_pg1 ; break;                                                                          
+            case L'}' : symOp=sym_pg1 ; break;  
+            case L'.' : symOp=sym_dot ; break;                                                                          
             // se non trovi opertore allora è 1 carattere
             default   : fOp=0;          break; 
         } ;

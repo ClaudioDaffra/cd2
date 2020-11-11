@@ -81,9 +81,14 @@
     var     lllvvv : line_t ;
     array   lllaaa : [10][10] line_t  ;
     
-    
+  /*  
     ccc ;
     lllvvv  ;
+   */
+    
+    lllvvv . vvv ;
+    
+    
     //line_t ; // Error : invalid use of
     
     
