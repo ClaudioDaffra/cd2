@@ -29,8 +29,6 @@
 	expressini posso ritornare NULL se non ci sono vedi array []
 	occorre controllare anche l'espressioni NULL
 
-	 
- 
 // error
 	 
 	anziche mantenere un vettore di errori , forse era meglio scrivere all'interno di una stringa e mantenere
@@ -42,6 +40,15 @@
 	con i riferimento ai file. io li ho suddivisi con qualche (codice bruttino vedi ast.h che include stScope...)
 
 
+	forse era meglio aggiungere ai membri della struttura anche gli offset
+	risparmiavamo un pointer, pero' funziona anche con, migliorabile ... col senno di poi
+	
+		typedef struct nodeTermStruct_s
+		{
+			wchar_t*    	id           		;	// struct name		utile per recuperare gli offset
+			void*			pvst				;	// void pointer to sym table
+			vectorStruct( pnode_t , vField )    ;	// vettore campi
 
+		} nodeTermStruct_t 
 
 

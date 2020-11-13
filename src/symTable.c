@@ -297,7 +297,6 @@ void stDebugSymTableNode(psymTable_t pst)
             for ( uint32_t i = 0 ; i < kVectorSize ; i++ ) // ........................................... member & offset
             {
                 fwprintf ( pFileOutputST , L" {%ls/%d} " , pst->member.data[i],(int)pst->offset.data[i] ) ;
-                
             }
             break ;  
             }

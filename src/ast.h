@@ -4,6 +4,11 @@
 #include "error.h"
 #include "lexer.h"
 //#include "symTable.h"
+// .................................... forward declaration
+
+typedef struct node_s     node_t ;
+
+typedef struct node_s *   pnode_t ;
 
 // .............................................. scope
 
@@ -15,6 +20,10 @@ enum stScope_e
 } ;
 
 typedef enum stScope_e stScope_t ;
+
+
+// ............................................................................................. ast.h
+
 
 // .................................... enumerativi nodo
 
@@ -48,11 +57,7 @@ enum enodeType
 
 typedef enum enodeType     enodeType_t;
 
-// .................................... forward declaration
 
-typedef struct node_s     node_t ;
-
-typedef struct node_s *   pnode_t ;
 
 // .................................... nodo terminale ( integer / real / id(caso speciale) )
 
@@ -89,7 +94,6 @@ nodePrefix_t ;
 
 typedef struct nodeBlock_s
 {
-    
     vectorStruct(pnode_t,next);    // vettore di nodi
     
 } nodeBlock_t ;
@@ -188,6 +192,8 @@ typedef struct nodeTermField_s
 
 typedef struct nodeTermStruct_s
 {
+    wchar_t*    	id           		;	// struct name		utile per recuperare gli offset
+    void*			pvst				;	// void pointer to sym table
     vectorStruct( pnode_t , vField )    ;	// vettore campi
     
 } nodeTermStruct_t ;

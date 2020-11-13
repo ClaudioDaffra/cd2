@@ -681,9 +681,8 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
                 
                 size_t structSize=0;
                 
-                if (kVectorSize)
+                if (kVectorSize) // tutti i nodi , tutti VAR o ARRAY
                 {
-                    
                     for ( uint32_t i = 0 ; i < kVectorSize ; i++ )
                     {
                         pnode_t  node = nBlock->block.next.data[i] ;
@@ -692,11 +691,10 @@ pnode_t  parserDeclType( pparser_t this , stScope_t scope )
                             vectorPushBack( pnode->declType.field , node  ) ;
                             
                             // inserisci i nodi nel vettore campi ( field )
-                            //  calcola le dimensioni della stuttura
+                            // calcola le dimensioni della stuttura
                             
                             if ( node->type == nTypeDeclVar     ) 
                             {
-                                
                                 vectorPushBack( pstNew->member , gcWcsDup(node->declVar.id)     ) ;
                                 vectorPushBack( pstNew->offset , structSize     ) ;
                                 structSize+=(int)stGetSize(node) ;

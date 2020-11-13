@@ -78,7 +78,7 @@ struct symTable_s
     vectorStruct(pwchar_t,  member)        ; // membri della struttura.
     vectorStruct(size_t  ,  offset)        ; // offset dei membri della struttura
     
-     size_t                    size        ; // dimesioni dell'oggetto
+    size_t                    size         ; // dimesioni dell'oggetto
 
     union // mantenuto solo per le const
     {

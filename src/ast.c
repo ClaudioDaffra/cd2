@@ -1,6 +1,7 @@
 #include "global.h"
 #include "error.h"
 #include "ast.h"
+#include "symTable.h"
 
 // TERM : INTEGER
 
@@ -419,17 +420,17 @@ node_t* astMakeNodeTermStruct( past_t this )
     nNew = gcMalloc ( sizeof(node_t) ) ;
     if ( nNew==NULL ) $astInternal ( malloc , outOfMemory , L"ast.c" , L"astMakeNodeTermStruct") ;
 
-    nNew->type = nTypeTermStruct  ;
-
-    nNew->row    =    0;
-    nNew->col    =    0;
-    nNew->token  =    NULL ;
+    nNew->type	= 	nTypeTermStruct  ;
+    
+	nNew->termStruct.id	=	 NULL ;
+    nNew->row			=    0;
+    nNew->col			=    0;
+    nNew->token			=    NULL ;
 
     vectorNew(nNew->termStruct.vField,128);
 
     return nNew ;
 }
-
 
 // ***********
 // astDebug
@@ -688,7 +689,7 @@ node_t* astNodeDebug( past_t this , node_t* n)
                     );
             } 
                
-            fwprintf ( this->pFileOutputNode , L"\n{\n" )  ;   
+            fwprintf ( this->pFileOutputNode , L"{\n" )  ;   
                
             for ( uint32_t i = 0 ; i < vectorSize ( n->declType.field ) ; i++ )
             {
@@ -723,7 +724,7 @@ node_t* astNodeDebug( past_t this , node_t* n)
             
             fwprintf ( this->pFileOutputNode , L")\n" )  ;
             
-             fwprintf ( this->pFileOutputNode , L"{\n" )  ;   
+            fwprintf ( this->pFileOutputNode , L"{\n" )  ;   
                
             astNodeDebug( this , n->declFunction.blockCode  )  ;
 
@@ -767,6 +768,31 @@ node_t* astNodeDebug( past_t this , node_t* n)
             fwprintf ( this->pFileOutputNode , L")\n");  
                
             break ;
+            
+        case nTypeTermStruct :
+        
+            if ( this->fDebug )
+            {
+				fwprintf ( this->pFileOutputNode , L"node [%018p] %-10ls :: id[%ls-%018p] size(%03d) : field[%03d]\n"
+				        ,(void*)n
+                        ,L"nTypeTermStruct" 
+                        ,n->termStruct.id
+                        ,n->termStruct.pvst
+                        ,((psymTable_t)(n->termStruct.pvst))->size
+                        ,vectorSize ( n->termStruct.vField ) 
+                ) ;
+			}
+			fwprintf ( this->pFileOutputNode , L"{\n");
+            
+            for ( size_t i = 0 ;i<vectorSize ( n->termStruct.vField ); i++)	
+            {
+				fwprintf ( this->pFileOutputNode, L" offset (%03d) :: ", (int)((psymTable_t)n->termStruct.pvst)->offset.data[i] ) ;
+				astNodeDebug( this , n->termStruct.vField.data[i]  )  ;  
+			}
+             
+            fwprintf ( this->pFileOutputNode , L"}\n");  
+                    
+			break ;
  
       default :
 

@@ -76,7 +76,7 @@
     type line_t
     { 
         var     x : integer ;
-        
+        var     y : integer ; 
         array   aaa : [10] real ;
     } ; 
     
@@ -89,7 +89,7 @@
     lllvvv  ;
    */
     
-    l1 . x ;
+    l1 . y ;
     
     
     //line_t ; // Error : invalid use of

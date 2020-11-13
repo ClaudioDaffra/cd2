@@ -317,7 +317,6 @@ node_t* parserDot( pparser_t this )
 	
 	// TERM STRUCT
 	
-	
 		if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserDot LOOP\n" );
 	
 		size_t vSizeSave = vectorSize(stNameSpace) ; 
@@ -325,15 +324,31 @@ node_t* parserDot( pparser_t this )
 	
 		psymTable_t pstTemp = NULL ;
 		pnode_t 	nStruct = astMakeNodeTermStruct( this->ast ) ;
+
+		pstTemp = stFindIDinMap(left->termArray.id);
+		
+		if ( pstTemp == NULL )
+		{
+			fwprintf ( stderr, L"\n!! [expr.c::parserDot] :  ( pstTemp == NULL )\n") ;	
+			exit(-1) ;
+		}
+		
+		// trovando id del primo elemento, troveremo anche il nome della struttura
+		// l1.x -> l1(line_t).x
+		// fwprintf(stderr,L"\n[[%ls]]\n",pstTemp->typeID ) ;
 	
-	pstTemp = stFindIDinMap(left->termArray.id);
-	
-	if ( pstTemp == NULL )
-	{
-					fwprintf ( stderr, L"\n!! [expr.c::parserDot] :  ( pstTemp == NULL )\n") ;	
-					exit(-1) ;
-	}
-	
+		nStruct->termStruct.id 		= gcWcsDup ( pstTemp->typeID ) ;
+		
+		// ricerca il riferimento alla struttura
+		
+		psymTable_t pstTypeNameTemp  = stFindIDinMap(pstTemp->typeID);
+		if ( pstTypeNameTemp == NULL )
+		{
+			fwprintf ( stderr, L"\n!! [expr.c::parserDot] :  ( pstTypeNameTemp == NULL )\n") ;	
+			exit(-1) ;
+		}
+		nStruct->termStruct.pvst	= (void*)pstTypeNameTemp ;
+		
 		while (	this->lexer->sym == sym_dot	)
 		{
 				if ( ( left->type != nTypeTermVar )	&& ( left->type != nTypeTermArray) ) 
@@ -343,44 +358,28 @@ node_t* parserDot( pparser_t this )
 				}
 				if ( ( left->type != nTypeTermVar 	)	) //	campo var
 				{
-					//vectorPushBack(stNameSpace,left->termVar.id 	) ;
 					vectorPushBack(stNameSpace,pstTemp->typeID 	) ;
 					pstTemp = stFindIDinMap(left->termVar.id);
 				}
 				if ( ( left->type != nTypeTermArray	) 	) //	campo array
 				{
-					//vectorPushBack(stNameSpace,left->termArray.id 	) ;
 					vectorPushBack(stNameSpace,pstTemp->typeID 	) ;
 					pstTemp = stFindIDinMap(left->termArray.id);
 				}
 
 				vectorPushBack ( nStruct->termStruct.vField , left ) ;
 
-				fwprintf ( stderr, L"\n!! [expr.c::parserDot] : pst[%p]\n",pstTemp) ;
+				//fwprintf ( stderr, L"\n!! [expr.c::parserDot] : pst[%p]\n",pstTemp) ;
 				//exit(-1);
-	/*			
-				sym_t       symSave   	= this->lexer->sym ;
-				wchar_t*    tokenSave   = gcWcsDup(this->lexer->token);
-				uint32_t    rowSave     = this->lexer->row_start ;
-				uint32_t    colSave     = this->lexer->col_start ;
-				
-				node_t *right=NULL;
-	*/
+
 				parserGetToken(this);
 
 				left=parserTerm(this);
-				
-				//#1  mettere il termine in un vettore e ritornare il vettore
-				
-						
-				//left = astMakeNodeBinOP( this->ast,this->lexer,symSave , right,left ) ;
-				
-				
-				//left->token 	=  	tokenSave	; 
-				//left->row    	= 	rowSave     ;
-				//left->col    	= 	colSave     ;
-		}
 
+		}
+		// inserisci ultimo campo struttura
+		vectorPushBack ( nStruct->termStruct.vField , left ) ;
+		
 		// ripristina le dimensionie del name space
 		stNameSpace.size = vSizeSave ;
 
