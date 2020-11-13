@@ -140,6 +140,12 @@ pnode_t  parserDeclConst( pparser_t this , stScope_t scope )
                 whmapInsert( mapST, stGetFullName(pstNew->id)   , pstNew ); // altrimenti inserisci name space + id
             }
 
+			pstNew->ns = gcWcsDup (stGetNameSpace(0)  ) ;
+
+for (size_t i=0;i<vectorSize(stNameSpace);i++)
+{
+}
+
             stDebugSymTableNode(pstNew) ; // DEBUG
             
             // ---------------

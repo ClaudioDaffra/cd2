@@ -257,7 +257,7 @@ typedef struct node_s*     pnode_t ;
 
 struct ast_s
 {
-    int         fDebug                 ;
+    int          fDebug                ;
     FILE*        pFileOutputAST        ;
     char*        fileNameOutputAST     ;  
     FILE*        pFileOutputNode       ;
@@ -300,6 +300,7 @@ node_t*     astMakeNodeTermVar        ( past_t this , wchar_t* _name , uint32_t 
 pnode_t     astMakeNodeTermArray      ( past_t this , wchar_t* id  , pnode_t pArrayDim )     ;
 pnode_t     astMakeNodeTermFunction   ( past_t this , wchar_t* id  , pnode_t pArrayParam ) ;
 node_t*     astMakeNodeTermField      ( past_t this , plexer_t lexer , wchar_t* id ) ;
+node_t* 	astMakeNodeTermStruct	  ( past_t this ) ;
 
 node_t*     astMakeNodeBinOP          ( past_t this , plexer_t lexer , sym_t sym , node_t* left , node_t* right ) ;
 node_t*     astMakeNodePrefix         ( past_t this ,    psPrefixOp_t prefix , node_t* left ) ;

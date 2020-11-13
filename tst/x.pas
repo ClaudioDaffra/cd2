@@ -68,25 +68,28 @@
 
     variabile
 
-*/
-    // qui puoi mettere o sym_pv o sym_end
 
+    // qui puoi mettere o sym_pv o sym_end
+*/
     const ccc = 123 ;
 
     type line_t
     { 
-        var     vvv : integer ;
+        var     x : integer ;
+        
         array   aaa : [10] real ;
     } ; 
-    var     lllvvv : line_t ;
-    array   lllaaa : [10][10] line_t  ;
+    
+    var     l1 : line_t ;
+   
+   //  array   lllaaa : [10][10] line_t  ;
     
   /*  
     ccc ;
     lllvvv  ;
    */
     
-    lllvvv . vvv ;
+    l1 . x ;
     
     
     //line_t ; // Error : invalid use of

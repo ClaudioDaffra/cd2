@@ -96,8 +96,8 @@ struct symTable_s
 typedef struct mapST_s
 {
     
-  wchar_t*      fullName     ;    // nome completo da ricercare
-  psymTable_t    pST         ;   // puntatore alla tabella dei simboli
+  wchar_t*       fullName     	;    // nome completo da ricercare
+  psymTable_t    pST         	;   // puntatore alla tabella dei simboli
   
 } mapST_t ;
 

@@ -409,6 +409,28 @@ pnode_t     astMakeNodeTermFunction    ( past_t this , wchar_t* id  , pnode_t pA
     return nNew ;
 }
 
+// TERM STRUCT
+
+node_t* astMakeNodeTermStruct( past_t this ) 
+{
+    if ( this->fDebug ) fwprintf ( this->pFileOutputAST , L"%-30ls \n",L"astMakeNodeTermStruct" );
+    node_t* nNew   = NULL ; // new node
+    
+    nNew = gcMalloc ( sizeof(node_t) ) ;
+    if ( nNew==NULL ) $astInternal ( malloc , outOfMemory , L"ast.c" , L"astMakeNodeTermStruct") ;
+
+    nNew->type = nTypeTermStruct  ;
+
+    nNew->row    =    0;
+    nNew->col    =    0;
+    nNew->token  =    NULL ;
+
+    vectorNew(nNew->termStruct.vField,128);
+
+    return nNew ;
+}
+
+
 // ***********
 // astDebug
 // ***********
