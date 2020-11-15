@@ -1,0 +1,94 @@
+
+file ast             : [0x000055f8e8f14a20] -> [tst/x.ast           ]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeTermInteger         :: [123]
+astmakeNodeDeclConst           
+astPushNodeBlock               :: [block]:[0x000055f8e8f29bd0] -> [next]:[0x000055f8e8f326b0]
+astPushNodeBlock               :: [block]:[0x000055f8e8f29710] -> [next]:[0x000055f8e8f326b0]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeDeclVar             
+astPushNodeBlock               :: [block]:[0x000055f8e8f33990] -> [next]:[0x000055f8e8f40410]
+astPushNodeBlock               :: [block]:[0x000055f8e8f33150] -> [next]:[0x000055f8e8f40410]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeDeclVar             
+astPushNodeBlock               :: [block]:[0x000055f8e8f409f0] -> [next]:[0x000055f8e8f4d470]
+astPushNodeBlock               :: [block]:[0x000055f8e8f33150] -> [next]:[0x000055f8e8f4d470]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeDeclArray           
+astPushNodeBlock               :: [block]:[0x000055f8e8f29710] -> [next]:[0x000055f8e8f4e380]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeDeclVar             
+astPushNodeBlock               :: [block]:[0x000055f8e8f64060] -> [next]:[0x000055f8e8f74c10]
+astPushNodeBlock               :: [block]:[0x000055f8e8f63820] -> [next]:[0x000055f8e8f74c10]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeDeclVar             
+astPushNodeBlock               :: [block]:[0x000055f8e8f751f0] -> [next]:[0x000055f8e8f85d90]
+astPushNodeBlock               :: [block]:[0x000055f8e8f63820] -> [next]:[0x000055f8e8f85d90]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeDeclArray           
+astPushNodeBlock               :: [block]:[0x000055f8e8f29710] -> [next]:[0x000055f8e8f86ca0]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeDeclVar             
+astPushNodeBlock               :: [block]:[0x000055f8e8f9c9b0] -> [next]:[0x000055f8e8fad530]
+astPushNodeBlock               :: [block]:[0x000055f8e8f9c170] -> [next]:[0x000055f8e8fad530]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeDeclVar             
+astPushNodeBlock               :: [block]:[0x000055f8e8fadb10] -> [next]:[0x000055f8e8fbe690]
+astPushNodeBlock               :: [block]:[0x000055f8e8f9c170] -> [next]:[0x000055f8e8fbe690]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeDeclArray           
+astPushNodeBlock               :: [block]:[0x000055f8e8f29710] -> [next]:[0x000055f8e8fbf5a0]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeDeclVar             
+astPushNodeBlock               :: [block]:[0x000055f8e8fd40c0] -> [next]:[0x000055f8e8fe0b90]
+astPushNodeBlock               :: [block]:[0x000055f8e8f29710] -> [next]:[0x000055f8e8fe0b90]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeDeclVar             
+astPushNodeBlock               :: [block]:[0x000055f8e8fe1af0] -> [next]:[0x000055f8e8fee5c0]
+astPushNodeBlock               :: [block]:[0x000055f8e8f29710] -> [next]:[0x000055f8e8fee5c0]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeDeclVar             
+astPushNodeBlock               :: [block]:[0x000055f8e8fef520] -> [next]:[0x000055f8e8ffbff0]
+astPushNodeBlock               :: [block]:[0x000055f8e8f29710] -> [next]:[0x000055f8e8ffbff0]
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeBlock               
+astMakeNodeTermVar             :: [r1]
+astMakeNodeTermStruct          
+astMakeNodeTermVar             :: [l2]
+astMakeNodeTermVar             :: [start]
+astMakeNodeTermVar             :: [y]
+astPushNodeBlock               :: [block]:[0x000055f8e8f29710] -> [next]:[0x000055f8e9002d50]

@@ -73,23 +73,35 @@
 */
     const ccc = 123 ;
 
-    type line_t
+    type point_t
     { 
         var     x : integer ;
         var     y : integer ; 
-        array   aaa : [10] real ;
     } ; 
-    
+    type line_t
+    { 
+        var     start : point_t ;
+        var     stop  : point_t ; 
+    } ;
+    type rect_t
+    { 
+        var     l1 : line_t ;
+        var     l2  : line_t ; 
+    } ;      
+    var     p1 : point_t ;
     var     l1 : line_t ;
-   
-   //  array   lllaaa : [10][10] line_t  ;
-    
+    var     r1 : rect_t ;
+        
   /*  
     ccc ;
     lllvvv  ;
    */
     
-    l1 . y ;
+    //p1 . y ;
+    
+    //l1 . stop . y ;
+    
+    r1 . l2 . start . y ;
     
     
     //line_t ; // Error : invalid use of

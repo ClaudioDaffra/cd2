@@ -305,7 +305,7 @@ node_t* parserDot( pparser_t this )
 	
 	if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserDot BEGIN\n" ) ;
 
-	// TERM
+	// ---------------------------------------------------------------------------------------------------- TERM
 	
 	left=parserTerm(this);
 
@@ -315,7 +315,7 @@ node_t* parserDot( pparser_t this )
 		return left ;
 	}
 	
-	// TERM STRUCT
+	// ---------------------------------------------------------------------------------------------------- TERM STRUCT
 	
 		if ( this->fDebug ) fwprintf ( this->pFileOutputParser , L"parserDot LOOP\n" );
 	
@@ -325,8 +325,9 @@ node_t* parserDot( pparser_t this )
 		psymTable_t pstTemp = NULL ;
 		pnode_t 	nStruct = astMakeNodeTermStruct( this->ast ) ;
 
-		pstTemp = stFindIDinMap(left->termArray.id);
-		
+		if ( ( left->type != nTypeTermVar 		)	) pstTemp = stFindIDinMap(left->termVar.id);
+		if ( ( left->type != nTypeTermArray 	)	) pstTemp = stFindIDinMap(left->termArray.id);
+
 		if ( pstTemp == NULL )
 		{
 			fwprintf ( stderr, L"\n!! [expr.c::parserDot] :  ( pstTemp == NULL )\n") ;	
@@ -348,7 +349,7 @@ node_t* parserDot( pparser_t this )
 			exit(-1) ;
 		}
 		nStruct->termStruct.pvst	= (void*)pstTypeNameTemp ;
-		
+
 		while (	this->lexer->sym == sym_dot	)
 		{
 				if ( ( left->type != nTypeTermVar )	&& ( left->type != nTypeTermArray) ) 
@@ -356,13 +357,21 @@ node_t* parserDot( pparser_t this )
 					fwprintf ( stderr, L"\n!! [expr.c::parserDot] : term not var or array\n") ;	
 					exit(-1) ;
 				}
+				
+				if ( ( left->type != nTypeTermVar 		)	) pstTemp = stFindIDinMap(left->termVar.id);
+				if ( ( left->type != nTypeTermArray 	)	) pstTemp = stFindIDinMap(left->termArray.id);
+
 				if ( ( left->type != nTypeTermVar 	)	) //	campo var
 				{
+					//fwprintf ( stderr,L"{{%d}}",vectorSize(stNameSpace)) ;
+					if ( vectorSize(stNameSpace)==2 ) vectorPopBack(stNameSpace);
 					vectorPushBack(stNameSpace,pstTemp->typeID 	) ;
 					pstTemp = stFindIDinMap(left->termVar.id);
 				}
 				if ( ( left->type != nTypeTermArray	) 	) //	campo array
 				{
+					//fwprintf ( stderr,L"{{%d}}",vectorSize(stNameSpace)) ;
+					if ( vectorSize(stNameSpace)==2 ) vectorPopBack(stNameSpace);
 					vectorPushBack(stNameSpace,pstTemp->typeID 	) ;
 					pstTemp = stFindIDinMap(left->termArray.id);
 				}

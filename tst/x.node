@@ -1,0 +1,48 @@
+
+file node            : [0x000055f8e8f19d90] -> [tst/x.node          ]
+
+node [0x000055f8e8f29710] block     
+
+node [0x000055f8e8f29710] -> [000/007]::[0x000055f8e8f326b0]
+node [0x000055f8e8f2a330] term integer :: [123] { 074/016 :: 123 }
+node [0x000055f8e8f326b0] DeclConst  :: id[ccc] sym[5] term[0x000055f8e8f2a330] scope[000]
+
+node [0x000055f8e8f29710] -> [001/007]::[0x000055f8e8f4e380]
+node [0x000055f8e8f4e380] DeclType   :: id[point_t]  : scope[000]
+{
+node [0x000055f8e8f40410] DeclVar    :: id[x] sym[105] expr[             (nil)] scope[000]
+node [0x000055f8e8f4d470] DeclVar    :: id[y] sym[105] expr[             (nil)] scope[000]
+}
+
+node [0x000055f8e8f29710] -> [002/007]::[0x000055f8e8f86ca0]
+node [0x000055f8e8f86ca0] DeclType   :: id[line_t]  : scope[000]
+{
+node [0x000055f8e8f74c10] DeclVar    :: id[start] sym[4] expr[             (nil)] scope[000]
+node [0x000055f8e8f85d90] DeclVar    :: id[stop] sym[4] expr[             (nil)] scope[000]
+}
+
+node [0x000055f8e8f29710] -> [003/007]::[0x000055f8e8fbf5a0]
+node [0x000055f8e8fbf5a0] DeclType   :: id[rect_t]  : scope[000]
+{
+node [0x000055f8e8fad530] DeclVar    :: id[l1] sym[4] expr[             (nil)] scope[000]
+node [0x000055f8e8fbe690] DeclVar    :: id[l2] sym[4] expr[             (nil)] scope[000]
+}
+
+node [0x000055f8e8f29710] -> [004/007]::[0x000055f8e8fe0b90]
+node [0x000055f8e8fe0b90] DeclVar    :: id[p1] sym[4] expr[             (nil)] scope[000]
+
+node [0x000055f8e8f29710] -> [005/007]::[0x000055f8e8fee5c0]
+node [0x000055f8e8fee5c0] DeclVar    :: id[l1] sym[4] expr[             (nil)] scope[000]
+
+node [0x000055f8e8f29710] -> [006/007]::[0x000055f8e8ffbff0]
+node [0x000055f8e8ffbff0] DeclVar    :: id[r1] sym[4] expr[             (nil)] scope[000]
+
+node [0x000055f8e8f29710] -> [007/007]::[0x000055f8e9002d50]
+node [0x000055f8e9002d50] nTypeTermStruct :: id[rect_t-0x000055f8e8f9c690] size(064) : field[004]
+{
+	OFFSET -> [000 (r1          ) 000] :: node [0x000055f8e9002c30] term var   :: [r1] { 104/005 :: r1 }
+	OFFSET -> [001 (l2          ) 064] :: node [0x000055f8e901bad0] term var   :: [l2] { 104/010 :: l2 }
+	OFFSET -> [002 (start       ) 096] :: node [0x000055f8e9034480] term var   :: [start] { 104/018 :: start }
+	OFFSET -> [003 (y           ) 112] :: node [0x000055f8e904ce50] term var   :: [y] { 104/022 :: y }
+}
+

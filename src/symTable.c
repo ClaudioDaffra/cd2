@@ -76,11 +76,11 @@ wchar_t* stGet_nsid(size_t level,wchar_t* id) // ns(l)+id
 {
 	if ( id == NULL )
 	{
-		if ( g.fDebug ) fwprintf ( pFileOutputST , L"# symTable   -> stGet_nsid -> [id::{nil}]\n" ) ;
+		if ( g.fDebug ) fwprintf ( pFileOutputST , L"\n# symTable   -> stGet_nsid -> [id::{nil}]\n" ) ;
 		return NULL ;
 	}
 	
-    if ( g.fDebug ) fwprintf ( pFileOutputST , L"# symTable   -> stGet_nsid looking for [%ls]",id==NULL?L"{nil}":id );
+    if ( g.fDebug ) fwprintf ( pFileOutputST , L"\n# symTable   -> stGet_nsid looking for [%ls]",id==NULL?L"{nil}":id );
     
     size_t MAXBUFFER = 4096 ;
     wchar_t* temp = gcMalloc( sizeof(wchar_t) * MAXBUFFER ) ;
@@ -110,7 +110,7 @@ wchar_t* stGet_nsid(size_t level,wchar_t* id) // ns(l)+id
     
     temp[k]=0;
     
-    if ( g.fDebug ) fwprintf ( pFileOutputST , L" found [%ls].\n",temp );
+    //if ( g.fDebug ) fwprintf ( pFileOutputST , L" found [%ls].\n",temp );
 
     return gcWcsDup(temp) ;
 }
@@ -157,7 +157,11 @@ psymTable_t stFindIDinMap(wchar_t* id)
         
         pret = whmapFind( mapST , stGet_nsid(i,id) ) ; // cerca il id nella mappa 
         
-        if ( pret != NULL ) return pret ; // ritorna indice se l'ha trovato
+        if ( pret != NULL ) 
+        {
+			fwprintf ( pFileOutputST , L" found::[%ls-%018p] \n", pret->id,pret );
+			return pret ; // ritorna indice se l'ha trovato
+		}
         
     } while(i!=0);
  

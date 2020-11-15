@@ -1,0 +1,131 @@
+
+file parser          : [0x000055f8e8f027d0] -> [tst/x.parser        ]
+
+# Parser  -> scanning ...
+
+-[tst/x.pas           ][074,004] len(05) sym(103) [               const]
+parserDeclConst
+-[tst/x.pas           ][074,010] len(03) sym(004) [                 ccc]
+-[tst/x.pas           ][074,014] len(01) sym(258) [                   =]
+-[tst/x.pas           ][074,016] len(03) sym(005) [                 123] -> [[123]]
+-[tst/x.pas           ][074,020] len(01) sym(153) [                   ;]
+-[tst/x.pas           ][076,004] len(04) sym(110) [                type]
+parserDeclVar
+parserDeclArray
+-[tst/x.pas           ][076,009] len(07) sym(004) [             point_t]
+-[tst/x.pas           ][077,004] len(01) sym(158) [                   {]
+-[tst/x.pas           ][078,008] len(03) sym(104) [                 var]
+parserDeclVar
+-[tst/x.pas           ][078,016] len(01) sym(004) [                   x]
+-[tst/x.pas           ][078,018] len(01) sym(155) [                   :]
+-[tst/x.pas           ][078,020] len(07) sym(105) [             integer]
+-[tst/x.pas           ][078,028] len(01) sym(153) [                   ;]
+-[tst/x.pas           ][079,008] len(03) sym(104) [                 var]
+parserDeclArray
+parserDeclVar
+-[tst/x.pas           ][079,016] len(01) sym(004) [                   y]
+-[tst/x.pas           ][079,018] len(01) sym(155) [                   :]
+-[tst/x.pas           ][079,020] len(07) sym(105) [             integer]
+-[tst/x.pas           ][079,028] len(01) sym(153) [                   ;]
+-[tst/x.pas           ][080,004] len(01) sym(159) [                   }]
+parserDeclArray
+parserDeclVar
+parserDeclArray
+-[tst/x.pas           ][080,006] len(01) sym(153) [                   ;]
+-[tst/x.pas           ][081,004] len(04) sym(110) [                type]
+parserDeclConst
+parserDeclVar
+parserDeclArray
+-[tst/x.pas           ][081,009] len(06) sym(004) [              line_t]
+-[tst/x.pas           ][082,004] len(01) sym(158) [                   {]
+-[tst/x.pas           ][083,008] len(03) sym(104) [                 var]
+parserDeclVar
+-[tst/x.pas           ][083,016] len(05) sym(004) [               start]
+-[tst/x.pas           ][083,022] len(01) sym(155) [                   :]
+-[tst/x.pas           ][083,024] len(07) sym(004) [             point_t]
+-[tst/x.pas           ][083,032] len(01) sym(153) [                   ;]
+-[tst/x.pas           ][084,008] len(03) sym(104) [                 var]
+parserDeclArray
+parserDeclVar
+-[tst/x.pas           ][084,016] len(04) sym(004) [                stop]
+-[tst/x.pas           ][084,022] len(01) sym(155) [                   :]
+-[tst/x.pas           ][084,024] len(07) sym(004) [             point_t]
+-[tst/x.pas           ][084,032] len(01) sym(153) [                   ;]
+-[tst/x.pas           ][085,004] len(01) sym(159) [                   }]
+parserDeclArray
+parserDeclVar
+parserDeclArray
+-[tst/x.pas           ][085,006] len(01) sym(153) [                   ;]
+-[tst/x.pas           ][086,004] len(04) sym(110) [                type]
+parserDeclConst
+parserDeclVar
+parserDeclArray
+-[tst/x.pas           ][086,009] len(06) sym(004) [              rect_t]
+-[tst/x.pas           ][087,004] len(01) sym(158) [                   {]
+-[tst/x.pas           ][088,008] len(03) sym(104) [                 var]
+parserDeclVar
+-[tst/x.pas           ][088,016] len(02) sym(004) [                  l1]
+-[tst/x.pas           ][088,019] len(01) sym(155) [                   :]
+-[tst/x.pas           ][088,021] len(06) sym(004) [              line_t]
+-[tst/x.pas           ][088,028] len(01) sym(153) [                   ;]
+-[tst/x.pas           ][089,008] len(03) sym(104) [                 var]
+parserDeclArray
+parserDeclVar
+-[tst/x.pas           ][089,016] len(02) sym(004) [                  l2]
+-[tst/x.pas           ][089,020] len(01) sym(155) [                   :]
+-[tst/x.pas           ][089,022] len(06) sym(004) [              line_t]
+-[tst/x.pas           ][089,029] len(01) sym(153) [                   ;]
+-[tst/x.pas           ][090,004] len(01) sym(159) [                   }]
+parserDeclArray
+parserDeclVar
+parserDeclArray
+-[tst/x.pas           ][090,006] len(01) sym(153) [                   ;]
+-[tst/x.pas           ][091,004] len(03) sym(104) [                 var]
+parserDeclConst
+parserDeclVar
+-[tst/x.pas           ][091,012] len(02) sym(004) [                  p1]
+-[tst/x.pas           ][091,015] len(01) sym(155) [                   :]
+-[tst/x.pas           ][091,017] len(07) sym(004) [             point_t]
+-[tst/x.pas           ][091,025] len(01) sym(153) [                   ;]
+-[tst/x.pas           ][092,004] len(03) sym(104) [                 var]
+parserDeclArray
+parserDeclConst
+parserDeclVar
+-[tst/x.pas           ][092,012] len(02) sym(004) [                  l1]
+-[tst/x.pas           ][092,015] len(01) sym(155) [                   :]
+-[tst/x.pas           ][092,017] len(06) sym(004) [              line_t]
+-[tst/x.pas           ][092,024] len(01) sym(153) [                   ;]
+-[tst/x.pas           ][093,004] len(03) sym(104) [                 var]
+parserDeclArray
+parserDeclConst
+parserDeclVar
+-[tst/x.pas           ][093,012] len(02) sym(004) [                  r1]
+-[tst/x.pas           ][093,015] len(01) sym(155) [                   :]
+-[tst/x.pas           ][093,017] len(06) sym(004) [              rect_t]
+-[tst/x.pas           ][093,024] len(01) sym(153) [                   ;]
+-[tst/x.pas           ][104,004] len(02) sym(004) [                  r1]
+parserDeclArray
+parserDeclConst
+parserDeclVar
+parserDeclArray
+parserExpr
+parserAssign
+parserAddSub
+parserMulDivMod
+parserDot BEGIN
+parserTerm
+ID                             :: [r1].
+-[tst/x.pas           ][104,007] len(01) sym(257) [                   .]
+parserDot LOOP
+-[tst/x.pas           ][104,009] len(02) sym(004) [                  l2]
+parserTerm
+ID                             :: [l2].
+-[tst/x.pas           ][104,012] len(01) sym(257) [                   .]
+-[tst/x.pas           ][104,014] len(05) sym(004) [               start]
+parserTerm
+ID                             :: [start].
+-[tst/x.pas           ][104,020] len(01) sym(257) [                   .]
+-[tst/x.pas           ][104,022] len(01) sym(004) [                   y]
+parserTerm
+ID                             :: [y].
+-[tst/x.pas           ][104,024] len(01) sym(153) [                   ;]
