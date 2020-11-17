@@ -1,48 +1,185 @@
 
-file node            : [0x000055f8e8f19d90] -> [tst/x.node          ]
+file node            : [0x0000564ef1b16d90] -> [tst/x.node          ]
 
-node [0x000055f8e8f29710] block     
+node [0x0000564ef1b26710] block     
 
-node [0x000055f8e8f29710] -> [000/007]::[0x000055f8e8f326b0]
-node [0x000055f8e8f2a330] term integer :: [123] { 074/016 :: 123 }
-node [0x000055f8e8f326b0] DeclConst  :: id[ccc] sym[5] term[0x000055f8e8f2a330] scope[000]
+node [0x0000564ef1b26710] -> [000/031]::[0x0000564ef1b30af0]
+node [0x0000564ef1b28210] term integer :: [10] { 002/016 :: 10 }
+node [0x0000564ef1b28720] term integer :: [20] { 002/020 :: 20 }
+node [0x0000564ef1b27cb0] ArrayDim   :: dim[2]
+node [0x0000564ef1b30af0] DeclArray  :: id[a1]  : dim[0x0000564ef1b27cb0] sym[108] il[             (nil)] scope[000]
 
-node [0x000055f8e8f29710] -> [001/007]::[0x000055f8e8f4e380]
-node [0x000055f8e8f4e380] DeclType   :: id[point_t]  : scope[000]
+node [0x0000564ef1b26710] -> [001/031]::[0x0000564ef1b39c00]
+node [0x0000564ef1b318d0] term string :: [str] { 004/015 :: "str" }
+node [0x0000564ef1b39c00] DeclConst  :: id[c1] sym[3] term[0x0000564ef1b318d0] scope[000]
+
+node [0x0000564ef1b26710] -> [002/031]::[0x0000564ef1b42c00]
+node [0x0000564ef1b3a920] term integer :: [100] { 007/024 :: 100 }
+node [0x0000564ef1b42c00] DeclVar    :: id[v1] sym[105] expr[0x0000564ef1b3a920] scope[000]
+
+node [0x0000564ef1b26710] -> [003/031]::[0x0000564ef1b5e410]
+node [0x0000564ef1b5e410] DeclType   :: id[point_t]  : scope[000]
 {
-node [0x000055f8e8f40410] DeclVar    :: id[x] sym[105] expr[             (nil)] scope[000]
-node [0x000055f8e8f4d470] DeclVar    :: id[y] sym[105] expr[             (nil)] scope[000]
+node [0x0000564ef1b504a0] DeclVar    :: id[x] sym[105] expr[             (nil)] scope[000]
+node [0x0000564ef1b5d500] DeclVar    :: id[y] sym[105] expr[             (nil)] scope[000]
 }
 
-node [0x000055f8e8f29710] -> [002/007]::[0x000055f8e8f86ca0]
-node [0x000055f8e8f86ca0] DeclType   :: id[line_t]  : scope[000]
+node [0x0000564ef1b26710] -> [004/031]::[0x0000564ef1b96d30]
+node [0x0000564ef1b96d30] DeclType   :: id[line_t]  : scope[000]
 {
-node [0x000055f8e8f74c10] DeclVar    :: id[start] sym[4] expr[             (nil)] scope[000]
-node [0x000055f8e8f85d90] DeclVar    :: id[stop] sym[4] expr[             (nil)] scope[000]
+node [0x0000564ef1b84ca0] DeclVar    :: id[start] sym[4] expr[             (nil)] scope[000]
+node [0x0000564ef1b95e20] DeclVar    :: id[stop] sym[4] expr[             (nil)] scope[000]
 }
 
-node [0x000055f8e8f29710] -> [003/007]::[0x000055f8e8fbf5a0]
-node [0x000055f8e8fbf5a0] DeclType   :: id[rect_t]  : scope[000]
+node [0x0000564ef1b26710] -> [005/031]::[0x0000564ef1bcf630]
+node [0x0000564ef1bcf630] DeclType   :: id[rect_t]  : scope[000]
 {
-node [0x000055f8e8fad530] DeclVar    :: id[l1] sym[4] expr[             (nil)] scope[000]
-node [0x000055f8e8fbe690] DeclVar    :: id[l2] sym[4] expr[             (nil)] scope[000]
+node [0x0000564ef1bbd5c0] DeclVar    :: id[l1] sym[4] expr[             (nil)] scope[000]
+node [0x0000564ef1bce720] DeclVar    :: id[l2] sym[4] expr[             (nil)] scope[000]
 }
 
-node [0x000055f8e8f29710] -> [004/007]::[0x000055f8e8fe0b90]
-node [0x000055f8e8fe0b90] DeclVar    :: id[p1] sym[4] expr[             (nil)] scope[000]
+node [0x0000564ef1b26710] -> [006/031]::[0x0000564ef1bf0c20]
+node [0x0000564ef1bf0c20] DeclVar    :: id[v2] sym[4] expr[             (nil)] scope[000]
 
-node [0x000055f8e8f29710] -> [005/007]::[0x000055f8e8fee5c0]
-node [0x000055f8e8fee5c0] DeclVar    :: id[l1] sym[4] expr[             (nil)] scope[000]
+node [0x0000564ef1b26710] -> [007/031]::[0x0000564ef1bfde60]
+node [0x0000564ef1bf1a00] term integer :: [20] { 029/019 :: 20 }
+node [0x0000564ef1bf14a0] ArrayDim   :: dim[1]
+node [0x0000564ef1bfde60] DeclArray  :: id[linea]  : dim[0x0000564ef1bf14a0] sym[4] il[             (nil)] scope[000]
 
-node [0x000055f8e8f29710] -> [006/007]::[0x000055f8e8ffbff0]
-node [0x000055f8e8ffbff0] DeclVar    :: id[r1] sym[4] expr[             (nil)] scope[000]
+node [0x0000564ef1b26710] -> [008/031]::[0x0000564ef1c06f80]
+node [0x0000564ef1bfec40] term string :: [aNb] { 031/017 :: "a\nb" }
+node [0x0000564ef1c06f80] DeclConst  :: id[c2] sym[3] term[0x0000564ef1bfec40] scope[000]
 
-node [0x000055f8e8f29710] -> [007/007]::[0x000055f8e9002d50]
-node [0x000055f8e9002d50] nTypeTermStruct :: id[rect_t-0x000055f8e8f9c690] size(064) : field[004]
+node [0x0000564ef1b26710] -> [009/031]::[0x0000564ef1c0f5d0]
+node [0x0000564ef1c072f0] term char  :: [N] { 032/009 :: '\n' }
+node [0x0000564ef1c0f5d0] DeclConst  :: id[c3] sym[2] term[0x0000564ef1c072f0] scope[000]
+
+node [0x0000564ef1b26710] -> [010/031]::[0x0000564ef1c18f70]
+node [0x0000564ef1c10c90] term integer :: [123] { 034/016 :: 123 }
+node [0x0000564ef1c18f70] DeclConst  :: id[ccc] sym[5] term[0x0000564ef1c10c90] scope[000]
+
+node [0x0000564ef1b26710] -> [011/031]::[0x0000564ef1c22910]
+node [0x0000564ef1c1a630] term char  :: [c] { 036/016 :: 'c' }
+node [0x0000564ef1c22910] DeclConst  :: id[c4] sym[2] term[0x0000564ef1c1a630] scope[000]
+
+node [0x0000564ef1b26710] -> [012/031]::[0x0000564ef1c2b900]
+node [0x0000564ef1c23620] term real  :: [12.340000] { 038/021 :: 12.34 }
+node [0x0000564ef1c2b900] DeclVar    :: id[v3] sym[106] expr[0x0000564ef1c23620] scope[000]
+
+node [0x0000564ef1b26710] -> [013/031]::[0x0000564ef1c343e0]
+node [0x0000564ef1c2c100] term char  :: [x] { 038/042 :: 'x' }
+node [0x0000564ef1c343e0] DeclVar    :: id[v4] sym[107] expr[0x0000564ef1c2c100] scope[000]
+
+node [0x0000564ef1b26710] -> [014/031]::[0x0000564ef1c3e2e0]
+node [0x0000564ef1c35f90] term string :: [stringa] { 040/021 :: "stringa" }
+node [0x0000564ef1c3e2e0] DeclVar    :: id[v5] sym[107] expr[0x0000564ef1c35f90] scope[000]
+
+node [0x0000564ef1b26710] -> [015/031]::[0x0000564ef1c48130]
+node [0x0000564ef1c3fe30] term integer :: [5] { 043/021 :: 0b00000101 }
+node [0x0000564ef1c48130] DeclVar    :: id[v6] sym[108] expr[0x0000564ef1c3fe30] scope[000]
+
+node [0x0000564ef1b26710] -> [016/031]::[0x0000564ef1c55b60]
+node [0x0000564ef1c55b60] DeclVar    :: id[p1] sym[4] expr[             (nil)] scope[000]
+
+node [0x0000564ef1b26710] -> [017/031]::[0x0000564ef1c63590]
+node [0x0000564ef1c63590] DeclVar    :: id[l1] sym[4] expr[             (nil)] scope[000]
+
+node [0x0000564ef1b26710] -> [018/031]::[0x0000564ef1c70fc0]
+node [0x0000564ef1c70fc0] DeclVar    :: id[r1] sym[4] expr[             (nil)] scope[000]
+
+node [0x0000564ef1b26710] -> [019/031]::[0x0000564ef1cdfac0]
+node [0x0000564ef1cdfac0] DeclFunction :: id[f1]  ( 0x0000564ef1cdfae8 ) -> [105] { 0x0000564ef1c73230 } 
+(
+node [0x0000564ef1c802c0] DeclVar    :: id[f1_v7] sym[105] expr[             (nil)] scope[001]
+node [0x0000564ef1c8c960] DeclVar    :: id[f1_v8] sym[105] expr[             (nil)] scope[001]
+node [0x0000564ef1c8d740] term integer :: [10] { 053/019 :: 10 }
+node [0x0000564ef1c8d1e0] ArrayDim   :: dim[1]
+node [0x0000564ef1c9dc10] DeclArray  :: id[a]  : dim[0x0000564ef1c8d1e0] sym[4] il[             (nil)] scope[001]
+)
 {
-	OFFSET -> [000 (r1          ) 000] :: node [0x000055f8e9002c30] term var   :: [r1] { 104/005 :: r1 }
-	OFFSET -> [001 (l2          ) 064] :: node [0x000055f8e901bad0] term var   :: [l2] { 104/010 :: l2 }
-	OFFSET -> [002 (start       ) 096] :: node [0x000055f8e9034480] term var   :: [start] { 104/018 :: start }
-	OFFSET -> [003 (y           ) 112] :: node [0x000055f8e904ce50] term var   :: [y] { 104/022 :: y }
+node [0x0000564ef1c73230] block     
+
+node [0x0000564ef1c73230] -> [000/003]::[0x0000564ef1caf750]
+node [0x0000564ef1caf750] DeclVar    :: id[VVV] sym[4] expr[             (nil)] scope[001]
+
+node [0x0000564ef1c73230] -> [001/003]::[0x0000564ef1cb18e0]
+node [0x0000564ef1cb18e0] term integer :: [8] { 061/008 :: 8 }
+
+node [0x0000564ef1c73230] -> [002/003]::[0x0000564ef1cb1df0]
+node [0x0000564ef1cb1df0] term integer :: [9] { 062/008 :: 9 }
+
+node [0x0000564ef1c73230] -> [003/003]::[0x0000564ef1cba5f0]
+node [0x0000564ef1cba5f0] nTypeTermStruct :: id[point_t-0x0000564ef1b43700] size(016) : field[002]
+{
+[00] fieldName[VVV       ] pstTemp->id[VVV       ] pstTemp->typeID[point_t   ]) size(016) offset(000)node [0x0000564ef1cba4d0] term var   :: [VVV] { 063/010 :: VVV }
+[01] fieldName[y         ] pstTemp->id[y         ] pstTemp->typeID[(null)    ]) size(008) offset(000)node [0x0000564ef1cdf560] term var   :: [y] { 063/014 :: y }
+}
+
+}
+
+node [0x0000564ef1b26710] -> [020/031]::[0x0000564ef1ce09f0]
+node [0x0000564ef1ce09f0] term integer :: [1] { 068/004 :: 1 }
+
+node [0x0000564ef1b26710] -> [021/031]::[0x0000564ef1ce10e0]
+node [0x0000564ef1ce1010] term integer :: [123] { 071/006 :: 123 }
+node [0x0000564ef1ce10e0] prefix     :: [251] { 071/004 :: ! }
+
+node [0x0000564ef1b26710] -> [022/031]::[0x0000564ef1ce15f0]
+node [0x0000564ef1ce15f0] term integer :: [456] { 072/004 :: 456 }
+
+node [0x0000564ef1b26710] -> [023/031]::[0x0000564ef1ce1b40]
+node [0x0000564ef1ce1b40] term string :: [claudio] { 074/004 :: "claudio" }
+
+node [0x0000564ef1b26710] -> [024/031]::[0x0000564ef1ce20c0]
+node [0x0000564ef1ce20c0] term integer :: [1] { 074/016 :: 1 }
+
+node [0x0000564ef1b26710] -> [025/031]::[0x0000564ef1ce2620]
+node [0x0000564ef1ce2620] term string :: [] { 074/021 :: "" }
+
+node [0x0000564ef1b26710] -> [026/031]::[0x0000564ef1ce2b80]
+node [0x0000564ef1ce2b80] term integer :: [42] { 074/026 :: 42 }
+
+node [0x0000564ef1b26710] -> [027/031]::[0x0000564ef1ce3090]
+node [0x0000564ef1ce3090] term integer :: [3] { 074/030 :: 3 }
+
+node [0x0000564ef1b26710] -> [028/031]::[0x0000564ef1ce4180]
+node [0x0000564ef1ce3ba0] term integer :: [11] { 076/008 :: 11 }
+node [0x0000564ef1ce40b0] term integer :: [12] { 076/012 :: 12 }
+node [0x0000564ef1ce3640] ArrayDim   :: dim[2]
+node [0x0000564ef1ce4180] nTypeTermArray :: id[arr]  : dim[002]
+
+node [0x0000564ef1b26710] -> [029/031]::[0x0000564ef1ce6ef0]
+node [0x0000564ef1ce6ef0] nTypeTermFunction :: id[f1]  : param[003]
+
+(
+node [0x0000564ef1ce4730] block     
+
+node [0x0000564ef1ce4730] -> [000/002]::[0x0000564ef1ce5030]
+node [0x0000564ef1ce5030] term integer :: [100] { 078/007 :: 100 }
+
+node [0x0000564ef1ce4730] -> [001/002]::[0x0000564ef1ce6930]
+node [0x0000564ef1ce5b40] term integer :: [21] { 078/018 :: 21 }
+node [0x0000564ef1ce60a0] term integer :: [2] { 078/021 :: 2 }
+node [0x0000564ef1ce6170] BinOp      :: Left[0x0000564ef1ce60a0] Right[0x0000564ef1ce5b40] :: sym [254] { 078/021 :: * }
+node [0x0000564ef1ce6790] term integer :: [4] { 078/025 :: 4 }
+node [0x0000564ef1ce6860] prefix     :: [253] { 078/024 :: - }
+node [0x0000564ef1ce55e0] ArrayDim   :: dim[2]
+node [0x0000564ef1ce6930] nTypeTermArray :: id[x]  : dim[002]
+
+node [0x0000564ef1ce4730] -> [002/002]::[0x0000564ef1ce6e20]
+node [0x0000564ef1ce6e20] term integer :: [300] { 078/032 :: 300 }
+
+)
+
+node [0x0000564ef1b26710] -> [030/031]::[0x0000564ef1ceb530]
+node [0x0000564ef1ceb530] term integer :: [123] { 083/008 :: ccc }
+
+node [0x0000564ef1b26710] -> [031/031]::[0x0000564ef1cefc90]
+node [0x0000564ef1cefc90] nTypeTermStruct :: id[rect_t-0x0000564ef1bac720] size(064) : field[004]
+{
+[00] fieldName[r1        ] pstTemp->id[r1        ] pstTemp->typeID[rect_t    ]) size(064) offset(000)node [0x0000564ef1cefb70] term var   :: [r1] { 092/005 :: r1 }
+[01] fieldName[l2        ] pstTemp->id[l2        ] pstTemp->typeID[line_t    ]) size(032) offset(000)node [0x0000564ef1d08a10] term var   :: [l2] { 092/010 :: l2 }
+[02] fieldName[start     ] pstTemp->id[start     ] pstTemp->typeID[point_t   ]) size(016) offset(032)node [0x0000564ef1d213c0] term var   :: [start] { 092/018 :: start }
+[03] fieldName[x         ] pstTemp->id[x         ] pstTemp->typeID[(null)    ]) size(008) offset(048)node [0x0000564ef1d39d90] term var   :: [x] { 092/022 :: x }
 }
 

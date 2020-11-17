@@ -339,7 +339,7 @@ node_t* parserDot( pparser_t this )
 		// fwprintf(stderr,L"\n[[%ls]]\n",pstTemp->typeID ) ;
 	
 		nStruct->termStruct.id 		= gcWcsDup ( pstTemp->typeID ) ;
-		
+
 		// ricerca il riferimento alla struttura
 		
 		psymTable_t pstTypeNameTemp  = stFindIDinMap(pstTemp->typeID);
@@ -352,6 +352,13 @@ node_t* parserDot( pparser_t this )
 
 		while (	this->lexer->sym == sym_dot	)
 		{
+/*			
+fwprintf ( stderr, L"\n namespace : " );
+for(int i=0;i<vectorSize(stNameSpace);i++)
+{
+	fwprintf ( stderr, L"[%ls]", vectorAt( stNameSpace , i ) );
+}
+*/
 				if ( ( left->type != nTypeTermVar )	&& ( left->type != nTypeTermArray) ) 
 				{
 					fwprintf ( stderr, L"\n!! [expr.c::parserDot] : term not var or array\n") ;	
@@ -364,14 +371,15 @@ node_t* parserDot( pparser_t this )
 				if ( ( left->type != nTypeTermVar 	)	) //	campo var
 				{
 					//fwprintf ( stderr,L"{{%d}}",vectorSize(stNameSpace)) ;
-					if ( vectorSize(stNameSpace)==2 ) vectorPopBack(stNameSpace);
+					if ( vectorSize(stNameSpace)>=2 ) vectorPopBack(stNameSpace);
 					vectorPushBack(stNameSpace,pstTemp->typeID 	) ;
+//fwprintf ( stderr, L"[[%ls]]", left->termVar.id );
 					pstTemp = stFindIDinMap(left->termVar.id);
 				}
 				if ( ( left->type != nTypeTermArray	) 	) //	campo array
 				{
 					//fwprintf ( stderr,L"{{%d}}",vectorSize(stNameSpace)) ;
-					if ( vectorSize(stNameSpace)==2 ) vectorPopBack(stNameSpace);
+					if ( vectorSize(stNameSpace)>=2 ) vectorPopBack(stNameSpace);
 					vectorPushBack(stNameSpace,pstTemp->typeID 	) ;
 					pstTemp = stFindIDinMap(left->termArray.id);
 				}

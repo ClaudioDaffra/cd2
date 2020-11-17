@@ -5,21 +5,57 @@
 
 # symTable   -> stGet_nsid -> [id::{nil}]
 
-# symTable   -> stGet_nsid looking for [ccc]
-# symTable   -> stGet_nsid looking for [ccc]
-# symTable   -> stGet_nsid -> [id::{nil}]
-
-# DEBUG ST [0x55f8e8f2a0e0] ->
+# symTable   -> stGet_nsid looking for [a1]
+# symTable   -> stGet_nsid looking for [a1]
+# DEBUG ST [0x564ef1b27a60] ->
 # symTable->scope   [0] :: [Global]
 # symTable->ns      [(null)]
-# symTable->id      [ccc]
+# symTable->id      [a1]
+# symTable->kind    [3] :: [Array]
+# symTable->type    [4] :: [stTypeByte]
+# symTable->nDim    [2] / [10][20]
+# symTable->member  [0] / 
+# symTable->size    [200]
+# symTable->typeID  [{NULL}]
+# symTable->value   [0]
+
+# symTable   -> stMakeSymTable ...
+
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# symTable   -> stGet_nsid looking for [c1]
+# symTable   -> stGet_nsid looking for [c1]
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# DEBUG ST [0x564ef1b315e0] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [(null)]
+# symTable->id      [c1]
 # symTable->kind    [1] :: [Const]
-# symTable->type    [1] :: [stTypeInteger]
+# symTable->type    [6] :: [stTypeConstString]
 # symTable->nDim    [0] / 
 # symTable->member  [0] / 
 # symTable->size    [0]
 # symTable->typeID  [{NULL}]
-# symTable->value   [123]
+# symTable->value   [str]
+
+# symTable   -> stMakeSymTable ...
+
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# symTable   -> stGet_nsid looking for [v1]
+# symTable   -> stGet_nsid looking for [v1]
+# DEBUG ST [0x564ef1b3a230] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [(null)]
+# symTable->id      [v1]
+# symTable->kind    [2] :: [Var]
+# symTable->type    [1] :: [stTypeInteger]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [8]
+# symTable->typeID  [{NULL}]
+# symTable->value   [0]
 
 # symTable   -> stMakeSymTable ...
 
@@ -31,7 +67,7 @@
 # symTable   -> stGet_nsid looking for [x]
 # symTable   -> stGet_nsid looking for [x]
 # symTable   -> stGet_nsid looking for [x]
-# DEBUG ST [0x55f8e8f33ea0] ->
+# DEBUG ST [0x564ef1b43f30] ->
 # symTable->scope   [0] :: [Global]
 # symTable->ns      [(null)]
 # symTable->id      [x]
@@ -50,7 +86,7 @@
 # symTable   -> stGet_nsid looking for [y]
 # symTable   -> stGet_nsid looking for [y]
 # symTable   -> stGet_nsid looking for [y]
-# DEBUG ST [0x55f8e8f40f00] ->
+# DEBUG ST [0x564ef1b50f90] ->
 # symTable->scope   [0] :: [Global]
 # symTable->ns      [(null)]
 # symTable->id      [y]
@@ -64,20 +100,20 @@
 
 
 # symTable   -> stGet_nsid looking for [x]
-# symTable   -> stGet_nsid looking for [x] found::[x-0x000055f8e8f33ea0] 
+# symTable   -> stGet_nsid looking for [x] found::[x-0x0000564ef1b43f30] 
 
 # symTable   -> stGet_nsid looking for [y]
-# symTable   -> stGet_nsid looking for [y] found::[y-0x000055f8e8f40f00] 
+# symTable   -> stGet_nsid looking for [y] found::[y-0x0000564ef1b50f90] 
 
 # symTable   -> stGet_nsid looking for [point_t]
-# DEBUG ST [0x55f8e8f33670] ->
+# DEBUG ST [0x564ef1b43700] ->
 # symTable->scope   [0] :: [Global]
 # symTable->ns      [(null)]
 # symTable->id      [point_t]
 # symTable->kind    [4] :: [Struct]
 # symTable->type    [5] :: [stTypeStruct]
 # symTable->nDim    [0] / 
-# symTable->member  [2] / [0x55f8e8f4e500][0x55f8e8f56680]
+# symTable->member  [2] / [0x564ef1b5e590][0x564ef1b66710]
 # symTable->size    [16]
 # symTable->typeID  [{NULL}]
 # symTable->value   [MEMBER]:: {x/0}  {y/8} 
@@ -89,12 +125,12 @@
 
 # symTable   -> stGet_nsid -> [id::{nil}]
 
-# symTable   -> stGet_nsid looking for [point_t] found::[point_t-0x000055f8e8f33670] 
+# symTable   -> stGet_nsid looking for [point_t] found::[point_t-0x0000564ef1b43700] 
 
 # symTable   -> stGet_nsid looking for [start]
 # symTable   -> stGet_nsid looking for [start]
 # symTable   -> stGet_nsid looking for [start]
-# DEBUG ST [0x55f8e8f64570] ->
+# DEBUG ST [0x564ef1b74600] ->
 # symTable->scope   [0] :: [Global]
 # symTable->ns      [(null)]
 # symTable->id      [start]
@@ -110,12 +146,12 @@
 
 # symTable   -> stGet_nsid -> [id::{nil}]
 
-# symTable   -> stGet_nsid looking for [point_t] found::[point_t-0x000055f8e8f33670] 
+# symTable   -> stGet_nsid looking for [point_t] found::[point_t-0x0000564ef1b43700] 
 
 # symTable   -> stGet_nsid looking for [stop]
 # symTable   -> stGet_nsid looking for [stop]
 # symTable   -> stGet_nsid looking for [stop]
-# DEBUG ST [0x55f8e8f75700] ->
+# DEBUG ST [0x564ef1b85790] ->
 # symTable->scope   [0] :: [Global]
 # symTable->ns      [(null)]
 # symTable->id      [stop]
@@ -129,20 +165,20 @@
 
 
 # symTable   -> stGet_nsid looking for [start]
-# symTable   -> stGet_nsid looking for [start] found::[start-0x000055f8e8f64570] 
+# symTable   -> stGet_nsid looking for [start] found::[start-0x0000564ef1b74600] 
 
 # symTable   -> stGet_nsid looking for [stop]
-# symTable   -> stGet_nsid looking for [stop] found::[stop-0x000055f8e8f75700] 
+# symTable   -> stGet_nsid looking for [stop] found::[stop-0x0000564ef1b85790] 
 
 # symTable   -> stGet_nsid looking for [line_t]
-# DEBUG ST [0x55f8e8f63d40] ->
+# DEBUG ST [0x564ef1b73dd0] ->
 # symTable->scope   [0] :: [Global]
 # symTable->ns      [(null)]
 # symTable->id      [line_t]
 # symTable->kind    [4] :: [Struct]
 # symTable->type    [5] :: [stTypeStruct]
 # symTable->nDim    [0] / 
-# symTable->member  [2] / [0x55f8e8f86e20][0x55f8e8f8efc0]
+# symTable->member  [2] / [0x564ef1b96eb0][0x564ef1b9f050]
 # symTable->size    [32]
 # symTable->typeID  [{NULL}]
 # symTable->value   [MEMBER]:: {start/0}  {stop/16} 
@@ -154,12 +190,12 @@
 
 # symTable   -> stGet_nsid -> [id::{nil}]
 
-# symTable   -> stGet_nsid looking for [line_t] found::[line_t-0x000055f8e8f63d40] 
+# symTable   -> stGet_nsid looking for [line_t] found::[line_t-0x0000564ef1b73dd0] 
 
 # symTable   -> stGet_nsid looking for [l1]
 # symTable   -> stGet_nsid looking for [l1]
 # symTable   -> stGet_nsid looking for [l1]
-# DEBUG ST [0x55f8e8f9cec0] ->
+# DEBUG ST [0x564ef1bacf50] ->
 # symTable->scope   [0] :: [Global]
 # symTable->ns      [(null)]
 # symTable->id      [l1]
@@ -175,12 +211,12 @@
 
 # symTable   -> stGet_nsid -> [id::{nil}]
 
-# symTable   -> stGet_nsid looking for [line_t] found::[line_t-0x000055f8e8f63d40] 
+# symTable   -> stGet_nsid looking for [line_t] found::[line_t-0x0000564ef1b73dd0] 
 
 # symTable   -> stGet_nsid looking for [l2]
 # symTable   -> stGet_nsid looking for [l2]
 # symTable   -> stGet_nsid looking for [l2]
-# DEBUG ST [0x55f8e8fae020] ->
+# DEBUG ST [0x564ef1bbe0b0] ->
 # symTable->scope   [0] :: [Global]
 # symTable->ns      [(null)]
 # symTable->id      [l2]
@@ -194,20 +230,20 @@
 
 
 # symTable   -> stGet_nsid looking for [l1]
-# symTable   -> stGet_nsid looking for [l1] found::[l1-0x000055f8e8f9cec0] 
+# symTable   -> stGet_nsid looking for [l1] found::[l1-0x0000564ef1bacf50] 
 
 # symTable   -> stGet_nsid looking for [l2]
-# symTable   -> stGet_nsid looking for [l2] found::[l2-0x000055f8e8fae020] 
+# symTable   -> stGet_nsid looking for [l2] found::[l2-0x0000564ef1bbe0b0] 
 
 # symTable   -> stGet_nsid looking for [rect_t]
-# DEBUG ST [0x55f8e8f9c690] ->
+# DEBUG ST [0x564ef1bac720] ->
 # symTable->scope   [0] :: [Global]
 # symTable->ns      [(null)]
 # symTable->id      [rect_t]
 # symTable->kind    [4] :: [Struct]
 # symTable->type    [5] :: [stTypeStruct]
 # symTable->nDim    [0] / 
-# symTable->member  [2] / [0x55f8e8fbf720][0x55f8e8fc78a0]
+# symTable->member  [2] / [0x564ef1bcf7b0][0x564ef1bd7930]
 # symTable->size    [64]
 # symTable->typeID  [{NULL}]
 # symTable->value   [MEMBER]:: {l1/0}  {l2/32} 
@@ -216,11 +252,203 @@
 
 # symTable   -> stGet_nsid -> [id::{nil}]
 
-# symTable   -> stGet_nsid looking for [point_t] found::[point_t-0x000055f8e8f33670] 
+# symTable   -> stGet_nsid looking for [point_t] found::[point_t-0x0000564ef1b43700] 
+
+# symTable   -> stGet_nsid looking for [v2]
+# symTable   -> stGet_nsid looking for [v2]
+# DEBUG ST [0x564ef1be4660] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [(null)]
+# symTable->id      [v2]
+# symTable->kind    [2] :: [Var]
+# symTable->type    [5] :: [stTypeStruct]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [16]
+# symTable->typeID  [point_t]
+# symTable->value   [MEMBER]::
+
+# symTable   -> stMakeSymTable ...
+
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# symTable   -> stGet_nsid looking for [line_t] found::[line_t-0x0000564ef1b73dd0] 
+
+# symTable   -> stGet_nsid looking for [linea]
+# symTable   -> stGet_nsid looking for [linea]
+# DEBUG ST [0x564ef1bf1250] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [(null)]
+# symTable->id      [linea]
+# symTable->kind    [3] :: [Array]
+# symTable->type    [5] :: [stTypeStruct]
+# symTable->nDim    [1] / [20]
+# symTable->member  [0] / 
+# symTable->size    [640]
+# symTable->typeID  [line_t]
+# symTable->value   [MEMBER]::
+
+# symTable   -> stMakeSymTable ...
+
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# symTable   -> stGet_nsid looking for [c2]
+# symTable   -> stGet_nsid looking for [c2]
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# DEBUG ST [0x564ef1bfe950] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [(null)]
+# symTable->id      [c2]
+# symTable->kind    [1] :: [Const]
+# symTable->type    [6] :: [stTypeConstString]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [0]
+# symTable->typeID  [{NULL}]
+# symTable->value   [aNb]
+
+# symTable   -> stMakeSymTable ...
+
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# symTable   -> stGet_nsid looking for [c3]
+# symTable   -> stGet_nsid looking for [c3]
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# DEBUG ST [0x564ef1c070a0] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [(null)]
+# symTable->id      [c3]
+# symTable->kind    [1] :: [Const]
+# symTable->type    [3] :: [stTypeChar]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [0]
+# symTable->typeID  [{NULL}]
+# symTable->value   [N]
+
+# symTable   -> stMakeSymTable ...
+
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# symTable   -> stGet_nsid looking for [ccc]
+# symTable   -> stGet_nsid looking for [ccc]
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# DEBUG ST [0x564ef1c10a40] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [(null)]
+# symTable->id      [ccc]
+# symTable->kind    [1] :: [Const]
+# symTable->type    [1] :: [stTypeInteger]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [0]
+# symTable->typeID  [{NULL}]
+# symTable->value   [123]
+
+# symTable   -> stMakeSymTable ...
+
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# symTable   -> stGet_nsid looking for [c4]
+# symTable   -> stGet_nsid looking for [c4]
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# DEBUG ST [0x564ef1c1a3e0] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [(null)]
+# symTable->id      [c4]
+# symTable->kind    [1] :: [Const]
+# symTable->type    [3] :: [stTypeChar]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [0]
+# symTable->typeID  [{NULL}]
+# symTable->value   [c]
+
+# symTable   -> stMakeSymTable ...
+
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# symTable   -> stGet_nsid looking for [v3]
+# symTable   -> stGet_nsid looking for [v3]
+# DEBUG ST [0x564ef1c22f40] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [(null)]
+# symTable->id      [v3]
+# symTable->kind    [2] :: [Var]
+# symTable->type    [2] :: [stTypeReal]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [8]
+# symTable->typeID  [{NULL}]
+# symTable->value   [0.000000]
+
+# symTable   -> stMakeSymTable ...
+
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# symTable   -> stGet_nsid looking for [v4]
+# symTable   -> stGet_nsid looking for [v4]
+# DEBUG ST [0x564ef1c2ba20] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [(null)]
+# symTable->id      [v4]
+# symTable->kind    [2] :: [Var]
+# symTable->type    [3] :: [stTypeChar]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [4]
+# symTable->typeID  [{NULL}]
+# symTable->value   [§]
+
+# symTable   -> stMakeSymTable ...
+
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# symTable   -> stGet_nsid looking for [v5]
+# symTable   -> stGet_nsid looking for [v5]
+# DEBUG ST [0x564ef1c35850] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [(null)]
+# symTable->id      [v5]
+# symTable->kind    [2] :: [Var]
+# symTable->type    [3] :: [stTypeChar]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [4]
+# symTable->typeID  [{NULL}]
+# symTable->value   [§]
+
+# symTable   -> stMakeSymTable ...
+
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# symTable   -> stGet_nsid looking for [v6]
+# symTable   -> stGet_nsid looking for [v6]
+# DEBUG ST [0x564ef1c3f750] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [(null)]
+# symTable->id      [v6]
+# symTable->kind    [2] :: [Var]
+# symTable->type    [4] :: [stTypeByte]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [1]
+# symTable->typeID  [{NULL}]
+# symTable->value   [0]
+
+# symTable   -> stMakeSymTable ...
+
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# symTable   -> stGet_nsid looking for [point_t] found::[point_t-0x0000564ef1b43700] 
 
 # symTable   -> stGet_nsid looking for [p1]
 # symTable   -> stGet_nsid looking for [p1]
-# DEBUG ST [0x55f8e8fd45d0] ->
+# DEBUG ST [0x564ef1c495a0] ->
 # symTable->scope   [0] :: [Global]
 # symTable->ns      [(null)]
 # symTable->id      [p1]
@@ -236,11 +464,11 @@
 
 # symTable   -> stGet_nsid -> [id::{nil}]
 
-# symTable   -> stGet_nsid looking for [line_t] found::[line_t-0x000055f8e8f63d40] 
+# symTable   -> stGet_nsid looking for [line_t] found::[line_t-0x0000564ef1b73dd0] 
 
 # symTable   -> stGet_nsid looking for [l1]
 # symTable   -> stGet_nsid looking for [l1]
-# DEBUG ST [0x55f8e8fe2000] ->
+# DEBUG ST [0x564ef1c56fd0] ->
 # symTable->scope   [0] :: [Global]
 # symTable->ns      [(null)]
 # symTable->id      [l1]
@@ -256,11 +484,11 @@
 
 # symTable   -> stGet_nsid -> [id::{nil}]
 
-# symTable   -> stGet_nsid looking for [rect_t] found::[rect_t-0x000055f8e8f9c690] 
+# symTable   -> stGet_nsid looking for [rect_t] found::[rect_t-0x0000564ef1bac720] 
 
 # symTable   -> stGet_nsid looking for [r1]
 # symTable   -> stGet_nsid looking for [r1]
-# DEBUG ST [0x55f8e8fefa30] ->
+# DEBUG ST [0x564ef1c64a00] ->
 # symTable->scope   [0] :: [Global]
 # symTable->ns      [(null)]
 # symTable->id      [r1]
@@ -272,64 +500,165 @@
 # symTable->typeID  [rect_t]
 # symTable->value   [MEMBER]::
 
+# symTable   -> stMakeSymTable ...
 
-# symTable   -> stGet_nsid looking for [r1] found::[r1-0x000055f8e8fefa30] 
+# symTable   -> stGet_nsid -> [id::{nil}]
 
-# symTable   -> stGet_nsid looking for [r1] found::[r1-0x000055f8e8fefa30] 
+# symTable   -> stGet_nsid looking for [f1_v7]
+# symTable   -> stGet_nsid looking for [f1_v7]
+# symTable   -> stGet_nsid looking for [f1_v7]
+# DEBUG ST [0x564ef1c73d40] ->
+# symTable->scope   [1] :: [Local]
+# symTable->ns      [(null)]
+# symTable->id      [f1_v7]
+# symTable->kind    [2] :: [Var]
+# symTable->type    [1] :: [stTypeInteger]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [8]
+# symTable->typeID  [{NULL}]
+# symTable->value   [0]
 
-# symTable   -> stGet_nsid looking for [rect_t] found::[rect_t-0x000055f8e8f9c690] 
+# symTable   -> stMakeSymTable ...
 
-# symTable   -> stGet_nsid looking for [r1] found::[r1-0x000055f8e8fefa30] 
+# symTable   -> stGet_nsid -> [id::{nil}]
 
-# symTable   -> stGet_nsid looking for [r1] found::[r1-0x000055f8e8fefa30] 
+# symTable   -> stGet_nsid looking for [f1_v8]
+# symTable   -> stGet_nsid looking for [f1_v8]
+# symTable   -> stGet_nsid looking for [f1_v8]
+# DEBUG ST [0x564ef1c803e0] ->
+# symTable->scope   [1] :: [Local]
+# symTable->ns      [(null)]
+# symTable->id      [f1_v8]
+# symTable->kind    [2] :: [Var]
+# symTable->type    [1] :: [stTypeInteger]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [8]
+# symTable->typeID  [{NULL}]
+# symTable->value   [0]
 
-# symTable   -> stGet_nsid looking for [l2]
-# symTable   -> stGet_nsid looking for [l2] found::[l2-0x000055f8e8fae020] 
+# symTable   -> stMakeSymTable ...
 
-# symTable   -> stGet_nsid looking for [l2]
-# symTable   -> stGet_nsid looking for [l2] found::[l2-0x000055f8e8fae020] 
+# symTable   -> stGet_nsid -> [id::{nil}]
 
-# symTable   -> stGet_nsid looking for [l2]
-# symTable   -> stGet_nsid looking for [l2]
-# symTable   -> stGet_nsid looking for [start]
-# symTable   -> stGet_nsid looking for [start] found::[start-0x000055f8e8f64570] 
+# symTable   -> stGet_nsid looking for [point_t] found::[point_t-0x0000564ef1b43700] 
 
-# symTable   -> stGet_nsid looking for [start]
-# symTable   -> stGet_nsid looking for [start] found::[start-0x000055f8e8f64570] 
+# symTable   -> stGet_nsid looking for [a]
+# symTable   -> stGet_nsid looking for [a]
+# symTable   -> stGet_nsid looking for [a]
+# DEBUG ST [0x564ef1c8cf90] ->
+# symTable->scope   [0] :: [Global]
+# symTable->ns      [(null)]
+# symTable->id      [a]
+# symTable->kind    [3] :: [Array]
+# symTable->type    [5] :: [stTypeStruct]
+# symTable->nDim    [1] / [10]
+# symTable->member  [0] / 
+# symTable->size    [160]
+# symTable->typeID  [point_t]
+# symTable->value   [MEMBER]::
 
-# symTable   -> stGet_nsid looking for [start]
-# symTable   -> stGet_nsid looking for [start]
+# symTable   -> stMakeSymTable ...
+
+# symTable   -> stGet_nsid -> [id::{nil}]
+
+# symTable   -> stGet_nsid looking for [point_t] found::[point_t-0x0000564ef1b43700] 
+
+# symTable   -> stGet_nsid looking for [VVV]
+# symTable   -> stGet_nsid looking for [VVV]
+# symTable   -> stGet_nsid looking for [VVV]
+# DEBUG ST [0x564ef1c9f0e0] ->
+# symTable->scope   [1] :: [Local]
+# symTable->ns      [(null)]
+# symTable->id      [VVV]
+# symTable->kind    [2] :: [Var]
+# symTable->type    [5] :: [stTypeStruct]
+# symTable->nDim    [0] / 
+# symTable->member  [0] / 
+# symTable->size    [16]
+# symTable->typeID  [point_t]
+# symTable->value   [MEMBER]::
+
+
+# symTable   -> stGet_nsid looking for [VVV]
+# symTable   -> stGet_nsid looking for [VVV] found::[VVV-0x0000564ef1c9f0e0] 
+
+# symTable   -> stGet_nsid looking for [VVV]
+# symTable   -> stGet_nsid looking for [VVV] found::[VVV-0x0000564ef1c9f0e0] 
+
+# symTable   -> stGet_nsid looking for [point_t] found::[point_t-0x0000564ef1b43700] 
+
+# symTable   -> stGet_nsid looking for [VVV]
+# symTable   -> stGet_nsid looking for [VVV] found::[VVV-0x0000564ef1c9f0e0] 
+
+# symTable   -> stGet_nsid looking for [VVV]
+# symTable   -> stGet_nsid looking for [VVV]
 # symTable   -> stGet_nsid looking for [y]
-# symTable   -> stGet_nsid looking for [y] found::[y-0x000055f8e8f40f00] 
+# symTable   -> stGet_nsid looking for [y] found::[y-0x0000564ef1b50f90] 
 
-# symTable   -> stGet_nsid looking for [r1] found::[r1-0x000055f8e8fefa30] 
+# symTable   -> stGet_nsid looking for [ccc] found::[ccc-0x0000564ef1c10a40] 
 
-# symTable   -> stGet_nsid looking for [r1] found::[r1-0x000055f8e8fefa30] 
+# symTable   -> stGet_nsid looking for [r1] found::[r1-0x0000564ef1c64a00] 
+
+# symTable   -> stGet_nsid looking for [r1] found::[r1-0x0000564ef1c64a00] 
+
+# symTable   -> stGet_nsid looking for [rect_t] found::[rect_t-0x0000564ef1bac720] 
+
+# symTable   -> stGet_nsid looking for [r1] found::[r1-0x0000564ef1c64a00] 
+
+# symTable   -> stGet_nsid looking for [r1] found::[r1-0x0000564ef1c64a00] 
 
 # symTable   -> stGet_nsid looking for [l2]
-# symTable   -> stGet_nsid looking for [l2] found::[l2-0x000055f8e8fae020] 
+# symTable   -> stGet_nsid looking for [l2] found::[l2-0x0000564ef1bbe0b0] 
+
+# symTable   -> stGet_nsid looking for [l2]
+# symTable   -> stGet_nsid looking for [l2] found::[l2-0x0000564ef1bbe0b0] 
+
+# symTable   -> stGet_nsid looking for [l2]
+# symTable   -> stGet_nsid looking for [l2]
+# symTable   -> stGet_nsid looking for [start]
+# symTable   -> stGet_nsid looking for [start] found::[start-0x0000564ef1b74600] 
 
 # symTable   -> stGet_nsid looking for [start]
-# symTable   -> stGet_nsid looking for [start] found::[start-0x000055f8e8f64570] 
+# symTable   -> stGet_nsid looking for [start] found::[start-0x0000564ef1b74600] 
 
-# symTable   -> stGet_nsid looking for [y]
-# symTable   -> stGet_nsid looking for [y] found::[y-0x000055f8e8f40f00] 
+# symTable   -> stGet_nsid looking for [start]
+# symTable   -> stGet_nsid looking for [start]
+# symTable   -> stGet_nsid looking for [x]
+# symTable   -> stGet_nsid looking for [x] found::[x-0x0000564ef1b43f30] 
 
 §§§ List symbol in table : 
 
-§§§ ((\ccc                ,0x55f8e8f2a0e0)) 
-§§§ ((\point_tx           ,0x55f8e8f33ea0)) 
-§§§ ((\point_ty           ,0x55f8e8f40f00)) 
-§§§ ((\point_t            ,0x55f8e8f33670)) 
-§§§ ((\line_tstart        ,0x55f8e8f64570)) 
-§§§ ((\line_tstop         ,0x55f8e8f75700)) 
-§§§ ((\line_t             ,0x55f8e8f63d40)) 
-§§§ ((\rect_tl1           ,0x55f8e8f9cec0)) 
-§§§ ((\rect_tl2           ,0x55f8e8fae020)) 
-§§§ ((\rect_t             ,0x55f8e8f9c690)) 
-§§§ ((\p1                 ,0x55f8e8fd45d0)) 
-§§§ ((\l1                 ,0x55f8e8fe2000)) 
-§§§ ((\r1                 ,0x55f8e8fefa30)) 
+§§§ ((\a1                 ,0x564ef1b27a60)) 
+§§§ ((\c1                 ,0x564ef1b315e0)) 
+§§§ ((\v1                 ,0x564ef1b3a230)) 
+§§§ ((\point_tx           ,0x564ef1b43f30)) 
+§§§ ((\point_ty           ,0x564ef1b50f90)) 
+§§§ ((\point_t            ,0x564ef1b43700)) 
+§§§ ((\line_tstart        ,0x564ef1b74600)) 
+§§§ ((\line_tstop         ,0x564ef1b85790)) 
+§§§ ((\line_t             ,0x564ef1b73dd0)) 
+§§§ ((\rect_tl1           ,0x564ef1bacf50)) 
+§§§ ((\rect_tl2           ,0x564ef1bbe0b0)) 
+§§§ ((\rect_t             ,0x564ef1bac720)) 
+§§§ ((\v2                 ,0x564ef1be4660)) 
+§§§ ((\linea              ,0x564ef1bf1250)) 
+§§§ ((\c2                 ,0x564ef1bfe950)) 
+§§§ ((\c3                 ,0x564ef1c070a0)) 
+§§§ ((\ccc                ,0x564ef1c10a40)) 
+§§§ ((\c4                 ,0x564ef1c1a3e0)) 
+§§§ ((\v3                 ,0x564ef1c22f40)) 
+§§§ ((\v4                 ,0x564ef1c2ba20)) 
+§§§ ((\v5                 ,0x564ef1c35850)) 
+§§§ ((\v6                 ,0x564ef1c3f750)) 
+§§§ ((\p1                 ,0x564ef1c495a0)) 
+§§§ ((\l1                 ,0x564ef1c56fd0)) 
+§§§ ((\r1                 ,0x564ef1c64a00)) 
+§§§ ((\f1f1_v7            ,0x564ef1c73d40)) 
+§§§ ((\f1f1_v8            ,0x564ef1c803e0)) 
+§§§ ((\f1a                ,0x564ef1c8cf90)) 
+§§§ ((\f1VVV              ,0x564ef1c9f0e0)) 
 
 # symTable   -> denitialized . 
 

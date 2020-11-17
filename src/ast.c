@@ -769,6 +769,8 @@ node_t* astNodeDebug( past_t this , node_t* n)
                
             break ;
             
+// ***************************************************************************************************************************************************** 
+           
         case nTypeTermStruct :
         
             if ( this->fDebug )
@@ -783,21 +785,13 @@ node_t* astNodeDebug( past_t this , node_t* n)
                 ) ;
 			}
 			fwprintf ( this->pFileOutputNode , L"{\n");
-            
+
             wchar_t* fieldName=NULL ;
-            
+        
             psymTable_t pstTemp=NULL;
-            stNameSpace.size = 1 ; // "\" 
- 
-			// ottieni il campo/field
-			if ( n->termStruct.vField.data[0]->type == nTypeTermVar 	) fieldName=n->termStruct.vField.data[0]->termVar.id ;
-			if ( n->termStruct.vField.data[0]->type == nTypeTermArray 	) fieldName=n->termStruct.vField.data[0]->termArray.id ;
-				
-			// ottieni il nome della struttura / namespace 
-			pstTemp = stFindIDinMap(fieldName);	// 
-			vectorPushBack(stNameSpace,pstTemp->typeID 	) ;
 
 			int offset=0;
+			int count=0;
             for ( size_t i = 0 ;i<vectorSize ( n->termStruct.vField ); i++)	
             {
 				//fwprintf ( this->pFileOutputNode, L" offset (%03d) :: ", (int)((psymTable_t)n->termStruct.pvst)->offset.data[i] ) ;
@@ -805,15 +799,35 @@ node_t* astNodeDebug( past_t this , node_t* n)
 				if ( n->termStruct.vField.data[i]->type == nTypeTermVar 	) fieldName=n->termStruct.vField.data[i]->termVar.id ;
 				if ( n->termStruct.vField.data[i]->type == nTypeTermArray 	) fieldName=n->termStruct.vField.data[i]->termArray.id ;
 
-				if ( vectorSize(stNameSpace)==2 ) vectorPopBack(stNameSpace);
-				vectorPushBack(stNameSpace,pstTemp->typeID 	) ;
-				pstTemp = stFindIDinMap(fieldName);
+				//pstTemp = stFindIDinMap(fieldName);	//
+				
+				// cerca a ritroso la variabile nella mappa 
+				// ANDREBBE FATTO A RITROSO MA QUI è DA ZERO in POI
+				
+				for ( whmapIt_t* it=whmapBegin(mapST) ; it != whmapEnd(mapST) ; whmapNext(mapST,it) )  
+				{
+					if ( wcsstr (  whmapData(it) , fieldName ) ) 
+					{
+						pstTemp = (void*)whmapFind(mapST, whmapData(it) ) ;
+						fwprintf ( this->pFileOutputNode , L"[%02d] fieldName[%-10ls] pstTemp->id[%-10ls] pstTemp->typeID[%-10ls]) "
+							,count++
+							,fieldName
+							,pstTemp->id
+							,pstTemp->typeID
+						) ;
+						fwprintf ( this->pFileOutputNode , L"size(%03d) offset(%03d)",pstTemp->size,offset ) ;
+						
+						if ( count>1 ) offset+=pstTemp->size; // il primo elemento non fa offset è la base ( dimensioni struttura ) 
+						//vectorPushBack(stNameSpace,gcWcsDup(pstTemp->typeID) 	) ;
+						fwprintf ( stderr , L"\n" );
+						break ;
+					}
+				}
 
-				fwprintf ( this->pFileOutputNode, L"\tOFFSET -> [%03d (%-12ls) %03d] :: " , i,fieldName,offset) ;
-				offset+=pstTemp->size;
-
-				//-----------------------------------------------------			
+				//-----------------------------------------------------
+				
 				astNodeDebug( this , n->termStruct.vField.data[i]  )  ;
+				
 				//-----------------------------------------------------  
 			}
              
