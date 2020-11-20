@@ -1,0 +1,17 @@
+	op_nop		,	//	no instruction
+	op_loadInt	,	//	load integer
+	op_loadReal ,	//	load real
+	op_cnv2rl 	,	//	converti a double il termine di sinistra / left
+	op_cnv2rr 	,	//	converti a double il termine di destra   / right
+	op_fadd 	,	//	addiziona reali
+	op_fsub 	,	//	sottrai reali
+	op_fmul		,	//  moltiplica reali
+	op_fdiv		,	//  dividi reali
+	op_fmod		,	//  modulo reali
+	op_add 		,	//	addiziona interi
+	op_sub 		,	//	sottrai interi
+	op_mul		,	//  moltiplica interi
+	op_div		,	//  dividi interi
+	op_mod		,	//  modulo interi
+	op_pushil	,	//  push left operator integer
+	op_pushrl

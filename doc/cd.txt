@@ -1,0 +1,77 @@
+
+--------------
+program source
+--------------
+
+
+main.c		:		programma principale
+					gestione garbage collector (gc.c)
+					gestione parametri line di comando (argParse.c)
+					inizializzazione file input / output
+					avvio parser.scan (parser.c)
+					avvio debug ast
+					avvio assemblatore
+					avvio macchina virtuale
+
+parser.c 	: 		avvio lexer.scan (lexer.c)
+					gestione BNF
+						cdParserTerm			:	term
+						allocazione nodi AST	:	ast.c (makeNodeTermInteger)
+					assembla nodi 				:	asm.c
+
+expr.c 		:		contiene BNF delle espressioni, diviso dal parser
+
+ast.c 		:		genera nodi dall'albero sintattico : makeNodeTermInteger
+
+error.c 	:		gestione messaggi di errore
+
+token.h		:		elenco simboli
+
+asm.c		:		assemblatore
+
+vm.c 		:		macchina virtuale
+
+
+-----------
+program lib
+------------
+
+
+argParse.c 	:		libreria gestione opzioni linea di comando
+
+gc.c 		:		libreria garbage collector
+
+hmap.c 		:		libreria hash map (char,wchar_t)
+
+mstack.h	:		libreria di macro gestione Stack
+
+mvector.h	:		libreria di macro gestione Vettori
+
+stdio.c 	:		libreria gestione standard IO
+
+
+-----------
+program dir
+------------
+
+CD 			:		root
+	bin		:		eseguibile
+	lib  	:		librerie
+	obj		:		file oggetto
+	src 	:		codice sorgente
+	test	:		file di test
+	doc		:		documentazione
+
+
+-----------
+option
+------------
+
+-i [filename]   :   input file
+-o [filename]   :   output file
+-d              :   show debug informatio
+-$ stdout       :   redirige tutto sullo standat output (stdout) || (stderr)
+-h              :   help
+
+
+/**/
