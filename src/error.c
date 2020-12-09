@@ -1,5 +1,16 @@
 #include "error.h"
 
+uint32_t kError     ;
+uint32_t kWarning   ;
+
+struct vector_s_vErrLog  
+{                          
+    errLog_t*   data 		;        
+    size_t  	size        ;         
+    size_t  	capacity    ;        
+}  vErrLog ;
+
+typedef errLog_t vectorDataTypevErrLog;
 
 // ................................................... sender
 

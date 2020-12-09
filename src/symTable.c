@@ -9,6 +9,15 @@ extern global_t g ;
 
 stScope_t stScope ;
 
+//vectorType(wstring_t,stNameSpace) ;
+
+struct vector_s_stNameSpace stNameSpace ;
+
+typedef wstring_t vectorDataTypestNameSpace;
+
+whmapType(mapST) ;
+
+
 // init stNameSpace
 
 #define $CD gcWcsDup((wchar_t*)L"\\")

@@ -34,8 +34,14 @@ typedef enum stKind_e stKind_t ;
 typedef wchar_t * wstring_t ;
 
 // .............................................. nameSpace
-
-vectorType(wstring_t,stNameSpace) ;
+struct vector_s_stNameSpace  
+{                          
+    wstring_t*   data 		;        
+    size_t  	size        ;         
+    size_t  	capacity    ;        
+}  ;
+//vectorType(wstring_t,stNameSpace) ;
+extern struct vector_s_stNameSpace   stNameSpace ;
 
 // .............................................. type
 // to see : ast.h -> eNodeType_t
@@ -101,7 +107,8 @@ typedef struct mapST_s
   
 } mapST_t ;
 
-whmapType(mapST) ;
+
+extern whmapType(mapST) ;
 
 
 // prototype

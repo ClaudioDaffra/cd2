@@ -30,7 +30,7 @@
 
 
 
-sym_t       sym ;
+extern sym_t       sym ;
 
 // questo per evitare warning comparazione ( signed wchar_t / unsigned wchar_t )
 #define _WEOF (wchar_t)WEOF

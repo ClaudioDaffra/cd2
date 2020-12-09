@@ -18,6 +18,7 @@
 // il calcolo riga e la colonna viene effettuato con row,col+1, per tanto occorrerà visualizzare
 // il risultato con row,col-1 e passarlo così  anche al parser 
 
+sym_t       sym ;
 
 // var global main.c
 

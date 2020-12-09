@@ -15,8 +15,8 @@
 
 // ................................................... k error,warning
 
-uint32_t kError     ;
-uint32_t kWarning   ;
+extern uint32_t kError     ;
+extern uint32_t kWarning   ;
 
 // ................................................... sender
 
@@ -161,7 +161,9 @@ typedef struct errLog_s * errLog_t ;
 
 // field
 
-vectorType(errLog_t,vErrLog);
+extern struct vector_s_vErrLog  vErrLog ;
+
+
 
 // method
 
